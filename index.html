@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中二华文文学 · 班级测验模拟练习</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+:root{--ink:#1a1410;--paper:#faf7f2;--warm:#f3ede3;--red:#c0392b;--gold:#b8860b;--gold-light:#fdf6e3;--border:#d4c9b5;--muted:#7a6e62;--ok:#2d6a4f;--ok-bg:#e8f5f0;--shadow:0 2px 12px rgba(26,20,16,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;line-height:1.75}
+.hdr{background:var(--ink);color:var(--paper);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.hdr-in{max-width:900px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px}
+.seal{width:44px;height:44px;border:2px solid var(--red);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:11px;color:var(--red);line-height:1.2;text-align:center;flex-shrink:0;letter-spacing:1px}
+.hdr-txt h1{font-family:'Noto Serif SC',serif;font-size:17px;font-weight:700;letter-spacing:2px}
+.hdr-txt p{font-size:11px;color:#aaa;letter-spacing:1px;margin-top:1px}
+.badge{margin-left:auto;background:var(--red);color:white;font-size:11px;padding:3px 10px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.main{max-width:900px;margin:0 auto;padding:28px 24px 60px}
+.chips{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.chip{background:white;border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
+.chip .v{font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:var(--red);line-height:1}
+.chip .l{color:var(--muted);font-size:12px}
+.gen-box{background:white;border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:28px;box-shadow:var(--shadow)}
+.gen-box h2{font-family:'Noto Serif SC',serif;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.gen-box h2::before{content:'';display:inline-block;width:3px;height:16px;background:var(--red);border-radius:2px}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.ftag{border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;background:var(--paper);color:var(--muted);transition:all .15s;font-family:'Noto Sans SC',sans-serif;white-space:nowrap}
+.ftag:hover{border-color:var(--red);color:var(--red)}
+.ftag.on{background:var(--red);border-color:var(--red);color:white}
+.gbtn{background:var(--ink);color:var(--paper);border:none;padding:11px 30px;font-size:14px;font-family:'Noto Sans SC',sans-serif;border-radius:8px;cursor:pointer;letter-spacing:2px;transition:all .15s}
+.gbtn:hover{background:#333}
+.paper{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:24px}
+.sec-hdr{background:var(--warm);border-bottom:1px solid var(--border);padding:13px 22px;display:flex;align-items:baseline;gap:12px}
+.sec-n{font-family:'Noto Serif SC',serif;font-size:12px;color:var(--muted);letter-spacing:2px}
+.sec-t{font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700}
+.sec-s{margin-left:auto;font-size:12px;color:var(--red);border:1px solid var(--red);padding:2px 10px;border-radius:20px}
+.qi{border-bottom:1px solid #f0ebe3;padding:18px 22px}
+.qi:last-child{border-bottom:none}
+.qn{font-family:'Noto Serif SC',serif;color:var(--red);font-weight:600;margin-right:6px}
+.qtag{font-size:11px;color:var(--muted);margin-left:6px;border:1px solid var(--border);padding:1px 7px;border-radius:10px}
+.qtext{font-size:14px;margin-bottom:12px;line-height:1.85}
+.aopts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.abtn{display:flex;align-items:flex-start;gap:9px;padding:9px 13px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;background:var(--paper);text-align:left;font-size:13px;font-family:'Noto Sans SC',sans-serif;line-height:1.6;transition:all .15s;color:var(--ink);width:100%}
+.abtn:hover:not(:disabled){border-color:var(--gold);background:var(--gold-light)}
+.abtn .al{font-family:'Noto Serif SC',serif;color:var(--red);font-weight:600;flex-shrink:0;min-width:16px}
+.abtn.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.abtn.ok .al,.abtn.sh .al{color:var(--ok)}
+.abtn.ng{border-color:var(--red);background:#fdf0ee;color:var(--red)}
+.abtn.ng .al{color:var(--red)}
+.abtn.sh{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.abtn:disabled{cursor:default}
+.exp{margin-top:10px;padding:11px 15px;background:var(--gold-light);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:13px;display:none;line-height:1.8}
+.exp.show{display:block}
+.poem-box{background:var(--warm);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:12px;font-family:'Noto Serif SC',serif;font-size:15px;line-height:2.2;letter-spacing:1px;text-align:center}
+.ta{width:100%;min-height:90px;border:1.5px solid var(--border);border-radius:8px;padding:11px 13px;font-size:13px;font-family:'Noto Sans SC',sans-serif;line-height:1.8;resize:vertical;background:white;color:var(--ink);transition:border-color .15s}
+.ta:focus{outline:none;border-color:var(--red)}
+.show-ans-btn{margin-top:10px;background:var(--gold);color:white;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-family:'Noto Sans SC',sans-serif;cursor:pointer;letter-spacing:1px}
+.show-ans-btn:hover{background:#9a7009}
+.ref-ans{margin-top:12px;padding:13px 16px;background:var(--gold-light);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;line-height:1.9;display:none;white-space:pre-wrap}
+.ref-ans.show{display:block}
+.subbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
+.subbtn{background:var(--red);color:white;border:none;padding:12px 34px;font-size:15px;font-family:'Noto Serif SC',serif;border-radius:8px;cursor:pointer;letter-spacing:3px;transition:all .15s}
+.subbtn:hover{background:#a93226}
+.subbtn:disabled{opacity:.5;cursor:not-allowed}
+.res-card{background:white;border:2px solid var(--red);border-radius:12px;padding:26px;margin-bottom:24px;text-align:center;display:none;box-shadow:var(--shadow)}
+.res-card.show{display:block}
+.res-n{font-family:'Noto Serif SC',serif;font-size:52px;color:var(--red);line-height:1;margin-bottom:6px}
+.res-l{color:var(--muted);font-size:14px;letter-spacing:2px}
+.res-br{margin-top:18px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.rb{font-size:13px;color:var(--muted)}
+.rb strong{color:var(--ink);font-size:16px}
+.empty{text-align:center;padding:56px 20px;color:var(--muted)}
+.empty .ico{font-size:44px;margin-bottom:12px}
+.empty h3{font-family:'Noto Serif SC',serif;font-size:17px;margin-bottom:8px;color:var(--ink)}
+.empty p{font-size:13px}
+@media(max-width:600px){.aopts{grid-template-columns:1fr}.main{padding:16px 14px 50px}.qi{padding:14px 16px}.hdr-in{padding:12px 16px}}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="seal">华<br>中</div>
+    <div class="hdr-txt"><h1>华文文学班级测验</h1><p>2026 · 中二 · 第三学段第一周</p></div>
+    <div class="badge">LT2 · 50分钟</div>
+  </div>
+</header>
+<div class="main">
+  <div class="chips">
+    <div class="chip"><span class="v" id="c-mcq">—</span><span class="l">选择题/10分</span></div>
+    <div class="chip"><span class="v" id="c-ap">—</span><span class="l">赏析题/8分</span></div>
+    <div class="chip"><span class="v" id="c-qa">—</span><span class="l">问答题/12分</span></div>
+    <div class="chip"><span class="v" id="c-tot" style="font-size:26px">—</span><span class="l">总分/30分</span></div>
+  </div>
+  <div class="gen-box">
+    <h2>生成模拟测验</h2>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:12px">选择范围（可多选），每次随机抽取不同题目组合。</div>
+    <div class="filter-row">
+      <button class="ftag on" data-t="all">全部范围</button>
+      <button class="ftag" data-t="xinrao">新谣</button>
+      <button class="ftag" data-t="social">通俗华文歌曲与社会</button>
+      <button class="ftag" data-t="micro">微型小说概论</button>
+      <button class="ftag" data-t="readnovel">如何阅读小说</button>
+      <button class="ftag" data-t="character">扁平与圆形人物</button>
+      <button class="ftag" data-t="butterfly">《永远的蝴蝶》</button>
+      <button class="ftag" data-t="berlin">《在柏林》</button>
+      <button class="ftag" data-t="ecology">新加坡微型小说生态</button>
+      <button class="ftag" data-t="mulan">《木兰辞》</button>
+      <button class="ftag" data-t="tang">初唐诗歌</button>
+    </div>
+    <button class="gbtn" id="gbtn">✦ 生成新测验</button>
+  </div>
+  <div class="res-card" id="res-card">
+    <div class="res-n" id="res-tot">—</div>
+    <div class="res-l">总分 / 30 分</div>
+    <div class="res-br">
+      <div class="rb">选择题 <strong id="r-mcq">—</strong>/10</div>
+      <div class="rb">赏析题 <strong id="r-ap">—</strong>/8（自评）</div>
+      <div class="rb">问答题 <strong id="r-qa">—</strong>/12（自评）</div>
+    </div>
+  </div>
+  <div id="quiz"><div class="paper"><div class="empty"><div class="ico">📄</div><h3>准备好了吗？</h3><p>点击「生成新测验」开始练习。</p></div></div></div>
+  <div class="subbar" id="subbar" style="display:none">
+    <div style="font-size:13px;color:var(--muted)">完成选择题后提交查看得分；开放题可对照参考答案自评。</div>
+    <button class="subbtn" id="subbtn">提 交 测 验</button>
+  </div>
+</div>
+<script>
+
+const BANK = {
+mcq: [
+{r:`新谣`,q:`新谣运动兴起于哪个年代？`,opts:[`1970年代初`,`1980年代初`,`1990年代初`,`1960年代末`],ans:1,exp:`新谣（Xinyao）是新加坡本土华语校园民谣，兴起于1980年代初。`},
+{r:`新谣`,q:`《传灯》这首歌的词作者是谁？`,opts:[`张泛`,`陈徽崇`,`杜南发`,`陈嘉庚`],ans:2,exp:`《传灯》词由杜南发创作，他是《南洋商报》文艺版主编，也是颁奖礼的负责人。`},
+{r:`新谣`,q:`《传灯》这首歌的曲作者是谁？`,opts:[`杜南发`,`张泛`,`陈徽崇`,`胡文虎`],ans:1,exp:`《传灯》曲由张泛谱写，创作经过是杜南发说"你写我就谱"，短时间内完成。`},
+{r:`新谣`,q:`《传灯》最初在哪个场合诞生？`,opts:[`《南洋商报》举办的第一届华语创作比赛颁奖典礼`,`新加坡国庆晚会`,`新加坡广播局歌唱比赛`,`华中迎新晚会`],ans:0,exp:`《传灯》诞生于1982年8月《南洋商报》举办的第一届华语创作比赛颁奖典礼。`},
+{r:`新谣`,q:`《传灯》后来如何在马来西亚传播开来？`,opts:[`通过马来西亚学生带回，经华文老师陈徽崇传唱`,`通过电台播放`,`通过录音带发行`,`通过报纸刊登歌词`],ans:0,exp:`马来西亚柔佛新山的学生将《传灯》带回，经华文老师陈徽崇传唱，在当地中学中传唱开来。`},
+{r:`新谣`,q:`以下哪项最能概括新谣的风格特征？`,opts:[`旋律清新自然、歌词简朴、反映本土情怀与生活`,`曲调激昂，歌词具有强烈政治色彩`,`节奏强烈，以英文歌词为主`,`改编自传统华族民谣`],ans:0,exp:`新谣的主要特征是旋律清新自然、歌词简朴，并反映新加坡本土情怀与日常生活。`},
+{r:`社会`,q:`《南洋商报》由谁在哪一年创办？`,opts:[`胡文虎，1929年`,`陈嘉庚，1923年`,`李光耀，1965年`,`班固，1983年`],ans:1,exp:`1923年9月6日，"树胶大王"陈嘉庚在新加坡创办《南洋商报》。`},
+{r:`社会`,q:`《星洲日报》由谁在哪一年创办？`,opts:[`陈嘉庚，1923年`,`胡文虎，1929年`,`李光耀，1979年`,`杜南发，1982年`],ans:1,exp:`1929年1月15日，胡文虎创办了《星洲日报》。`},
+{r:`社会`,q:`《南洋商报》与《星洲日报》合并后的新报纸叫什么名字？`,opts:[`《联合早报》`,`《南洋星洲联合早报》`,`《新加坡日报》`,`《华文早报》`],ans:1,exp:`两报于1983年合并，《南洋星洲联合早报》于1983年3月16日面世。`},
+{r:`社会`,q:`两报在哪一年正式合并？`,opts:[`1975年`,`1979年`,`1983年`,`1990年`],ans:2,exp:`具有60年历史的《南洋商报》和54年历史的《星洲日报》于1983年合并。`},
+{r:`社会`,q:`讲华语运动于哪一年由谁发起？`,opts:[`1965年，李显龙`,`1979年，李光耀`,`1983年，吴作栋`,`1975年，拉惹勒南`],ans:1,exp:`讲华语运动于1979年由建国总理李光耀发起。`},
+{r:`社会`,q:`新加坡广播局（SBC）存在的时间段是？`,opts:[`1963—1965年`,`1965—1980年`,`1980—1994年`,`1994—1999年`],ans:2,exp:`新加坡广播局 Singapore Broadcasting Corporation 存在于1980年至1994年。`},
+{r:`社会`,q:`MediaCorp从哪一年开始运营？`,opts:[`1980年`,`1994年`,`1999年`,`2003年`],ans:2,exp:`MediaCorp从1999年开始运营，是新加坡广播电视机构的现名。`},
+{r:`社会`,q:`新加坡实施《报章与印刷馆法令》是哪一年？`,opts:[`1965年`,`1970年`,`1974年`,`1983年`],ans:2,exp:`新加坡于1974年实施《报章与印刷馆法令》，两报在1975年重组为公共公司。`},
+{r:`微型小说`,q:`微型小说起源于哪个国家？`,opts:[`日本`,`中国`,`英国`,`美国`],ans:3,exp:`微型小说起源于美国，于50年代传入日本。`},
+{r:`微型小说`,q:`对微型小说的定义是"不超过多少字，却要具备小说的一切要素"？`,opts:[`五百字`,`一千五百字`,`三千字`,`一万字`],ans:1,exp:`定义是"不超过一千五百字，却要具备小说的一切要素"。`},
+{r:`微型小说`,q:`微型小说四大特点中，"密"指的是什么？`,opts:[`文字精密，不允许有错别字`,`结构紧凑，时间场所人物尽可能集中`,`内容秘密，主题隐晦`,`密度大，每句话都有多重含义`],ans:1,exp:`"密"指结构紧凑，力求时间、场所、人物集中，精巧如微雕工艺品。`},
+{r:`微型小说`,q:`微型小说四大特点中，"奇"主要指什么？`,opts:[`题材奇特，写鬼怪故事`,`人物奇异，描写超自然人物`,`结尾精巧出人意料`,`语言奇特，使用方言`],ans:2,exp:`"奇"指结尾精巧，出人意料，微型小说的特点多半在于一个"奇"字。`},
+{r:`微型小说`,q:`托尔斯泰对微型小说有何评价？`,opts:[`微型小说是最无聊的文学形式`,`小小说是训练写作最好的学校`,`微型小说只适合儿童阅读`,`微型小说是文学的末路`],ans:1,exp:`俄罗斯作家托尔斯泰说："小小说是训练写作最好的学校。"`},
+{r:`微型小说`,q:`在"九流十家"中，小说家被归为第几位？`,opts:[`第一流`,`第五流`,`第九流`,`第十家（不入流）`],ans:3,exp:`小说家虽自成一家，但被视为不入流者，故有"九流十家"之说，小说家是第十家。`},
+{r:`微型小说`,q:`《丈夫支出帐本中的一页》被引用来说明微型小说哪个特点？`,opts:[`新——立意新颖`,`微——篇幅短小却情节完整`,`密——结构紧凑`,`奇——结尾出人意料`],ans:1,exp:`全文仅七行字，却具有长篇小说的全部情节，说明"微"——篇幅短小的特点。`},
+{r:`阅读小说`,q:`哪种叙事观点的叙事者能随意进入任何人物的内心深处？`,opts:[`第一人称主角叙事`,`第一人称非主角叙事`,`全知全能叙事观点`,`第三人称主角叙事`],ans:2,exp:`全知全能叙事观点的叙事者对每一件事都能洞然，能随意进入任何人物的内心深处。`},
+{r:`阅读小说`,q:`第一人称主角叙事观点的最大优点是什么？`,opts:[`可以描写所有人物的内心`,`叙事弹性最高`,`与读者生活经验接近，具有亲切感与真实感`,`可以随意切换时间地点`],ans:2,exp:`第一人称主角叙事的好处是与读者的生活经验非常接近，具有亲切感与真实感。`},
+{r:`阅读小说`,q:`推理小说常采用哪种叙述方式？`,opts:[`顺叙式`,`回溯式`,`时空错综`,`倒叙与插叙结合`],ans:1,exp:`推理小说常采用回溯式——先呈现结局，再由结局推回发生经过。`},
+{r:`阅读小说`,q:`微型小说常采用哪种叙述方式？`,opts:[`顺叙式`,`回溯式`,`时空错综`,`单线顺叙`],ans:2,exp:`微型小说常采用时空错综的叙述方式，以现在与过去两线错综进行。`},
+{r:`阅读小说`,q:`铺垫手法最准确的描述是？`,opts:[`在文章开头交代背景信息`,`为了让后文表达更清楚形象，提前为主要写作对象做的描写`,`在文章结尾作总结升华`,`在文章中间插入回忆`],ans:1,exp:`铺垫是为了让后文的意思表达得更清楚、更形象，提前为主要写作对象做的描写。`},
+{r:`阅读小说`,q:`第一人称非主角叙事观点的主要限制是什么？`,opts:[`无法描写任何人物的外貌`,`叙事者只能从外部观察他人，无法透视他人性格`,`叙事者不能参与故事情节`,`叙事者必须始终在场`],ans:1,exp:`第一人称非主角叙事有限制，叙事者只能从外部观察其他人物，无法透视他人性格。`},
+{r:`人物`,q:`扁平人物与圆形人物的概念由哪位作家提出？`,opts:[`托尔斯泰`,`欧·亨利`,`福斯特（E.M. Forster）`,`陈启佑`],ans:2,exp:`英国小说家福斯特（E.M. Forster）在《小说面面观》中提出了扁平人物与圆形人物的概念。`},
+{r:`人物`,q:`以下哪项是扁平人物的主要特征？`,opts:[`性格复杂多变，有发展过程`,`可以用一个句子加以描述概括，性格单一`,`在小说中都是主角`,`性格善变，难以预测`],ans:1,exp:`扁平人物性格单一，是按照一个简单的意念或特质创造的，常常可以用一个句子加以描述概括。`},
+{r:`人物`,q:`圆形人物的主要特点是什么？`,opts:[`性格简单，容易描述`,`只出现在长篇小说中`,`具有复杂性格特征，性格有形成与发展的过程`,`总是文学作品中的反派`],ans:2,exp:`圆形人物具有复杂性格特征，这类人物性格有形成与发展的过程，打破了简单的好坏分类。`},
+{r:`人物`,q:`福斯特在哪部著作中提出扁平与圆形人物的概念？`,opts:[`《小说的艺术》`,`《小说面面观》`,`《文学理论》`,`《人物论》`],ans:1,exp:`福斯特在《小说面面观》中将小说人物分为扁平和圆形两种。`},
+{r:`人物`,q:`在西方戏剧作品中，扁平人物常被用来做什么？`,opts:[`担任主角`,`充当配角（次要人物）`,`担任旁白`,`代替圆形人物`],ans:1,exp:`在西方国家的戏剧作品中，常常需要扁平人物来充当次要人物（配角）。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》的作者是谁？`,opts:[`奥莱尔（美国）`,`陈启佑（台湾）`,`邱宝建（新加坡）`,`柳宗元（唐代）`],ans:1,exp:`《永远的蝴蝶》的作者是台湾作家陈启佑。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》采用哪种叙事观点？`,opts:[`全知全能叙事`,`第一人称非主角叙事`,`第一人称主角叙事`,`第三人称主角叙事`],ans:2,exp:`《永远的蝴蝶》采用第一人称主角叙事，"我"即主角，读者通过"我"的眼睛了解故事。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》中樱子是如何去世的？`,opts:[`她生了重病`,`她替主角去寄信时过马路被车撞死`,`她在战争中牺牲`,`她因思念而伤心离世`],ans:1,exp:`樱子要帮主角去邮筒寄信，过马路时被车撞死，主角一直后悔没有自己去寄信。`},
+{r:`蝴蝶`,q:`"永远的蝴蝶"的象征意义是什么？`,opts:[`象征自由与飞翔的梦想`,`象征樱子美丽而短暂，永远留在主角记忆中`,`象征战争的残酷`,`象征台湾的自然风光`],ans:1,exp:`樱子就像蝴蝶般美丽而短暂，永远留在主角的记忆中，是对逝去爱人的永恒思念。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》的叙事结构特点是什么？`,opts:[`纯粹顺叙，按时间先后`,`时空错综，现在与回忆交织`,`回溯式，先呈现结局`,`倒叙，从死亡写起`],ans:1,exp:`《永远的蝴蝶》采用时空错综的叙述结构，现在时间与回忆交织进行，结局出人意料。`},
+{r:`柏林`,q:`《在柏林》的作者是谁？`,opts:[`王勃（唐代诗人）`,`陈子昂（唐代诗人）`,`奥莱尔（美国女作家）`,`陈启佑（台湾作家）`],ans:2,exp:`《在柏林》的作者是美国女作家奥莱尔。`},
+{r:`柏林`,q:`《在柏林》中，老妇人不断重复数着什么？`,opts:[`她丈夫的名字`,`"一、二、三"`,`车站名`,`她的地址`],ans:1,exp:`老妇人不断数着"一、二、三"，这正是她失去的三个儿子的数字，她因此精神崩溃。`},
+{r:`柏林`,q:`《在柏林》中，小说第一次"静"与结尾"静"有何区别？`,opts:[`两次完全相同`,`第一次是真正的平静，第二次是表面平静`,`第一次是小姑娘停止嗤笑的表面平静，第二次是整个车厢被震撼后的内心震动`,`第一次比第二次更令人震惊`],ans:2,exp:`第一次"静"是小姑娘不笑了（表面平静）；第二次"静"是整个车厢被震撼后的内心深处的震动，"静得可怕"。`},
+{r:`柏林`,q:`老兵说"他们的母亲"而非"她"，这样写有何效果？`,opts:[`"他们的母亲"比"她"更简洁`,`说明她是失去三个儿子后精神崩溃的妻子，避免读者误解`,`"她"的语气更正式`,`两者效果完全相同`],ans:1,exp:`若改成"她"，读者可能误以为老兵在管教有精神病的陌生妇女，而非揭示她是因失去三子而崩溃的妻子。`},
+{r:`柏林`,q:`《在柏林》老妇人数"一、二、三"这个细节，在结构上起什么作用？`,opts:[`是铺垫手法，为震撼结局做铺垫`,`说明老妇人喜欢数数`,`表现老妇人的数学能力`,`说明故事发生在课堂上`],ans:0,exp:`老妇人神秘数着"一、二、三"是铺垫手法，与小姑娘的嗤笑一起为震撼的结局做铺垫。`},
+{r:`柏林`,q:`《在柏林》的主题是什么？`,opts:[`歌颂战争中的英雄主义`,`批判两个小姑娘的失礼行为`,`反映战争的残酷与对普通人的摧残，以及人性的冷漠与觉醒`,`赞美老兵的忠诚与勇气`],ans:2,exp:`《在柏林》的主题是战争的残酷与对普通人的摧残，以及人性的冷漠与觉醒。`},
+{r:`生态`,q:`新加坡微型小说创作的"转型期"大约是哪段时间？`,opts:[`70年代`,`80至87年`,`87至90年`,`90年以后`],ans:2,exp:`转型期是87年至90年，这一时期微型小说创作无论量和质都有了飞跃的发展。`},
+{r:`生态`,q:`《永远的门》是哪位新加坡作家的作品？`,opts:[`淡莹`,`希尼尔`,`邱宝建`,`方修`],ans:2,exp:`《永远的门》是新加坡作家邱宝建的微型小说代表作。`},
+{r:`生态`,q:`《永远的门》结局中，搬开花竹书架后发现了什么？`,opts:[`一扇真实可以推开的门`,`一幅画在墙上的门`,`一个秘密通道`,`一封情书`],ans:1,exp:`搬开花竹书架后，发现墙上有扇精巧的紫红色的门，门拉手是黄铜的，但那竟是画在墙上的门！`},
+{r:`生态`,q:`《管宁割席》出自哪部典籍？`,opts:[`《孟子》`,`《聊斋志异》`,`《世说新语》`,`《汉书》`],ans:2,exp:`《管宁割席》出自南朝宋刘义庆所著的《世说新语·德行》。`},
+{r:`生态`,q:`《揠苗助长》出自哪部典籍？`,opts:[`《论语》`,`《孟子·公孙丑上》`,`《庄子》`,`《史记》`],ans:1,exp:`《揠苗助长》出自《孟子·公孙丑上》，讲宋人拔苗助长导致禾苗枯死的故事。`},
+{r:`生态`,q:`新加坡微型小说作者多为华文教师，因此这类作品又常被称为？`,opts:[`"伤痕文学"`,`教育问题小说`,`校园微型小说`,`华文课堂文学`],ans:1,exp:`由于作者多为华文教师，对语文政策转变有切身感受，这类作品故又称"教育问题小说"。`},
+{r:`木兰`,q:`《木兰辞》属于哪个朝代的乐府诗？`,opts:[`唐代`,`宋代`,`北朝（南北朝时期）`,`汉代`],ans:2,exp:`《木兰辞》是中国南北朝时期北方的一首长篇叙事民歌，也是一篇乐府诗。`},
+{r:`木兰`,q:`《木兰辞》与哪首诗并称为乐府诗的"双璧"？`,opts:[`《静夜思》`,`《孔雀东南飞》`,`《长恨歌》`,`《出塞》`],ans:1,exp:`《木兰辞》与《孔雀东南飞》并称为乐府诗的"双璧"。`},
+{r:`木兰`,q:`"将军百战死，壮士十年归"运用了哪种修辞手法？`,opts:[`比喻`,`借代`,`互文`,`排比`],ans:2,exp:`此句是互文，上下两句互相补充，表达将士们经历百战，十年后有的牺牲有的归来。`},
+{r:`木兰`,q:`"巾帼不让须眉"中，"须眉"借代什么？`,opts:[`老人`,`男性`,`女性`,`英雄`],ans:1,exp:`"须眉"借代男性，"巾帼"借代女性，这是借代的修辞手法。`},
+{r:`木兰`,q:`"木兰不用尚书郎，愿驰千里足，送儿还故乡"表现了木兰怎样的品格？`,opts:[`渴望建功立业，留名青史`,`英勇善战，战功赫赫`,`不慕名利、淳朴真诚、眷恋家乡的纯真品格`,`痛恨战争，渴望和平`],ans:2,exp:`木兰拒绝做官，只想回家，表现出她不慕名利、淳朴真诚的纯真品格。`},
+{r:`木兰`,q:`"旦辞爷娘去，暮宿黄河边……旦辞黄河去，暮至黑山头"运用了什么修辞手法？`,opts:[`比喻`,`互文`,`对偶`,`夸张`],ans:2,exp:`此句运用对偶手法，层层递进写出征途遥远，同时体现木兰对家乡和父母的思念。`},
+{r:`木兰`,q:`"扑朔迷离"这个成语出自《木兰辞》的哪个部分？`,opts:[`描写出征的部分`,`描写战场的部分`,`描写回家的部分`,`最后以双兔为喻的部分`],ans:3,exp:`"扑朔迷离"出自《木兰辞》最后以双兔为喻的部分，赞美木兰从军多年不被发现是女郎的谨慎和机智。`},
+{r:`初唐`,q:`初唐四杰指哪四位诗人？`,opts:[`李白、杜甫、白居易、王维`,`王勃、杨炯、卢照邻、骆宾王`,`陈子昂、柳宗元、李涉、王昌龄`,`曹操、曹植、陈子昂、王勃`],ans:1,exp:`初唐四杰是王勃、杨炯、卢照邻、骆宾王，简称"王杨卢骆"。`},
+{r:`初唐`,q:`"海内存知己，天涯若比邻"出自哪首诗？`,opts:[`《登幽州台歌》陈子昂`,`《江雪》柳宗元`,`《送杜少府之任蜀州》王勃`,`《井栏砂宿遇夜客》李涉`],ans:2,exp:`"海内存知己，天涯若比邻"出自王勃的《送杜少府之任蜀州》，是著名的送别名句。`},
+{r:`初唐`,q:`"念天地之悠悠，独怆然而涕下"出自哪首诗？`,opts:[`《送杜少府之任蜀州》王勃`,`《登幽州台歌》陈子昂`,`《江雪》柳宗元`,`《滕王阁序》王勃`],ans:1,exp:`出自陈子昂的《登幽州台歌》，表达了诗人怀才不遇、孤独悲愤的情感。`},
+{r:`初唐`,q:`"千山鸟飞绝，万径人踪灭"运用了什么修辞手法？`,opts:[`对偶`,`比喻`,`夸张`,`借代`],ans:2,exp:`此句运用夸张手法，用"千山""万径"夸大范围，突出环境的空旷与寂静。`},
+{r:`初唐`,q:`《江雪》中"孤舟蓑笠翁"象征什么？`,opts:[`悠闲自在的渔翁生活`,`诗人自己虽孤独身处逆境，仍坚守高洁品格`,`战乱中流离失所的百姓`,`对江南水乡的美好回忆`],ans:1,exp:`"孤舟蓑笠翁"代表诗人自己，虽孤独身处逆境，仍坚守高洁品格，不向环境屈服。`},
+{r:`初唐`,q:`王勃被称为"唐诗喷薄的朝阳"，这暗示了什么？`,opts:[`王勃是唐代最长寿的诗人`,`王勃才华横溢，诗歌充满生机，为盛唐奠定基础，但也英年早逝`,`王勃的诗歌如阳光般温暖`,`王勃是初唐最多产的诗人`],ans:1,exp:`"唐诗喷薄的朝阳"暗示王勃才华横溢，其诗一扫浮靡之风，充满生机，但他英年早逝（故也称"流星"）。`},
+{r:`初唐`,q:`"建安风骨"的风格特点是什么？`,opts:[`汉代宫廷诗歌的华丽风格`,`东汉建安时期诗歌慷慨悲凉、语言刚健有力的风格特点`,`唐代边塞诗的豪迈风格`,`宋代婉约派的写作风格`],ans:1,exp:`"建安风骨"是东汉建安时期诗歌的风格特点，内容上慷慨悲凉，语言刚健有力。`},
+{r:`初唐`,q:`《送杜少府之任蜀州》中"无为在歧路，儿女共沾巾"表达了什么？`,opts:[`对战争的控诉`,`对朋友离别的悲伤哭泣`,`否定柔弱伤感，表现广阔胸襟与豁达精神`,`对蜀地风景的向往`],ans:2,exp:`此句劝朋友不要像普通儿女那样哭泣，体现广阔胸襟与豁达积极的精神，表现深厚友情。`},
+{r:`初唐`,q:`王勃《滕王阁序》属于哪种文体？`,opts:[`律诗`,`词`,`骈文`,`散文`],ans:2,exp:`《滕王阁序》属于骈文，大量使用对偶，以四字句和六字句为主，也叫"四六文"。`}
+],
+appreciation: [
+{poem:`海内存知己，\n天涯若比邻。`,source:`王勃《送杜少府之任蜀州》`,ans:`大意：只要四海之中有了解自己的人，即使远在天涯海角也好似亲密近邻。\n\n思想感情：①打破空间的距离感——"天涯"与"比邻"形成强烈对比，以空间之远反衬心灵之近，真正的友谊不受地理距离限制。②体现诗人广阔的胸襟与豁达积极的精神——否定了柔弱伤感的"儿女之态"，鼓励友人勇敢前行，超越一般离愁，洋溢着自信与豪迈。`},
+{poem:`无为在歧路，\n儿女共沾巾。`,source:`王勃《送杜少府之任蜀州》`,ans:`大意：不要在分手的岔路上因离别而感到悲伤，就像那些青年男女一样地流泪沾湿手帕。\n\n思想感情：①体现诗人对朋友的深厚情谊——感情真挚，才不忍以眼泪作别。②表现广阔的胸襟与豪迈气概——否定了柔弱、伤感的"儿女之态"，超越了一般的离别悲愁，显示出豁达乐观的精神风貌。`},
+{poem:`前不见古人，后不见来者。\n念天地之悠悠，独怆然而涕下。`,source:`陈子昂《登幽州台歌》`,ans:`大意：回头看不见过去贤明的君主，向前也看不见未来的明君。想到天地广阔无边与永恒长久，独自悲伤地流下眼泪。\n\n思想感情：运用对比（反衬）手法，以天地的永恒广阔反衬个人的孤独渺小，抒发了怀才不遇、生不逢时的悲愤之情，以及深沉的孤独感。`},
+{poem:`千山鸟飞绝，万径人踪灭。\n孤舟蓑笠翁，独钓寒江雪。`,source:`柳宗元《江雪》`,ans:`大意：所有山上，连一只飞鸟的影子都没有；所有路上，连一个人的脚印都找不到；江面上有一只小船，船上有个穿蓑衣戴斗笠的老翁，他独自一人在漫天飞雪的寒江上钓鱼。\n\n思想感情：运用夸张手法（"千山""万径"），营造出极度寂寥的氛围。诗人借寒江上独自钓鱼的老翁形象抒发被贬后的孤独寂寞，更表现了不向逆境低头、坚守高洁品格的精神。`},
+{poem:`旦辞爷娘去，暮宿黄河边，\n不闻爷娘唤女声，但闻黄河流水鸣溅溅。\n旦辞黄河去，暮至黑山头，\n不闻爷娘唤女声，但闻燕山胡骑鸣啾啾。`,source:`《木兰辞》`,ans:`大意：早晨告别父母出发，傍晚在黄河边宿营，听不到父母呼唤女儿的声音，只听到黄河水哗哗流动的声音。早晨离开黄河，傍晚到达黑山头，听不到父母呼唤女儿的声音，只听到燕山胡人战马的嘶鸣声。\n\n思想感情：运用对偶的修辞手法，两组平行句层层递进写出征途遥远。以"不闻爷娘唤女声"反复表达木兰对父母的深切思念，同时以环境声衬托战争的紧张气氛，体现木兰对家乡的依恋之情。`},
+{poem:`万里赴戎机，关山度若飞。\n朔气传金柝，寒光照铁衣。\n将军百战死，壮士十年归。`,source:`《木兰辞》`,ans:`大意：奔赴万里之外战场，翻越关山如同飞翔。北方寒风传送金属打击的声音，月光映照在铠甲上。将士们经历了无数次战斗，十年后有的牺牲有的归来。\n\n思想感情：运用对偶和互文的修辞手法，高度概括了木兰十年征战的艰苦历程。"朔气传金柝，寒光照铁衣"体现战地生活的艰辛；"将军百战死，壮士十年归"（互文）体现了战斗的激烈与时间的漫长，表现了木兰英勇顽强的精神。`},
+{poem:`木兰不用尚书郎，\n愿驰千里足，送儿还故乡。`,source:`《木兰辞》`,ans:`大意：木兰不想做尚书郎这个官职，只希望骑上千里马，赶快把她送回故乡父母身边。\n\n思想感情：尚书郎是在皇帝身边处理政务的重要官职。木兰建功受封却拒绝做官，只想回家与父母团聚，充分表现了木兰不慕名利、淳朴真诚、不贪功名的纯真品格，以及对父母的深厚情感。`},
+{poem:`城阙辅三秦，风烟望五津。\n与君离别意，同是宦游人。`,source:`王勃《送杜少府之任蜀州》`,ans:`大意：三秦之地护卫着都城长安，你将要奔赴的蜀地是一片风烟迷茫；我与你都充满了离别愁意，因为我们都是远离家乡、外出做官的人。\n\n思想感情：首联描绘出壮阔的送别场景，气势宏大；颔联"同是宦游人"拉近了两人的距离，以共同的处境互相慰藉，表现出诗人对友人深厚的同情与理解，同时流露出淡淡的离别之情，为后面的豪迈送别奠定感情基调。`}
+],
+open: [
+{t:`新谣`,q:`简述《传灯》这首歌的创作背景及其主题。`,ans:`《传灯》诞生于1982年8月《南洋商报》举办的第一届华语创作比赛颁奖典礼。词作者杜南发是该报文艺版主编，颁奖礼当晚他觉得应该有一首代表比赛的歌曲，作曲家张泛说"你写我就谱"，两人于是在短暂时间内完成了这首诗乐。《传灯》的主题：①歌颂华族文化源远流长的生命力；②呼唤华族子弟肩负起传承华族文化的使命与责任。`},
+{t:`新谣`,q:`新谣的风格特征是什么？为什么说新谣具有历史价值？`,ans:`新谣的风格特征：旋律清新自然、歌词简朴，真实反映新加坡本土情怀与日常生活。\n\n历史价值：新谣虽然创作意图相对单纯，但只要内容反映当时的现实，就能从中窥探到那个时代的华族社会面貌，因此具备一定的历史价值，能让后人了解当时新加坡华族社群的生活与情感。`},
+{t:`社会`,q:`简述新加坡华文报业的发展历程，重点说明两报合并的背景。`,ans:`1923年陈嘉庚创办《南洋商报》，1929年胡文虎创办《星洲日报》。两报立场相近，终极效忠对象都是新加坡。六七十年代英文迅速崛起，华文地位下滑，华文教育走向没落，两报竞争进入恶性循环。1974年政府实施《报章与印刷馆法令》，两报重组为公共公司。在政府主导下，最终达成合并，《南洋星洲联合早报》于1983年3月16日面世。`},
+{t:`社会`,q:`讲华语运动的宗旨是什么？它与新加坡华文媒体有何关联？`,ans:`讲华语运动于1979年由李光耀发起，宗旨有三：①改善华族新加坡人的语言环境；②促进华族社群之间的团结与理解；③营造利于实施母语政策的大环境。\n\n与华文媒体的关联：新加坡广播局在讲华语运动背景下严令禁止方言歌曲播映，促使华文歌曲转型发展。这些政策变化本身就是社会现实，华文歌曲的内容也反映了这一时期华族社群对语言与身份认同的关注。`},
+{t:`微型小说`,q:`微型小说有哪四大写作特点？请各举一例说明。`,ans:`微型小说的四大特点是"微、新、密、奇"。①微：篇幅短小，注重字句凝炼。如《丈夫支出帐本中的一页》全文仅七行字，却具有长篇小说的全部情节。②新：立意新颖，风格清新，主题可以多元。③密：结构紧凑，时间、场所、人物尽可能集中，如同微雕工艺品，在选材、剪裁和布局上下功夫。④奇：结尾精巧出人意料，如邱宝建的《永远的门》结尾发现"门"原来是画在墙上的，令人拍案叫绝。`},
+{t:`微型小说`,q:`为什么微型小说中的小说家被视为"不入流"？`,ans:`根据班固《汉书·艺文志·诸子略序》，先秦诸家被分为"九流十家"。前九流各有其官职来源，如儒家源于司徒之官，道家源于史家。小说家虽自成一家，但其内容是"街谈巷说，道听途说者之所造也"，来自民间街头巷尾的传言，被认为格调不高，因此被视为不入流，排在第十位（故称"九流十家"）。`},
+{t:`阅读小说`,q:`比较全知全能叙事观点与第一人称主角叙事观点的异同。`,ans:`相同点：两者都是小说常用的叙事观点，都能完整讲述故事。\n\n不同点：①全知全能叙事：以三人称叙述，叙事者洞悉一切，能随意进入任何人物的内心深处，弹性最高。②第一人称主角叙事：以"我"（主人翁）叙述，只能描述"我"所知道的内容，但其好处是与读者的生活经验非常接近，具有亲切感与真实感，令读者更有代入感。`},
+{t:`阅读小说`,q:`什么是铺垫手法？以《在柏林》为例说明其运用。`,ans:`铺垫是为了让后文的意思表达得更清楚、更形象，提前为主要写作对象做的描写。\n\n在《在柏林》中：①老妇人不断神秘地数着"一、二、三"，令人疑惑；②两个小姑娘因为听不懂而不加思索地嗤笑；③老兵狠狠扫了她们一眼，随即车厢平静——这些细节层层铺垫，为结尾老兵揭示妻子因失去三个儿子精神崩溃、即将送她去疯人院的震撼结局做好了充分准备。`},
+{t:`人物`,q:`什么是扁平人物？产生扁平人物的原因有哪些？`,ans:`扁平人物是单一性格的人物，又称类型人物。福斯特认为，扁平人物"是按照一个简单的意念或特质被创造出来的"，常常可以用一个句子加以描述概括。\n\n产生原因：①作品篇幅有限，难以对所有人物详加刻画；②文学作品中，次要人物往往是简单的概括；③西方国家戏剧作品中，常需要扁平人物来充当次要人物；④作家生活底子不厚，无法创造立体的圆形人物。`},
+{t:`蝴蝶`,q:`《永远的蝴蝶》中，"永远的蝴蝶"这个题目有什么象征意义？`,ans:`樱子就像一只美丽的蝴蝶，美丽而短暂：她帮主角去寄信，在过马路时被车撞死，生命就此停格在那一刻。然而她却"永远"地留在了主角的记忆与心中，成为永远无法释怀的遗憾与思念。蝴蝶的意象同时象征美好与易逝，既表现了爱情的美丽，也暗示了生命的脆弱。题目将短暂与永恒并置，深刻揭示了小说的主题。`},
+{t:`柏林`,q:`分析《在柏林》中两次"静"的不同含义。`,ans:`第一次"静"：老兵狠狠扫了两个小姑娘一眼后，车厢里随即平静了——这是一种表面上的平静，是小姑娘们被威慑住而停止嗤笑，是被迫的安静。\n\n第二次"静"：老兵说出真相后，车厢里"一片寂静，静得可怕"——这是整个车厢所有乘客内心被深深震撼后的沉默，是对战争残酷性的震惊与对受害者的怜悯，是从内心深处的震动，远比第一次的"静"更深沉、更令人窒息。`},
+{t:`生态`,q:`简述新加坡微型小说的四个发展时期及各时期的主要特点。`,ans:`①萌芽期（70年代）：篇幅较长的创作无法引起读者兴趣，微型小说因此有了发展空间。②发展期（80至87年）：两大报合并后文艺副刊缩小；中国文学团体来新交流，对新华文艺起积极推动作用。③转型期（87至90年）：创作无论量和质都有飞跃发展，许多写诗、散文的作者纷纷加入；1987年新加坡最后一所华校停办。④多元化发展期（90年后）：伤痕题材兴起；经济发展带来更大创作空间；海内外文化交流更频繁，微型小说走向多元。`},
+{t:`木兰`,q:`《木兰辞》中"互文"是什么修辞手法？请举两个例子说明。`,ans:`互文是古诗中常用的修辞手法，表现为诗中上下两句或一句话中的两个部分，看似各说一件事，其实是互相呼应、互相补充，说的是同一件事。\n\n例1："将军百战死，壮士十年归"——并非将军都战死、壮士都归来，而是将士们经历百战，有的牺牲，有的十年后归来。\n\n例2："秦时明月汉时关"（王昌龄《出塞》）——并非秦代只有明月、汉代只有关，而是那亘古以来的明月照着历经秦汉的边关。`},
+{t:`初唐`,q:`初唐四杰对唐代诗歌发展有什么贡献？`,ans:`初唐四杰是王勃、杨炯、卢照邻、骆宾王。他们都是官小而名大、年少而才高的诗人，贡献主要有：①在题材上，把诗歌从宫廷移到民间，从宫廷模拟移到了江山和塞漠，使诗歌题材大为扩大。②在风格上，一扫前代浮靡之风，变得刚健有力，充满生机与活力。③为盛唐诗歌的繁荣奠定了基础，承前启后，具有重要的历史地位。`},
+{t:`初唐`,q:`分析"海内存知己，天涯若比邻"这两句诗的思想感情。`,ans:`大意：只要四海之中有了解自己的人，即使远在天涯海角也好似亲密近邻。\n\n思想感情：①打破空间的距离感："天涯"与"比邻"形成强烈对比，以空间之远反衬心灵之近，说明真正的友谊不受地理距离的限制。②体现广阔胸襟与豪迈气概：表现了诗人超越一般离愁的豁达精神，对友谊充满自信，鼓励友人勇敢前行，洋溢着积极进取的精神。`}
+]
+};
+
+let quiz=null, mcqAns={}, submitted=false;
+
+document.querySelectorAll('.ftag').forEach(function(b){
+  b.addEventListener('click', function(){
+    var t = b.dataset.t;
+    if(t==='all'){
+      document.querySelectorAll('.ftag').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    } else {
+      document.querySelector('[data-t="all"]').classList.remove('on');
+      b.classList.toggle('on');
+      if(!document.querySelectorAll('.ftag.on').length)
+        document.querySelector('[data-t="all"]').classList.add('on');
+    }
+  });
+});
+
+function getFilter(){
+  var on=[].slice.call(document.querySelectorAll('.ftag.on')).map(function(b){return b.dataset.t;});
+  return on.indexOf('all')>=0 ? null : on;
+}
+
+function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+
+function tagToKey(label){
+  var m={新谣:'xinrao',社会:'social',微型小说:'micro',阅读小说:'readnovel',人物:'character',蝴蝶:'butterfly',柏林:'berlin',生态:'ecology',木兰:'mulan',初唐:'tang'};
+  return m[label]||label;
+}
+
+function gen(){
+  submitted=false; mcqAns={};
+  document.getElementById('res-card').classList.remove('show');
+  document.getElementById('subbar').style.display='none';
+  ['c-mcq','c-ap','c-qa','c-tot'].forEach(function(id){document.getElementById(id).textContent='—';});
+
+  var filter=getFilter();
+  var pool=BANK.mcq.filter(function(q){return !filter||filter.indexOf(tagToKey(q.r))>=0;});
+  if(pool.length<10) pool=BANK.mcq;
+  var selected=pickBalanced(pool,10);
+
+  var apPool=BANK.appreciation;
+  if(filter && filter.indexOf('mulan')<0 && filter.indexOf('tang')<0) apPool=BANK.appreciation;
+  var ap=rnd(apPool);
+
+  var oPool=BANK.open.filter(function(q){return !filter||filter.indexOf(tagToKey(q.t))>=0;});
+  if(oPool.length<3) oPool=BANK.open;
+  var openQs=pickOpenDiff(oPool,3);
+
+  quiz={mcq:selected,ap:ap,openQs:openQs};
+  render();
+}
+
+function pickBalanced(pool,n){
+  var shuffled=shuffle(pool);
+  var target=shuffle([0,0,1,1,2,2,3,3,0,2]);
+  var result=[];
+  var used={};
+  for(var i=0;i<n;i++){
+    var wantAns=target[i];
+    var found=false;
+    for(var j=0;j<shuffled.length;j++){
+      if(used[j]) continue;
+      if(shuffled[j].ans===wantAns){result.push(Object.assign({},shuffled[j]));used[j]=true;found=true;break;}
+    }
+    if(!found){
+      for(var j=0;j<shuffled.length;j++){
+        if(used[j]) continue;
+        result.push(rotateAnswer(shuffled[j],wantAns));
+        used[j]=true;break;
+      }
+    }
+  }
+  return result;
+}
+
+function rotateAnswer(q,targetAns){
+  var opts=q.opts.slice();
+  var cur=q.ans;
+  if(cur===targetAns) return Object.assign({},q);
+  var tmp=opts[cur]; opts[cur]=opts[targetAns]; opts[targetAns]=tmp;
+  return Object.assign({},q,{opts:opts,ans:targetAns});
+}
+
+function pickOpenDiff(pool,n){
+  var shuffled=shuffle(pool);
+  var result=[]; var usedTopics={};
+  for(var i=0;i<shuffled.length;i++){
+    if(!usedTopics[shuffled[i].t]){result.push(shuffled[i]);usedTopics[shuffled[i].t]=true;if(result.length===n)break;}
+  }
+  if(result.length<n){
+    for(var i=0;i<shuffled.length;i++){
+      if(result.indexOf(shuffled[i])<0){result.push(shuffled[i]);if(result.length===n)break;}
+    }
+  }
+  return result;
+}
+
+function render(){
+  var mcq=quiz.mcq, ap=quiz.ap, openQs=quiz.openQs;
+  var h='';
+  h+='<div class="paper"><div class="sec-hdr"><span class="sec-n">第一节</span><span class="sec-t">选择题（每题1分，共10题）</span><span class="sec-s">10分</span></div>';
+  for(var i=0;i<mcq.length;i++){
+    var q=mcq[i];
+    h+='<div class="qi" id="qi'+i+'">';
+    h+='<div class="qtext"><span class="qn">'+(i+1)+'.</span>'+q.q+'<span class="qtag">'+q.r+'</span></div>';
+    h+='<div class="aopts">';
+    for(var j=0;j<q.opts.length;j++){
+      h+='<button class="abtn" id="a'+i+'-'+j+'" data-qi="'+i+'" data-oi="'+j+'"><span class="al">'+('ABCD'[j])+'</span><span>'+q.opts[j]+'</span></button>';
+    }
+    h+='</div><div class="exp" id="ex'+i+'">'+q.exp+'</div></div>';
+  }
+  h+='</div>';
+
+  h+='<div class="paper"><div class="sec-hdr"><span class="sec-n">第二节</span><span class="sec-t">赏析题</span><span class="sec-s">8分</span></div>';
+  h+='<div class="qi"><div class="qtext"><span class="qn">11.</span>写出以下诗句的大意以及所表达的思想感情。</div>';
+  h+='<div class="poem-box">'+ap.poem.replace(/\n/g,'<br>')+'<br><small style="font-size:12px;color:var(--muted)">——'+ap.source+'</small></div>';
+  h+='<textarea class="ta" id="ap-ta" placeholder="大意：……&#10;&#10;思想感情：……"></textarea>';
+  h+='<button class="show-ans-btn" data-ref="ap-ref">查看参考答案</button>';
+  h+='<div class="ref-ans" id="ap-ref">'+ap.ans.replace(/\n/g,'<br>')+'</div></div></div>';
+
+  h+='<div class="paper"><div class="sec-hdr"><span class="sec-n">第三节</span><span class="sec-t">问答题（共3题，每题4分）</span><span class="sec-s">12分</span></div>';
+  for(var i=0;i<openQs.length;i++){
+    var q=openQs[i];
+    h+='<div class="qi"><div class="qtext"><span class="qn">'+(i+12)+'.</span>'+q.q+'<span class="qtag">'+q.t+'</span></div>';
+    h+='<textarea class="ta" id="oq-ta-'+i+'" placeholder="请在此输入答案……"></textarea>';
+    h+='<button class="show-ans-btn" data-ref="oq-ref-'+i+'">查看参考答案</button>';
+    h+='<div class="ref-ans" id="oq-ref-'+i+'">'+q.ans.replace(/\n/g,'<br>')+'</div></div>';
+  }
+  h+='</div>';
+
+  document.getElementById('quiz').innerHTML=h;
+  document.getElementById('subbar').style.display='flex';
+}
+
+document.addEventListener('click', function(e){
+  var abtn=e.target.closest('.abtn');
+  if(abtn && abtn.dataset.qi!==undefined){
+    var qi=parseInt(abtn.dataset.qi), oi=parseInt(abtn.dataset.oi);
+    if(submitted||mcqAns[qi]!==undefined) return;
+    mcqAns[qi]=oi;
+    var cor=quiz.mcq[qi].ans;
+    for(var j=0;j<4;j++){
+      var b=document.getElementById('a'+qi+'-'+j);
+      b.disabled=true;
+      if(j===cor) b.classList.add(oi===cor?'ok':'sh');
+      if(j===oi&&oi!==cor) b.classList.add('ng');
+    }
+    document.getElementById('ex'+qi).classList.add('show');
+    return;
+  }
+  var sab=e.target.closest('.show-ans-btn');
+  if(sab && sab.dataset.ref){
+    var el=document.getElementById(sab.dataset.ref);
+    if(el) el.classList.toggle('show');
+    return;
+  }
+  if(e.target.closest('#gbtn')){ gen(); return; }
+  if(e.target.closest('#subbtn')){ submitQuiz(); return; }
+});
+
+function submitQuiz(){
+  if(!quiz) return;
+  submitted=true;
+  for(var i=0;i<quiz.mcq.length;i++){
+    if(mcqAns[i]===undefined){
+      for(var j=0;j<4;j++){
+        var b=document.getElementById('a'+i+'-'+j);
+        b.disabled=true;
+        if(j===quiz.mcq[i].ans) b.classList.add('sh');
+      }
+      document.getElementById('ex'+i).classList.add('show');
+    }
+  }
+  var score=0;
+  for(var i=0;i<quiz.mcq.length;i++){if(mcqAns[i]===quiz.mcq[i].ans)score++;}
+  document.getElementById('c-mcq').textContent=score;
+  document.getElementById('c-ap').textContent='自评';
+  document.getElementById('c-qa').textContent='自评';
+  document.getElementById('c-tot').textContent=score+'+自评';
+  document.getElementById('res-tot').textContent=score;
+  document.getElementById('r-mcq').textContent=score;
+  document.getElementById('r-ap').textContent='自评';
+  document.getElementById('r-qa').textContent='自评';
+  document.getElementById('res-card').classList.add('show');
+  document.getElementById('res-card').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('subbtn').disabled=true;
+  document.getElementById('subbtn').textContent='已提交';
+}
+</script>
+</body>
+</html>
