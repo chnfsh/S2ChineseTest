@@ -2,2343 +2,1350 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>字字珠玑 · 华文听写练习</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华文文学 · 学习中心</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
 :root{
-  --paper: #F3EEDF;
-  --paper-deep: #ECE4CF;
-  --ink: #2A241F;
-  --ink-soft: #5B5048;
-  --seal: #B23A2E;
-  --seal-deep: #8E2C22;
-  --bamboo: #5C7A5E;
-  --bamboo-deep: #44604A;
-  --gold: #B8893F;
-  --grid-line: #C8463A;
-  --card-line: #D8CDB0;
-  --shadow: 0 2px 10px rgba(42,36,31,0.10), 0 1px 2px rgba(42,36,31,0.08);
-  --shadow-lg: 0 8px 28px rgba(42,36,31,0.18), 0 2px 6px rgba(42,36,31,0.10);
-  --radius: 14px;
-  --serif: "Songti SC","Noto Serif SC","STSong","SimSun",serif;
-  --sans: "PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  --ink:#1a1410;--paper:#faf7f2;--warm:#f3ede3;--deep:#0e0c0a;
+  --red:#c0392b;--red2:#e74c3c;--gold:#b8860b;--gold2:#d4a017;--gold-light:#fdf6e3;
+  --border:#d4c9b5;--muted:#7a6e62;--ok:#2d6a4f;--ok-bg:#e8f5f0;
+  --shadow:0 2px 16px rgba(26,20,16,.10);--shadow2:0 8px 32px rgba(26,20,16,.18);
 }
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  background:
-    radial-gradient(ellipse at top left, rgba(184,137,63,0.07), transparent 50%),
-    radial-gradient(ellipse at bottom right, rgba(92,122,94,0.06), transparent 50%),
-    var(--paper);
-  background-attachment:fixed;
-  color:var(--ink);
-  font-family:var(--sans);
-  min-height:100vh;
-  -webkit-tap-highlight-color: transparent;
-}
-.paper-texture{
-  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.5;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0px, transparent 1px, transparent 2px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.012) 0px, transparent 1px, transparent 2px);
-}
-#app{position:relative; z-index:1; max-width:760px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh}
 
-/* ---------- Header ---------- */
-header.topbar{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 18px 12px 22px;
-  position:sticky; top:0; z-index:50;
-  background:linear-gradient(180deg, var(--paper) 70%, rgba(243,238,223,0));
+/* ── SCREENS ── */
+.screen{display:none !important;min-height:100vh}
+.screen.active{display:block !important}
+#home.active{display:flex !important}
+
+/* ══════════════════════════════════════
+   HOME
+══════════════════════════════════════ */
+#home{
+  background:var(--deep);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;padding:40px 24px;position:relative;overflow:hidden;
 }
-.brand{display:flex; align-items:center; gap:10px;}
-.brand .seal-mark{
-  width:38px; height:38px; border-radius:8px;
-  background:var(--seal); color:#fff; display:flex; align-items:center; justify-content:center;
-  font-family:var(--serif); font-size:20px; font-weight:700; box-shadow:var(--shadow);
-  transform:rotate(-3deg);
+#home::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 30%, rgba(184,134,11,.13) 0%, transparent 70%),
+             radial-gradient(ellipse 60% 80% at 80% 80%, rgba(192,57,43,.08) 0%, transparent 60%);
+  pointer-events:none;
+}
+.home-seal{
+  width:72px;height:72px;border:2px solid var(--gold2);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Serif SC',serif;font-size:18px;color:var(--gold2);
+  line-height:1.2;text-align:center;letter-spacing:2px;margin-bottom:28px;
   flex-shrink:0;
 }
-.brand h1{font-family:var(--serif); font-size:19px; margin:0; letter-spacing:1px; line-height:1.2;}
-.brand .sub{font-size:11px; color:var(--ink-soft); letter-spacing:1px;}
-.countdown{
-  text-align:right; font-size:12px; color:var(--ink-soft); line-height:1.5;
+.home-title{
+  font-family:'Noto Serif SC',serif;font-size:clamp(26px,5vw,42px);
+  font-weight:300;color:#f0e8d8;letter-spacing:6px;text-align:center;margin-bottom:8px;
 }
-.countdown b{font-family:var(--serif); font-size:20px; color:var(--seal); display:block;}
-.icon-btn{
-  background:none; border:1.5px solid var(--card-line); border-radius:10px;
-  width:38px; height:38px; display:flex; align-items:center; justify-content:center;
-  cursor:pointer; color:var(--ink-soft); font-size:17px; flex-shrink:0;
+.home-sub{
+  font-size:13px;color:rgba(240,232,216,.45);letter-spacing:4px;
+  text-align:center;margin-bottom:56px;
 }
-.icon-btn:active{background:var(--paper-deep);}
+.home-cards{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:680px;
+}
+.home-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(240,232,216,.12);
+  border-radius:16px;padding:36px 28px;cursor:pointer;
+  transition:all .25s;text-align:center;position:relative;overflow:hidden;
+}
+.home-card::after{
+  content:'';position:absolute;inset:0;border-radius:16px;
+  background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 60%);
+  pointer-events:none;
+}
+.home-card:hover{
+  background:rgba(255,255,255,.09);border-color:rgba(240,232,216,.3);
+  transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4);
+}
+.home-card-icon{font-size:44px;margin-bottom:16px;display:block}
+.home-card-title{
+  font-family:'Noto Serif SC',serif;font-size:20px;color:#f0e8d8;
+  letter-spacing:3px;margin-bottom:10px;
+}
+.home-card-desc{font-size:12px;color:rgba(240,232,216,.5);letter-spacing:1px;line-height:1.8}
+.home-card.card-quiz .home-card-icon{filter:drop-shadow(0 0 12px rgba(192,57,43,.6))}
+.home-card.card-poems .home-card-icon{filter:drop-shadow(0 0 12px rgba(184,134,11,.6))}
+.home-ver{
+  position:absolute;bottom:20px;font-size:11px;
+  color:rgba(240,232,216,.2);letter-spacing:2px;
+}
 
-main{flex:1; padding:0 18px 100px 18px;}
+/* ══════════════════════════════════════
+   SHARED NAV BAR
+══════════════════════════════════════ */
+.topbar{
+  background:var(--ink);color:var(--paper);position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 16px rgba(0,0,0,.2);
+}
+.topbar-in{
+  max-width:960px;margin:0 auto;padding:12px 20px;
+  display:flex;align-items:center;gap:14px;
+}
+.topbar-back{
+  background:none;border:1px solid rgba(240,232,216,.2);color:rgba(240,232,216,.7);
+  border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;
+  font-family:'Noto Sans SC',sans-serif;letter-spacing:1px;transition:all .15s;white-space:nowrap;
+}
+.topbar-back:hover{border-color:rgba(240,232,216,.5);color:var(--paper)}
+.topbar-seal{
+  width:36px;height:36px;border:1.5px solid var(--red);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Noto Serif SC',serif;font-size:10px;color:var(--red);line-height:1.2;text-align:center;flex-shrink:0;
+}
+.topbar-title{font-family:'Noto Serif SC',serif;font-size:15px;font-weight:700;letter-spacing:2px}
+.topbar-sub{font-size:11px;color:#aaa;letter-spacing:1px;margin-top:1px}
 
-/* ---------- Cards / Sections ---------- */
-.card{
-  background:#FBF8F0;
-  border:1px solid var(--card-line);
-  border-radius:var(--radius);
+/* ══════════════════════════════════════
+   POEMS SCREEN
+══════════════════════════════════════ */
+#poems-screen{background:var(--paper)}
+.poems-main{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+
+/* search */
+.poems-search-row{
+  display:flex;gap:10px;margin-bottom:24px;align-items:center;flex-wrap:wrap;
+}
+.poems-search{
+  flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:8px;
+  padding:10px 14px;font-size:14px;font-family:'Noto Sans SC',sans-serif;
+  background:white;color:var(--ink);transition:border-color .15s;
+}
+.poems-search:focus{outline:none;border-color:var(--gold)}
+.poems-count{font-size:12px;color:var(--muted);white-space:nowrap;letter-spacing:1px}
+
+/* grade tabs */
+.grade-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.gtab{
+  border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;
+  font-size:12px;cursor:pointer;background:var(--paper);color:var(--muted);
+  transition:all .15s;font-family:'Noto Sans SC',sans-serif;white-space:nowrap;
+}
+.gtab:hover{border-color:var(--gold);color:var(--gold)}
+.gtab.on{background:var(--ink);border-color:var(--ink);color:white}
+
+/* poem grid */
+.poems-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;
+}
+.poem-card{
+  background:white;border:1px solid var(--border);border-radius:10px;
+  padding:14px 16px;cursor:pointer;transition:all .2s;
+  display:flex;flex-direction:column;gap:4px;
+}
+.poem-card:hover{
+  border-color:var(--gold);box-shadow:var(--shadow);transform:translateY(-2px);
+}
+.poem-card-title{
+  font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600;color:var(--ink);
+}
+.poem-card-author{font-size:12px;color:var(--muted)}
+.poem-card-grade{
+  font-size:10px;color:var(--gold);border:1px solid var(--gold);
+  display:inline-block;padding:1px 7px;border-radius:10px;margin-top:2px;align-self:flex-start;
+}
+.poems-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+
+/* ══════════════════════════════════════
+   POEM DETAIL
+══════════════════════════════════════ */
+#poem-detail{background:var(--paper)}
+.detail-main{max-width:680px;margin:0 auto;padding:32px 24px 80px}
+.detail-header{text-align:center;margin-bottom:32px}
+.detail-title{
+  font-family:'Noto Serif SC',serif;font-size:clamp(22px,4vw,32px);
+  font-weight:700;color:var(--ink);letter-spacing:3px;margin-bottom:8px;
+}
+.detail-meta{font-size:13px;color:var(--muted);letter-spacing:2px;margin-bottom:6px}
+.detail-grade{
+  display:inline-block;font-size:11px;color:var(--gold);
+  border:1px solid var(--gold);padding:2px 12px;border-radius:20px;
+}
+.detail-divider{
+  width:60px;height:1px;background:var(--border);margin:20px auto;
+}
+
+/* poem text */
+.poem-text{
+  background:white;border:1px solid var(--border);border-radius:12px;
+  padding:28px 32px;margin-bottom:20px;
+  font-family:'Noto Serif SC',serif;font-size:clamp(16px,2.5vw,19px);
+  line-height:2.4;letter-spacing:2px;text-align:center;
   box-shadow:var(--shadow);
-  padding:18px 20px;
-  margin-bottom:16px;
-  position:relative;
-  overflow:hidden;
 }
-.card::before{
-  content:""; position:absolute; left:0; top:0; bottom:0; width:5px;
-  background:repeating-linear-gradient(180deg, var(--seal) 0 7px, transparent 7px 14px);
-  opacity:0.55;
+.poem-line{display:block;margin-bottom:2px}
+.poem-para{margin-bottom:12px}
+
+/* read button */
+.read-btn{
+  width:100%;padding:14px;background:var(--ink);color:var(--paper);
+  border:none;border-radius:10px;font-size:15px;
+  font-family:'Noto Serif SC',serif;letter-spacing:4px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:all .2s;margin-bottom:16px;
 }
-.card-inner{margin-left:6px;}
-h2.section-title{
-  font-family:var(--serif); font-size:16px; margin:26px 0 10px 2px; color:var(--ink);
-  display:flex; align-items:center; gap:8px;
+.read-btn:hover{background:#333}
+.read-btn.reading{background:var(--red)}
+.read-btn .icon{font-size:18px}
+
+/* reading indicator */
+.reading-bar{
+  display:none;background:var(--gold-light);border:1px solid var(--border);
+  border-radius:8px;padding:12px 16px;margin-bottom:16px;
+  font-size:13px;color:var(--gold);text-align:center;letter-spacing:1px;
 }
-h2.section-title .tag{
-  font-size:10.5px; background:var(--bamboo); color:#fff; padding:2px 8px; border-radius:20px; font-family:var(--sans); font-weight:600; letter-spacing:1px;
+.reading-bar.show{display:block}
+.reading-line{
+  background:rgba(184,134,11,.15);border-radius:4px;
+  padding:2px 6px;transition:background .3s;
+}
+.reading-line.active{background:rgba(184,134,11,.4);color:var(--ink)}
+
+/* note */
+.poem-note{
+  background:var(--gold-light);border-left:3px solid var(--gold);
+  border-radius:0 8px 8px 0;padding:14px 18px;
+  font-size:13px;color:var(--ink);line-height:1.9;margin-bottom:16px;
+}
+.poem-note-label{
+  font-size:11px;color:var(--gold);letter-spacing:2px;margin-bottom:6px;font-weight:500;
 }
 
-/* ---------- Hero / Dashboard ---------- */
-.hero{
-  text-align:center; padding:22px 10px 8px 10px;
+/* nav between poems */
+.poem-nav{display:flex;gap:10px;margin-top:8px}
+.poem-nav-btn{
+  flex:1;padding:11px;background:white;border:1px solid var(--border);
+  border-radius:8px;font-size:13px;font-family:'Noto Sans SC',sans-serif;
+  cursor:pointer;transition:all .15s;color:var(--muted);text-align:center;
 }
-.hero .big-num{font-family:var(--serif); font-size:54px; color:var(--seal); line-height:1; letter-spacing:2px;}
-.hero .big-label{font-size:13px; color:var(--ink-soft); margin-top:4px;}
-.stat-row{display:flex; gap:10px; margin-top:18px;}
-.stat-box{
-  flex:1; background:#FBF8F0; border:1px solid var(--card-line); border-radius:12px;
-  padding:12px 6px; text-align:center;
-}
-.stat-box .n{font-family:var(--serif); font-size:22px; color:var(--ink);}
-.stat-box .l{font-size:11px; color:var(--ink-soft); margin-top:2px;}
-.stat-box.due .n{color:var(--seal);}
-.stat-box.mastered .n{color:var(--bamboo-deep);}
+.poem-nav-btn:hover{border-color:var(--ink);color:var(--ink)}
+.poem-nav-btn:disabled{opacity:.35;cursor:not-allowed}
 
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  font-family:var(--sans); font-weight:600; font-size:15px;
-  border-radius:11px; border:none; cursor:pointer; padding:14px 20px;
-  transition:transform .08s ease;
-}
-.btn:active{transform:scale(0.97);}
-.btn-primary{background:var(--seal); color:#fff; box-shadow:var(--shadow);}
-.btn-secondary{background:var(--bamboo); color:#fff;}
-.btn-outline{background:transparent; color:var(--ink); border:1.5px solid var(--card-line);}
-.btn-ghost{background:var(--paper-deep); color:var(--ink-soft);}
-.btn-block{width:100%;}
-.btn-row{display:flex; gap:10px; margin-top:14px;}
-.btn[disabled]{opacity:0.4; cursor:not-allowed;}
-
-.mode-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px;}
-.mode-card{
-  background:#FBF8F0; border:1.5px solid var(--card-line); border-radius:12px;
-  padding:14px 12px; cursor:pointer; text-align:left;
-}
-.mode-card.active{border-color:var(--seal); background:#FCF1EC;}
-.mode-card .mi{font-size:22px;}
-.mode-card .mt{font-family:var(--serif); font-size:14.5px; margin-top:6px;}
-.mode-card .md{font-size:11px; color:var(--ink-soft); margin-top:2px; line-height:1.4;}
-
-/* ---------- Lesson picker ---------- */
-.lesson-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(64px,1fr)); gap:8px; margin-top:10px;}
-.lesson-chip{
-  border:1.5px solid var(--card-line); background:#FBF8F0; border-radius:10px;
-  padding:8px 4px; text-align:center; cursor:pointer; font-size:12.5px; position:relative;
-}
-.lesson-chip .num{font-family:var(--serif); font-size:16px; display:block;}
-.lesson-chip.sel{border-color:var(--bamboo); background:#EFF4EE; color:var(--bamboo-deep);}
-.lesson-chip .dot{position:absolute; top:4px; right:4px; width:7px; height:7px; border-radius:50%; background:var(--seal); display:none;}
-.lesson-chip.has-due .dot{display:block;}
-.grade-tabs{display:flex; gap:8px; margin-top:4px;}
-.grade-tab{
-  flex:1; text-align:center; padding:9px; border-radius:10px; cursor:pointer;
-  border:1.5px solid var(--card-line); font-weight:600; font-size:13.5px; color:var(--ink-soft);
-}
-.grade-tab.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
-
-/* ---------- Practice screen ---------- */
-.practice-wrap{display:flex; flex-direction:column; min-height:calc(100vh - 70px);}
-.progress-bar-track{height:6px; background:var(--paper-deep); border-radius:4px; overflow:hidden; margin:6px 0 18px 0;}
-.progress-bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--seal)); border-radius:4px; transition:width .3s ease;}
-.prompt-card{
-  background:#FBF8F0; border:1px solid var(--card-line); border-radius:var(--radius);
-  box-shadow:var(--shadow); padding:20px; text-align:center; position:relative;
-}
-.lesson-tag{font-size:11.5px; color:var(--ink-soft); letter-spacing:0.5px;}
-.lesson-tag b{color:var(--seal);}
-.pinyin-display{font-family:var(--sans); font-size:24px; letter-spacing:2px; color:var(--ink); margin:10px 0 2px 0; font-weight:600;}
-.context-sentence{font-size:17px; line-height:2; margin:14px 4px 4px 4px; color:var(--ink);}
-.blank-marker{
-  display:inline-block; min-width:2.2em; border-bottom:2px solid var(--seal); margin:0 2px; color:transparent;
-}
-.context-sentence.revealed .blank-marker{color:var(--seal); border-bottom-style:dashed; font-weight:700;}
-.speak-btn{
-  margin-top:14px; background:var(--gold); color:#fff; border:none; border-radius:30px;
-  padding:9px 20px; font-size:13.5px; font-weight:600; cursor:pointer; display:inline-flex; gap:6px; align-items:center;
-}
-.speak-btn:active{transform:scale(0.96);}
-.hint-text{font-size:12px; color:var(--ink-soft); margin-top:10px;}
-
-/* canvas writing area */
-.write-zone{margin-top:18px; position:relative;}
-.grid-cells{display:flex; justify-content:center; gap:8px; flex-wrap:wrap;}
-.cell{position:relative; flex-shrink:0;}
-.cell canvas{position:absolute; inset:0; width:100%; height:100%; touch-action:none;}
-.cell .guide{background:#fff; border:1.5px solid var(--grid-line); border-radius:6px;}
-.lined-area{position:relative; width:100%; max-width:520px; height:170px; margin:0 auto; background:#fff; border:1.5px solid var(--card-line); border-radius:8px; overflow:hidden;}
-.lined-area canvas{position:absolute; inset:0; width:100%; height:100%; touch-action:none; background:transparent;}
-
-.write-tools{display:flex; justify-content:center; gap:10px; margin-top:12px;}
-.tool-btn{
-  background:var(--paper-deep); border:none; border-radius:9px; padding:8px 14px; font-size:12.5px;
-  color:var(--ink-soft); cursor:pointer; font-weight:600;
-}
-
-.answer-reveal{
-  margin-top:18px; padding:16px; background:#FCF7EC; border:1px dashed var(--gold); border-radius:12px;
-  display:none;
-}
-.answer-reveal.show{display:block;}
-.answer-hanzi{font-family:var(--serif); font-size:30px; letter-spacing:4px; color:var(--seal-deep);}
-.answer-pinyin{font-size:13px; color:var(--ink-soft); margin-top:4px;}
-.answer-full{font-size:16px; line-height:1.8; margin-top:6px;}
-.answer-full .focusword{color:var(--seal); font-weight:700; text-decoration:underline; text-decoration-style:wavy;}
-
-.self-mark-row{display:flex; gap:10px; margin-top:16px;}
-.mark-btn{
-  flex:1; padding:15px; border-radius:12px; border:none; font-size:15px; font-weight:700; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; gap:8px;
-}
-.mark-wrong{background:#F4E2DE; color:var(--seal-deep);}
-.mark-right{background:#E4ECE2; color:var(--bamboo-deep);}
-.mark-btn:active{transform:scale(0.97);}
-
-/* MCQ */
-.mcq-options{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:18px;}
-.mcq-opt{
-  padding:16px 8px; border-radius:12px; border:1.5px solid var(--card-line); background:#fff;
-  font-family:var(--serif); font-size:24px; cursor:pointer;
-}
-.mcq-opt.correct{border-color:var(--bamboo); background:#E4ECE2; color:var(--bamboo-deep);}
-.mcq-opt.wrong{border-color:var(--seal); background:#F4E2DE; color:var(--seal-deep);}
-
-/* seal stamp animation */
-.stamp-pop{
-  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0); z-index:200;
-  font-family:var(--serif); font-size:90px; color:var(--seal); border:6px solid var(--seal); border-radius:16px;
-  padding:6px 18px; pointer-events:none; opacity:0; transform:translate(-50%,-50%) rotate(-12deg) scale(0.4);
-}
-.stamp-pop.go{animation:stampGo .55s ease-out forwards;}
-@keyframes stampGo{
-  0%{opacity:0; transform:translate(-50%,-50%) rotate(-12deg) scale(0.3);}
-  55%{opacity:0.95; transform:translate(-50%,-50%) rotate(-12deg) scale(1.08);}
-  75%{opacity:0.95; transform:translate(-50%,-50%) rotate(-12deg) scale(0.96);}
-  100%{opacity:0; transform:translate(-50%,-50%) rotate(-12deg) scale(1);}
-}
-
-/* bottom nav */
-nav.bottombar{
-  position:fixed; bottom:0; left:0; right:0; z-index:60;
-  background:#FBF8F0; border-top:1px solid var(--card-line);
-  display:flex; max-width:760px; margin:0 auto;
-  padding:6px 6px calc(6px + env(safe-area-inset-bottom)) 6px;
-}
-.nav-btn{
-  flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 0;
-  background:none; border:none; color:var(--ink-soft); font-size:10.5px; cursor:pointer; border-radius:10px;
-}
-.nav-btn .ni{font-size:19px;}
-.nav-btn.active{color:var(--seal);}
-
-/* stats */
-.error-list{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
-.error-item{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 12px; background:#FBF8F0; border:1px solid var(--card-line); border-radius:10px;
-}
-.error-item .w{font-family:var(--serif); font-size:17px;}
-.error-item .meta{font-size:11px; color:var(--ink-soft);}
-.error-item .lapses{
-  background:var(--seal); color:#fff; font-size:11px; padding:2px 8px; border-radius:12px; font-weight:700;
-}
-.bar-row{display:flex; align-items:center; gap:8px; margin:6px 0;}
-.bar-row .lbl{width:74px; font-size:11.5px; color:var(--ink-soft); flex-shrink:0;}
-.bar-track{flex:1; height:10px; background:var(--paper-deep); border-radius:6px; overflow:hidden;}
-.bar-fill{height:100%; background:linear-gradient(90deg,var(--bamboo),var(--bamboo-deep));}
-.bar-pct{width:34px; font-size:11px; text-align:right; color:var(--ink-soft); flex-shrink:0;}
-
-.empty-state{text-align:center; padding:40px 16px; color:var(--ink-soft);}
-.empty-state .ei{font-size:38px; margin-bottom:8px;}
-
-textarea.tip-edit{
-  width:100%; min-height:70px; border:1px solid var(--card-line); border-radius:8px; padding:10px;
-  font-family:var(--sans); font-size:13px; resize:vertical; background:#fff;
-}
-
-.tag-row{display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;}
-.pill{font-size:11.5px; background:var(--paper-deep); color:var(--ink-soft); padding:4px 10px; border-radius:20px;}
-
-.modal-bg{
-  position:fixed; inset:0; background:rgba(42,36,31,0.45); z-index:100; display:none;
-  align-items:flex-end; justify-content:center;
-}
-.modal-bg.show{display:flex;}
-.modal-sheet{
-  background:var(--paper); width:100%; max-width:760px; border-radius:20px 20px 0 0;
-  padding:20px 20px calc(20px + env(safe-area-inset-bottom)) 20px; max-height:85vh; overflow-y:auto;
-  box-shadow:0 -8px 30px rgba(0,0,0,0.2);
-}
-.modal-handle{width:40px; height:4px; background:var(--card-line); border-radius:3px; margin:0 auto 14px auto;}
-
-.screen{display:none;}
-.screen.active{display:block;}
-
-@media (max-width:380px){
-  .hero .big-num{font-size:44px;}
+/* ══════════════════════════════════════
+   QUIZ SCREEN (ported from existing)
+══════════════════════════════════════ */
+#quiz-screen{background:var(--paper)}
+.quiz-main{max-width:900px;margin:0 auto;padding:28px 20px 60px}
+.chips{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.chip{background:white;border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
+.chip .v{font-family:'Noto Serif SC',serif;font-size:20px;font-weight:700;color:var(--red);line-height:1}
+.chip .l{color:var(--muted);font-size:12px}
+.gen-box{background:white;border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:28px;box-shadow:var(--shadow)}
+.gen-box h2{font-family:'Noto Serif SC',serif;font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.gen-box h2::before{content:'';display:inline-block;width:3px;height:16px;background:var(--red);border-radius:2px}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.ftag{border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;cursor:pointer;background:var(--paper);color:var(--muted);transition:all .15s;font-family:'Noto Sans SC',sans-serif;white-space:nowrap}
+.ftag:hover{border-color:var(--red);color:var(--red)}
+.ftag.on{background:var(--red);border-color:var(--red);color:white}
+.gbtn{background:var(--ink);color:var(--paper);border:none;padding:11px 30px;font-size:14px;font-family:'Noto Sans SC',sans-serif;border-radius:8px;cursor:pointer;letter-spacing:2px;transition:all .15s}
+.gbtn:hover{background:#333}
+.paper{background:white;border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:24px}
+.sec-hdr{background:var(--warm);border-bottom:1px solid var(--border);padding:13px 22px;display:flex;align-items:baseline;gap:12px}
+.sec-n{font-family:'Noto Serif SC',serif;font-size:12px;color:var(--muted);letter-spacing:2px}
+.sec-t{font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700}
+.sec-s{margin-left:auto;font-size:12px;color:var(--red);border:1px solid var(--red);padding:2px 10px;border-radius:20px}
+.qi{border-bottom:1px solid #f0ebe3;padding:18px 22px}
+.qi:last-child{border-bottom:none}
+.qn{font-family:'Noto Serif SC',serif;color:var(--red);font-weight:600;margin-right:6px}
+.qtag{font-size:11px;color:var(--muted);margin-left:6px;border:1px solid var(--border);padding:1px 7px;border-radius:10px}
+.qtext{font-size:14px;margin-bottom:12px;line-height:1.85}
+.aopts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.abtn{display:flex;align-items:flex-start;gap:9px;padding:9px 13px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;background:var(--paper);text-align:left;font-size:13px;font-family:'Noto Sans SC',sans-serif;line-height:1.6;transition:all .15s;color:var(--ink);width:100%}
+.abtn:hover:not(:disabled){border-color:var(--gold);background:var(--gold-light)}
+.abtn .al{font-family:'Noto Serif SC',serif;color:var(--red);font-weight:600;flex-shrink:0;min-width:16px}
+.abtn.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.abtn.ok .al,.abtn.sh .al{color:var(--ok)}
+.abtn.ng{border-color:var(--red);background:#fdf0ee;color:var(--red)}
+.abtn.ng .al{color:var(--red)}
+.abtn.sh{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.abtn:disabled{cursor:default}
+.exp{margin-top:10px;padding:11px 15px;background:var(--gold-light);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:13px;display:none;line-height:1.8}
+.exp.show{display:block}
+.poem-box{background:var(--warm);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:12px;font-family:'Noto Serif SC',serif;font-size:15px;line-height:2.2;letter-spacing:1px;text-align:center}
+.ta{width:100%;min-height:90px;border:1.5px solid var(--border);border-radius:8px;padding:11px 13px;font-size:13px;font-family:'Noto Sans SC',sans-serif;line-height:1.8;resize:vertical;background:white;color:var(--ink);transition:border-color .15s}
+.ta:focus{outline:none;border-color:var(--red)}
+.show-ans-btn{margin-top:10px;background:var(--gold);color:white;border:none;padding:8px 20px;border-radius:6px;font-size:13px;font-family:'Noto Sans SC',sans-serif;cursor:pointer;letter-spacing:1px}
+.show-ans-btn:hover{background:#9a7009}
+.ref-ans{margin-top:12px;padding:13px 16px;background:var(--gold-light);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:13px;line-height:1.9;display:none;white-space:pre-wrap}
+.ref-ans.show{display:block}
+.subbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px}
+.subbtn{background:var(--red);color:white;border:none;padding:12px 34px;font-size:15px;font-family:'Noto Serif SC',serif;border-radius:8px;cursor:pointer;letter-spacing:3px;transition:all .15s}
+.subbtn:hover{background:#a93226}
+.subbtn:disabled{opacity:.5;cursor:not-allowed}
+.res-card{background:white;border:2px solid var(--red);border-radius:12px;padding:26px;margin-bottom:24px;text-align:center;display:none;box-shadow:var(--shadow)}
+.res-card.show{display:block}
+.res-n{font-family:'Noto Serif SC',serif;font-size:52px;color:var(--red);line-height:1;margin-bottom:6px}
+.res-l{color:var(--muted);font-size:14px;letter-spacing:2px}
+.res-br{margin-top:18px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.rb{font-size:13px;color:var(--muted)}
+.rb strong{color:var(--ink);font-size:16px}
+.empty{text-align:center;padding:56px 20px;color:var(--muted)}
+.empty .ico{font-size:44px;margin-bottom:12px}
+.empty h3{font-family:'Noto Serif SC',serif;font-size:17px;margin-bottom:8px;color:var(--ink)}
+.empty p{font-size:13px}
+@media(max-width:600px){
+  .home-cards{grid-template-columns:1fr}
+  .aopts{grid-template-columns:1fr}
+  .quiz-main,.poems-main,.detail-main{padding:16px 14px 50px}
+  .poem-text{padding:20px 16px}
+  .topbar-in{padding:10px 14px}
 }
 </style>
 </head>
 <body>
-<div class="paper-texture"></div>
-<div id="app">
-  <header class="topbar">
-    <div class="brand">
-      <div class="seal-mark">字</div>
-      <div>
-        <h1>字字珠玑</h1>
-        <div class="sub">梦溪华文听写 · 五六年级</div>
-      </div>
-    </div>
-    <div class="countdown" id="examCountdown">
-      <b id="examDays">--</b>距考试
-    </div>
-  </header>
 
-  <main id="mainArea">
-    <div class="screen active" id="screen-home"></div>
-    <div class="screen" id="screen-lessons"></div>
-    <div class="screen" id="screen-practice"></div>
-    <div class="screen" id="screen-stats"></div>
-    <div class="screen" id="screen-admin"></div>
-  </main>
-
-  <nav class="bottombar">
-    <button class="nav-btn active" data-nav="home"><span class="ni">🏠</span>首页</button>
-    <button class="nav-btn" data-nav="lessons"><span class="ni">📖</span>选课文</button>
-    <button class="nav-btn" data-nav="practice"><span class="ni">✍️</span>开始练习</button>
-    <button class="nav-btn" data-nav="stats"><span class="ni">📊</span>错字本</button>
-  </nav>
+<!-- ═══════════ HOME ═══════════ -->
+<div id="home" class="screen active">
+  <div class="home-seal">华<br>文</div>
+  <h1 class="home-title">华文学习中心</h1>
+  <p class="home-sub">华中 · 2026 · 中二</p>
+  <div class="home-cards">
+    <div class="home-card card-quiz" id="btn-go-quiz">
+      <span class="home-card-icon">📝</span>
+      <div class="home-card-title">班级测验</div>
+      <div class="home-card-desc">中二华文文学<br>第三学段模拟练习<br>132道题库随机组卷</div>
+    </div>
+    <div class="home-card card-poems" id="btn-go-poems">
+      <span class="home-card-icon">📖</span>
+      <div class="home-card-title">古典名篇</div>
+      <div class="home-card-desc">中小学必背古诗文<br>345篇目录浏览<br>朗读 · 赏析</div>
+    </div>
+  </div>
+  <div class="home-ver">Hwa Chong Institution · 华文文学学习平台</div>
 </div>
 
-<div class="modal-bg" id="settingsModal">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <h2 class="section-title">⚙️ 设置</h2>
-    <div id="settingsContent"></div>
+<!-- ═══════════ POEMS LIST ═══════════ -->
+<div id="poems-screen" class="screen">
+  <div class="topbar">
+    <div class="topbar-in">
+      <button class="topbar-back" id="poems-back">← 返回首页</button>
+      <div class="topbar-seal">古<br>诗</div>
+      <div>
+        <div class="topbar-title">古典名篇</div>
+        <div class="topbar-sub">中小学必背古诗文 345 篇</div>
+      </div>
+    </div>
+  </div>
+  <div class="poems-main">
+    <div class="poems-search-row">
+      <input class="poems-search" id="poems-search" type="text" placeholder="搜索篇名、作者……">
+      <span class="poems-count" id="poems-count"></span>
+    </div>
+    <div class="grade-tabs" id="grade-tabs"></div>
+    <div class="poems-grid" id="poems-grid"></div>
   </div>
 </div>
 
-<div class="stamp-pop" id="stampPop">✓</div>
+<!-- ═══════════ POEM DETAIL ═══════════ -->
+<div id="poem-detail" class="screen">
+  <div class="topbar">
+    <div class="topbar-in">
+      <button class="topbar-back" id="detail-back">← 返回目录</button>
+      <div class="topbar-seal">古<br>诗</div>
+      <div>
+        <div class="topbar-title" id="detail-topbar-title">—</div>
+        <div class="topbar-sub" id="detail-topbar-sub">—</div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-main">
+    <div class="detail-header">
+      <div class="detail-title" id="d-title"></div>
+      <div class="detail-meta" id="d-meta"></div>
+      <span class="detail-grade" id="d-grade"></span>
+      <div class="detail-divider"></div>
+    </div>
+    <div class="poem-text" id="d-text"></div>
+    <div class="reading-bar" id="reading-bar">🔊 正在朗读中……</div>
+    <button class="read-btn" id="read-btn">
+      <span class="icon">🔊</span>
+      <span id="read-btn-label">朗 读</span>
+    </button>
+    <div class="poem-note" id="d-note" style="display:none">
+      <div class="poem-note-label">赏析笔记</div>
+      <div id="d-note-text"></div>
+    </div>
+    <div class="poem-nav">
+      <button class="poem-nav-btn" id="prev-poem">← 上一篇</button>
+      <button class="poem-nav-btn" id="next-poem">下一篇 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ QUIZ ═══════════ -->
+<div id="quiz-screen" class="screen">
+  <div class="topbar">
+    <div class="topbar-in">
+      <button class="topbar-back" id="quiz-back">← 返回首页</button>
+      <div class="topbar-seal">华<br>中</div>
+      <div>
+        <div class="topbar-title">华文文学班级测验</div>
+        <div class="topbar-sub">2026 · 中二 · 第三学段第一周 · LT2</div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-main">
+    <div class="chips">
+      <div class="chip"><span class="v" id="c-mcq">—</span><span class="l">选择题/10分</span></div>
+      <div class="chip"><span class="v" id="c-ap">—</span><span class="l">赏析题/8分</span></div>
+      <div class="chip"><span class="v" id="c-qa">—</span><span class="l">问答题/12分</span></div>
+      <div class="chip"><span class="v" id="c-tot" style="font-size:26px">—</span><span class="l">总分/30分</span></div>
+    </div>
+    <div class="gen-box">
+      <h2>生成模拟测验</h2>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px">选择范围（可多选），每次随机抽取不同题目组合。</div>
+      <div class="filter-row">
+        <button class="ftag on" data-t="all">全部范围</button>
+        <button class="ftag" data-t="xinrao">新谣</button>
+        <button class="ftag" data-t="social">通俗华文歌曲与社会</button>
+        <button class="ftag" data-t="micro">微型小说概论</button>
+        <button class="ftag" data-t="readnovel">如何阅读小说</button>
+        <button class="ftag" data-t="character">扁平与圆形人物</button>
+        <button class="ftag" data-t="butterfly">《永远的蝴蝶》</button>
+        <button class="ftag" data-t="berlin">《在柏林》</button>
+        <button class="ftag" data-t="ecology">新加坡微型小说生态</button>
+        <button class="ftag" data-t="mulan">《木兰辞》</button>
+        <button class="ftag" data-t="tang">初唐诗歌</button>
+      </div>
+      <button class="gbtn" id="gbtn">✦ 生成新测验</button>
+    </div>
+    <div class="res-card" id="res-card">
+      <div class="res-n" id="res-tot">—</div>
+      <div class="res-l">总分 / 30 分</div>
+      <div class="res-br">
+        <div class="rb">选择题 <strong id="r-mcq">—</strong>/10</div>
+        <div class="rb">赏析题 <strong id="r-ap">—</strong>/8（自评）</div>
+        <div class="rb">问答题 <strong id="r-qa">—</strong>/12（自评）</div>
+      </div>
+    </div>
+    <div id="quiz-content"><div class="paper"><div class="empty"><div class="ico">📄</div><h3>准备好了吗？</h3><p>点击「生成新测验」开始练习。</p></div></div></div>
+    <div class="subbar" id="subbar" style="display:none">
+      <div style="font-size:13px;color:var(--muted)">完成选择题后提交查看得分；开放题可对照参考答案自评。</div>
+      <button class="subbtn" id="subbtn">提 交 测 验</button>
+    </div>
+  </div>
+</div>
 
 <script>
-// 梦溪华文听写表 - 五年级(1-17课) + 六年级(1-12课) 完整数据
-// 数据来源：用户提供的听写表扫描件，人工核对整理
-const LESSONS = [
-// ============ 五年级 ============
-{id:"g5-1", grade:5, lesson:1, title:"到户外去",
- words:[
-  {w:"露营活动",p:"lù yíng huó dòng"},{w:"集合",p:"jí hé"},{w:"一双袜子",p:"yī shuāng wà zi"},
-  {w:"手电筒",p:"shǒu diàn tǒng"},{w:"防止意外",p:"fáng zhǐ yì wài"},{w:"单独行动",p:"dān dú xíng dòng"},
-  {w:"贵重物品",p:"guì zhòng wù pǐn"},{w:"绑得结结实实",p:"bǎng de jiē jiē shí shí"},{w:"一顿饭",p:"yī dùn fàn"}
- ],
- sentences:[
-  {t:"我不小心摔了个四脚朝天。",f:"摔"},
-  {t:"轮到我时，我来不及冲凉，只好擦了擦脸，就跑去吃饭。",f:"轮"},
-  {t:"我虽然很累，但是却感到非常充实。",f:"充实"},
-  {t:"只要我们齐心协力，互相配合，一定可以拿到冠军。",f:"协力"},
-  {t:"我不管三七二十一，狼吞虎咽地吃了起来。",f:"狼吞虎咽",moxie:true},
-  {t:"大海一望无际，海面被夕阳染成了一片金黄。",moxie:true},
-  {t:"清凉的海风吹来，高大的椰树轻轻摇摆，阵阵的海浪在我们耳边低声地歌唱。",moxie:true}
- ], tips:[]},
 
-{id:"g5-2", grade:5, lesson:2, title:"身体会说话",
- words:[
-  {w:"正确答案",p:"zhèng què dá àn"},{w:"三更半夜",p:"sān gēng bàn yè"},{w:"眼圈发黑",p:"yǎn quān fā hēi"},
-  {w:"代表学校",p:"dài biǎo xué xiào"},{w:"昏暗角落",p:"hūn àn jiǎo luò"},{w:"使用电脑",p:"shǐ yòng diàn nǎo"},
-  {w:"户外活动",p:"hù wài huó dòng"},{w:"放松心情",p:"fàng sōng xīn qíng"},{w:"伤害身体",p:"shāng hài shēn tǐ"}
- ],
- sentences:[
-  {t:"我目不转睛地盯着手机。",f:"盯"},
-  {t:"你不但坐得直直的，而且还让我和书本保持一定的距离。",f:"保持"},
-  {t:"我们都是无忧无虑的孩子。"},
-  {t:"我因为睡眠不足，所以整天无精打采。",f:"睡眠",moxie:true},
-  {t:"我把这一切都抛到了脑后。",f:"抛",moxie:true},
-  {t:"为了我们的明天，赶快改掉坏习惯吧！",f:"习惯",moxie:true}
- ], tips:[]},
-
-{id:"g5-3", grade:5, lesson:3, title:"懂事的你",
- words:[
-  {w:"调味料",p:"tiáo wèi liào"},{w:"劳累",p:"láo lèi"},{w:"黄瓜",p:"huáng guā"},{w:"紫菜",p:"zǐ cài"},
-  {w:"剪刀",p:"jiǎn dāo"},{w:"形状",p:"xíng zhuàng"},{w:"炒菜",p:"chǎo cài"},{w:"制作贺卡",p:"zhì zuò hè kǎ"},
-  {w:"生日聚会",p:"shēng rì jù huì"},{w:"收到祝福",p:"shōu dào zhù fú"},{w:"一份礼物",p:"yī fèn lǐ wù"},
-  {w:"七嘴八舌",p:"qī zuǐ bā shé"},{w:"安慰朋友",p:"ān wèi péng yǒu"},{w:"感到烦恼",p:"gǎn dào fán nǎo"},
-  {w:"语重心长",p:"yǔ zhòng xīn cháng"},{w:"对牛弹琴",p:"duì niú tán qín"},{w:"半信半疑",p:"bàn xìn bàn yí"}
- ],
- sentences:[
-  {t:"我们都低头沉默着，好像犯了错误似的。",f:"沉默"},
-  {t:"老师提出问题，我们异口同声地回答。",f:"异口同声"},
-  {t:"老师一进来，课室里顿时鸦雀无声。",f:"鸦雀无声"},
-  {t:"有的同学还神气十足地左顾右盼。",f:"左顾右盼"},
-  {t:"看着儿子又惊又怕的样子，张先生的眼眶红了，泪水不知不觉地流了下来。",f:"眼眶",moxie:true},
-  {t:"妈妈苦口婆心地劝他，他还是一副满不在乎的样子，甚至还对妈妈大喊大叫。",f:"满不在乎",moxie:true},
-  {t:"这次的活动多么令人兴奋、令人期待啊！",moxie:true}
- ], tips:["「佥」家族：脸（月+佥）、俭（亻+佥）、检（木+佥）、剑（刀+佥）、签（竹+佥）","「责」家族：绩（纟+责）、渍（氵+责）、债（亻+责）"]},
-
-{id:"g5-4", grade:5, lesson:4, title:"分享是快乐的",
- words:[
-  {w:"肉类",p:"ròu lèi"},{w:"烧水",p:"shāo shuǐ"},{w:"必须",p:"bì xū"},{w:"饼干",p:"bǐng gān"},
-  {w:"存放",p:"cún fàng"},{w:"自私",p:"zì sī"},{w:"敲门",p:"qiāo mén"},{w:"捐出食物",p:"juān chū shí wù"},
-  {w:"新鲜果汁",p:"xīn xiān guǒ zhī"},{w:"愁眉苦脸",p:"chóu méi kǔ liǎn"},{w:"舒舒服服",p:"shū shū fu fu"},
-  {w:"越来越丰富",p:"yuè lái yuè fēng fù"}
- ],
- sentences:[
-  {t:"放学后，妹妹一溜烟地跑回家。",f:"一溜烟"},
-  {t:"愉快的笑声在空中回荡。",f:"愉快"},
-  {t:"要是妈妈知道了这件事，一定会很生气。"},
-  {t:"同学们感受到了从来没有过的快乐。"},
-  {t:"他们看了觉得很奇怪，纷纷出来围观。",f:"奇怪"},
-  {t:"他的心里顿时涌起一股暖流。",moxie:true},
-  {t:"正当他焦急万分的时候",moxie:true},
-  {t:"在这宁静的夜晚，村民们终于明白了分享能带来快乐。",moxie:true}
- ], tips:[]},
-
-{id:"g5-5", grade:5, lesson:5, title:"我闯祸了",
- words:[
-  {w:"程度",p:"chéng dù"},{w:"根据",p:"gēn jù"},{w:"打招呼",p:"dǎ zhāo hu"},{w:"逗别人",p:"dòu bié rén"},
-  {w:"出现矛盾",p:"chū xiàn máo dùn"},{w:"参加测试",p:"cān jiā cè shì"},{w:"遇到困难",p:"yù dào kùn nán"},
-  {w:"结结巴巴",p:"jiē jiē bā bā"}
- ],
- sentences:[
-  {t:"时间一分一秒地过去。",f:"一分一秒"},
-  {t:"我低下了头，觉得脸上一阵火辣。",f:"火辣"},
-  {t:"爸爸的神情和往常一样严肃。",f:"严肃"},
-  {t:"看着地上的碎片，我脑海里出现了爸爸那张愤怒的脸。",f:"愤怒"},
-  {t:"我假装看书，拿着书的手不禁微微发抖。",f:"不禁"},
-  {t:"我紧张得呼吸急促，心跳加速，脑袋一片空白。",f:"呼吸急促"},
-  {t:"他们你一言、我一语地取笑我。",moxie:true},
-  {t:"他全身发抖，像个将要爆炸的炸弹。",f:"爆炸",moxie:true},
-  {t:"不知为什么，一股深深的歉意竟悄悄地涌上了我的心头。",f:"歉意",moxie:true}
- ], tips:[]},
-
-{id:"g5-6", grade:5, lesson:6, title:"我的东西找到了",
- words:[
-  {w:"银色钱包",p:"yín sè qián bāo"},{w:"联系方式",p:"lián xì fāng shì"},{w:"电话号码",p:"diàn huà hào mǎ"},
-  {w:"今天早晨",p:"jīn tiān zǎo chén"},{w:"摇晃身体",p:"yáo huàng shēn tǐ"},{w:"上前阻拦",p:"shàng qián zǔ lán"},
-  {w:"麻烦",p:"má fan"},{w:"喜出望外",p:"xǐ chū wàng wài"},{w:"拾金不昧",p:"shí jīn bù mèi"},
-  {w:"兴致勃勃",p:"xìng zhì bó bó"},{w:"虚惊一场",p:"xū jīng yī chǎng"},{w:"倒退几步",p:"dào tuì jǐ bù"}
- ],
- sentences:[
-  {t:"原来我们周围这么多善良、诚实的人。",f:"周围"},
-  {t:"不料，那几个人不约而同地回来了。",f:"不约而同"},
-  {t:"几个路人看见了，争先恐后地向钞票飘走的方向跑去。",f:"争先恐后"},
-  {t:"阿姨脸上露出不解的神情。"},
-  {t:"看着眼前的情景，我呆住了。",f:"呆住"},
-  {t:"我一边想着，一边加快了脚步。",moxie:true},
-  {t:"这件事已经过去很久了，现在回忆起来，仍然历历在目，让我十分难忘。",f:"历历在目",moxie:true},
-  {t:"望着他远去的背影，我忽然觉得他变得高大起来。",f:"变得",moxie:true}
- ], tips:["「票」家族：钞票（钱）、漂走（氵，跟水有关）、飘走（风，跟风有关）"]},
-
-{id:"g5-7", grade:5, lesson:7, title:"一千桶水",
- words:[
-  {w:"头顶",p:"tóu dǐng"},{w:"公斤",p:"gōng jīn"},{w:"依依不舍",p:"yī yī bù shě"},{w:"喷出水柱",p:"pēn chū shuǐ zhù"},
-  {w:"厚厚的书",p:"hòu hòu de shū"},{w:"一层楼",p:"yī céng lóu"},{w:"实现梦想",p:"shí xiàn mèng xiǎng"},
-  {w:"不知深浅",p:"bù zhī shēn qiǎn"},{w:"盖在身上",p:"gài zài shēn shàng"},{w:"用车载过来",p:"yòng chē zài guò lái"},
-  {w:"奄奄一息",p:"yǎn yǎn yī xī"},{w:"迫不及待",p:"pò bù jí dài"},{w:"随着波浪",p:"suí zhe bō làng"},
-  {w:"激动地欢呼",p:"jī dòng de huān hū"},{w:"身体巨大",p:"shēn tǐ jù dà"}
- ],
- sentences:[
-  {t:"看着鲸鱼快死了，我急得团团转。",f:"团团转"},
-  {t:"渐渐地，海水越涨越高。",f:"渐渐"},
-  {t:"村民们也挥着手和它道别，直到它的身影消失在海平面。",f:"消失"},
-  {t:"这次的活动大概需要20个同学来帮忙。",f:"大概"},
-  {t:"它一会儿浮出海面，一会沉入海底。"},
-  {t:"看着它一动不动，我的心不禁一沉。",f:"不禁",moxie:true},
-  {t:"大家又兴奋又紧张，看着鲸鱼慢慢地回到了大海，悬着的心才放了下来。",f:"悬着",moxie:true},
-  {t:"我停下脚步，目不转睛地注视着小男孩努力救小鱼的动作。",moxie:true}
- ], tips:["「既」家族：即、既、概 — 注意右边偏旁不同，意思也不同（即=立刻；既=已经；概=大概）"]},
-
-{id:"g5-8", grade:5, lesson:8, title:"和时间赛跑",
- words:[
-  {w:"曾经",p:"céng jīng"},{w:"永远",p:"yǒng yuǎn"},{w:"不知不觉",p:"bù zhī bù jué"},{w:"一眨眼",p:"yī zhǎ yǎn"},
-  {w:"学习汉字",p:"xué xí hàn zì"},{w:"制造机器",p:"zhì zào jī qì"},{w:"登上月球",p:"dēng shàng yuè qiú"},
-  {w:"计划未来",p:"jì huà wèi lái"},{w:"节省时间",p:"jié shěng shí jiān"},{w:"井井有条",p:"jǐng jǐng yǒu tiáo"}
- ],
- sentences:[
-  {t:"从此以后，每当我听到滴答滴答的钟声，就好像听见了时间匆匆的脚步声。",f:"匆匆"},
-  {t:"看到太阳仍然露着半边脸时，我禁不住高兴得跳了起来：「我赢了！」",f:"禁不住"},
-  {t:"为了不输给太阳，我拼命地跑，跑得上气不接下气。",f:"拼命"},
-  {t:"每一次赢了比赛，我都有说不出的快乐。"},
-  {t:"「一寸光阴一寸金，寸金难买寸光阴」我们应该珍惜时间。",f:"应该",moxie:true},
-  {t:"那一步似乎很小很小，作用却很大很大。",f:"作用",moxie:true},
-  {t:"黑发不知勤学早，白首方悔读书迟。",f:"白首方悔",moxie:true}
- ], tips:[]},
-
-{id:"g5-9", grade:5, lesson:9, title:"很久很久以前",
- words:[
-  {w:"增添乐趣",p:"zēng tiān lè qù"},{w:"民众俱乐部",p:"mín zhòng jù lè bù"},{w:"免费电影",p:"miǎn fèi diàn yǐng"},
-  {w:"女扮男装",p:"nǚ bàn nán zhuāng"},{w:"烈日当空",p:"liè rì dāng kōng"},{w:"尽孝心",p:"jìn xiào xīn"},
-  {w:"离开家乡",p:"lí kāi jiā xiāng"},{w:"打败敌人",p:"dǎ bài dí rén"},{w:"蚊虫叮",p:"wén chóng dīng"}
- ],
- sentences:[
-  {t:"电影院将放映电影《花木兰》。",f:"放映"},
-  {t:"跑步比赛结束后，大家都筋疲力尽了。",f:"筋疲力尽"},
-  {t:"她代替父亲去打仗，保家卫国，是一位女英雄。",f:"代替"},
-  {t:"只听见咔嚓一声，大鸡蛋裂开了一条缝，光透了进来。",f:"裂开",moxie:true},
-  {t:"他睁眼一看，周围黑乎乎一片，什么也看不见。",f:"周围",moxie:true}
- ], tips:["「召」家族：昭（日）、招（扌）、沼（氵）、绍（纟）"]},
-
-{id:"g5-10", grade:5, lesson:10, title:"成长的烦恼",
- words:[
-  {w:"隐形眼镜",p:"yǐn xíng yǎn jìng"},{w:"热线电话",p:"rè xiàn diàn huà"},{w:"一段往事",p:"yī duàn wǎng shì"},
-  {w:"弯着腰",p:"wān zhe yāo"},{w:"十分唠叨",p:"shí fēn láo dao"},{w:"心情格外舒畅",p:"xīn qíng gé wài shū chàng"},
-  {w:"丰盛的午餐",p:"fēng shèng de wǔ cān"},{w:"嘲笑同学",p:"cháo xiào tóng xué"},{w:"比较幸运",p:"bǐ jiào xìng yùn"}
- ],
- sentences:[
-  {t:"我用手小心翼翼地遮住饭盒。",f:"小心翼翼"},
-  {t:"我觉得很难过，为之前的想法感到惭愧。",f:"惭愧"},
-  {t:"我不应该和别人攀比，应该学会感恩，珍惜自己所拥有的。",f:"应该"},
-  {t:"农夫已经刷了一个下午了，猪舍还是很脏。",f:"农夫"},
-  {t:"我两耳发热，努力控制着，不让眼泪掉下来。",moxie:true},
-  {t:"温暖的阳光迅速照亮了整个房间。",f:"迅速",moxie:true},
-  {t:"一股浓浓的香气扑鼻而来。",moxie:true},
-  {t:"朋友递来一把伞，让我倍感温暖。",f:"递",moxie:true},
-  {t:"大家都向老奶奶投去关切的目光。",f:"关切",moxie:true}
- ], tips:["「应该」的「应」常被写错，注意是广字头不是文字头"]},
-
-{id:"g5-11", grade:5, lesson:11, title:"同学之间",
- words:[
-  {w:"零起点",p:"líng qǐ diǎn"},{w:"初级班",p:"chū jí bān"},{w:"基本知识",p:"jī běn zhī shi"},
-  {w:"人数有限",p:"rén shù yǒu xiàn"},{w:"详细情况",p:"xiáng xì qíng kuàng"},{w:"尽力而为",p:"jìn lì ér wéi"},
-  {w:"狠狠地瞪",p:"hěn hěn de dèng"},{w:"恨不得",p:"hèn bu de"},{w:"扭打",p:"niǔ dǎ"},
-  {w:"彼此",p:"bǐ cǐ"},{w:"扣子",p:"kòu zi"},{w:"话音刚落",p:"huà yīn gāng luò"}
- ],
- sentences:[
-  {t:"他一上来，不管三七二十一就朝我的胸口用力一推，我来不及躲闪，摔了个大跟头。",f:"躲闪"},
-  {t:"大强气鼓鼓地站着，满脸通红，两只眼睛好像要喷出火来。",f:"气鼓鼓"},
-  {t:"我气极了，像一头愤怒的狮子，不顾一切地向他扑去。",f:"愤怒"},
-  {t:"学校要培养我们不放弃，坚持到底的精神。",f:"培养",moxie:true},
-  {t:"同学们无心的话像一把刀，刺进他的心，他的眼睛顿时蒙上了一层雾。",f:"刺进",moxie:true},
-  {t:"他强忍着泪水，努力地挤出一丝笑容。",f:"强忍",moxie:true}
- ], tips:[]},
-
-{id:"g5-12", grade:5, lesson:12, title:"新加坡，我为你骄傲",
- words:[
-  {w:"夜幕降临",p:"yè mù jiàng lín"},{w:"表演队伍",p:"biǎo yǎn duì wǔ"},{w:"呈献表演",p:"chéng xiàn biǎo yǎn"},
-  {w:"排列整齐",p:"pái liè zhěng qí"},{w:"宽阔舞台",p:"kuān kuò wǔ tái"},{w:"唯一",p:"wéi yī"},
-  {w:"最佳机场",p:"zuì jiā jī chǎng"},{w:"太棒了",p:"tài bàng le"},{w:"著名美食",p:"zhù míng měi shí"},
-  {w:"尖尖的刺",p:"jiān jiān de cì"},{w:"描绘",p:"miáo huì"},{w:"不屈不挠",p:"bù qū bù náo"}
- ],
- sentences:[
-  {t:"国庆日那天，我和家人兴高采烈地来到滨海湾，观看盼望已久的国庆庆典。",f:"兴高采烈"},
-  {t:"夜空中燃放出五彩缤纷的烟花，把庆典的欢乐气氛推向高潮。",f:"五彩缤纷"},
-  {t:"大家兴奋地唱着一首首爱国歌曲，为自己是新加坡人感到无比骄傲和自豪。",f:"骄傲"},
-  {t:"这一切真是激动人心！",f:"激动",moxie:true},
-  {t:"人们纷纷挥动着荧光棒，把滨海湾变成了一片灯海。",f:"挥动",moxie:true},
-  {t:"国庆节到了，我们都沉浸在欢乐的节日气氛中。",f:"沉浸",moxie:true}
- ], tips:[]},
-
-{id:"g5-13", grade:5, lesson:13, title:"汉字王国",
- words:[
-  {w:"甲骨文",p:"jiǎ gǔ wén"},{w:"包括",p:"bāo kuò"},{w:"世界各地",p:"shì jiè gè dì"},{w:"独特的艺术",p:"dú tè de yì shù"},
-  {w:"官员",p:"guān yuán"},{w:"派人",p:"pài rén"},{w:"违抗命令",p:"wéi kàng mìng lìng"},{w:"再三询问",p:"zài sān xún wèn"},
-  {w:"善良",p:"shàn liáng"},{w:"胆怯",p:"dǎn qiè"},{w:"梦想",p:"mèng xiǎng"},{w:"软弱",p:"ruǎn ruò"}
- ],
- sentences:[
-  {t:"他不仅有学问，而且十分聪明。",f:"不仅"},
-  {t:"他停下脚步看了一会儿，叹了一口气。",f:"叹"},
-  {t:"杨修笑了笑，胸有成竹地说把门改窄一些就行了。",f:"胸有成竹"},
-  {t:"众人听了，有的相信，有的怀疑。",f:"怀疑",moxie:true},
-  {t:"众人听了恍然大悟，都很佩服杨修。",f:"恍然大悟",moxie:true},
-  {t:"汉字是古老的文字，距今有三千多年的历史。",f:"历史",moxie:true}
- ], tips:[]},
-
-{id:"g5-14", grade:5, lesson:14, title:"老师，谢谢您",
- words:[
-  {w:"恢复自信",p:"huī fù zì xìn"},{w:"辛勤工作",p:"xīn qín gōng zuò"},{w:"甲乙丙丁",p:"jiǎ yǐ bǐng dīng"},
-  {w:"多么顽皮",p:"duō me wán pí"},{w:"一首诗",p:"yī shǒu shī"},{w:"培育学生",p:"péi yù xué shēng"},
-  {w:"积极训练",p:"jī jí xùn liàn"},{w:"加倍努力",p:"jiā bèi nǔ lì"},{w:"取得好成绩",p:"qǔ dé hǎo chéng jì"},
-  {w:"不约而同",p:"bù yuē ér tóng"},{w:"默默祈祷",p:"mò mò qí dǎo"},{w:"偏偏",p:"piān piān"}
- ],
- sentences:[
-  {t:"我并不知道自己犯了什么错误。",f:"错误"},
-  {t:"满肚子的委屈涌上心头，我趴在桌子上哭了起来。",f:"委屈"},
-  {t:"我感到脸上发烫，额头直冒汗，恨不得找个地洞钻进去！",f:"发烫"},
-  {t:"老师温柔地说：「凡是你会回答的，就举右手。」",f:"温柔"},
-  {t:"放学了，同学们陆陆续续回家了。",f:"陆陆续续",moxie:true},
-  {t:"老师的微笑像太阳，照亮了我的童年。",moxie:true},
-  {t:"每当我和陈老师的目光相遇时，我们都会心照不宣地笑一笑。",f:"心照不宣",moxie:true}
- ], tips:[]},
-
-{id:"g5-15", grade:5, lesson:15, title:"想当一棵树",
- words:[
-  {w:"栽种树木",p:"zāi zhòng shù mù"},{w:"道路宽阔",p:"dào lù kuān kuò"},{w:"淡淡的香味",p:"dàn dàn de xiāng wèi"},
-  {w:"味道很浓",p:"wèi dào hěn nóng"},{w:"是否正确",p:"shì fǒu zhèng què"},{w:"食物腐烂",p:"shí wù fǔ làn"},
-  {w:"闲聊",p:"xián liáo"},{w:"抬头挺胸",p:"tái tóu tǐng xiōng"},{w:"慷慨大方",p:"kāng kǎi dà fāng"},
-  {w:"阴凉",p:"yīn liáng"},{w:"悄悄落下",p:"qiāo qiāo luò xià"},{w:"一片枯叶",p:"yī piàn kū yè"}
- ],
- sentences:[
-  {t:"我们要学会它的姿态，笔直地站立着。",f:"姿态"},
-  {t:"大树伸出粗壮和茂密的枝条。",f:"粗壮"},
-  {t:"趁老师在忙，他们悄悄地说起话来。",f:"趁",moxie:true},
-  {t:"一个晴朗的夜晚，微风轻轻地吹着。",moxie:true},
-  {t:"他听得出神了。",moxie:true},
-  {t:"我睁大眼睛，瞪着它看了一会儿。",f:"瞪",moxie:true}
- ], tips:[]},
-
-{id:"g5-16", grade:5, lesson:16, title:"语言的力量",
- words:[
-  {w:"一滴眼泪",p:"yī dī yǎn lèi"},{w:"珍惜资源",p:"zhēn xī zī yuán"},{w:"翻开书本",p:"fān kāi shū běn"},
-  {w:"一粒米",p:"yī lì mǐ"},{w:"减少污染",p:"jiǎn shǎo wū rǎn"},{w:"和谐共处",p:"hé xié gòng chǔ"},
-  {w:"博物馆",p:"bó wù guǎn"},{w:"来去匆匆",p:"lái qù cōng cōng"},{w:"迫不及待",p:"pò bù jí dài"},
-  {w:"春天到了",p:"chūn tiān dào le"},{w:"多么奇妙",p:"duō me qí miào"},{w:"盲人",p:"máng rén"},
-  {w:"令人惋惜",p:"lìng rén wǎn xī"},{w:"冷漠无情",p:"lěng mò wú qíng"}
- ],
- sentences:[
-  {t:"他说着，脸上浮现出淡淡的悲伤。",f:"浮现"},
-  {t:"来来往往的路人对他视而不见。",f:"视而不见"},
-  {t:"蓝天白云、绿树红花，青草地上翩翩起舞的蝴蝶，多么美好啊！这一切怎能不叫人陶醉呢？",f:"翩翩起舞",moxie:true},
-  {t:"一个人的语言，可以像优美的歌曲，也可以像伤人的利剑。",f:"利剑",moxie:true}
- ], tips:[]},
-
-{id:"g5-17", grade:5, lesson:17, title:"世界那么大",
- words:[
-  {w:"冬暖夏凉",p:"dōng nuǎn xià liáng"},{w:"减少伤亡",p:"jiǎn shǎo shāng wáng"},{w:"搭建房屋",p:"dā jiàn fáng wū"},
-  {w:"淹水",p:"yān shuǐ"},{w:"避开攻击",p:"bì kāi gōng jī"},{w:"神奇",p:"shén qí"},
-  {w:"天寒地冻",p:"tiān hán dì dòng"},{w:"环境恶劣",p:"huán jìng è liè"},{w:"祖先",p:"zǔ xiān"},
-  {w:"体形矮小",p:"tǐ xíng ǎi xiǎo"},{w:"阻挡寒风",p:"zǔ dǎng hán fēng"},{w:"驾车",p:"jià chē"}
- ],
- sentences:[
-  {t:"他们的生活发生了巨大的变化。",f:"巨大"},
-  {t:"他们的外表和我们一样，黑头发，黄皮肤。",f:"外表"},
-  {t:"这里有一座座高大的建筑，远看就像起伏的山峰。",f:"起伏",moxie:true},
-  {t:"宏伟壮观的金字塔，体现了古埃及人民的智慧。",f:"智慧",moxie:true}
- ], tips:[]},
-
-{id:"g5-18", grade:5, lesson:18, title:"5A词语搭配",
- words:[
-  {w:"野外探险",p:"yě wài tàn xiǎn"},{w:"活动安排",p:"huó dòng ān pái"},{w:"防止意外",p:"fáng zhǐ yì wài"},
-  {w:"单独行动",p:"dān dú xíng dòng"},{w:"贵重物品",p:"guì zhòng wù pǐn"},{w:"禁止吸烟",p:"jìn zhǐ xī yān"},
-  {w:"竞赛规则",p:"jìng sài guī zé"},{w:"互相配合",p:"hù xiāng pèi hé"},{w:"风中摇摆",p:"fēng zhōng yáo bǎi"},
-  {w:"假期充实",p:"jià qī chōng shí"},{w:"正确答案",p:"zhèng què dá àn"},{w:"填写表格",p:"tián xiě biǎo gé"},
-  {w:"昏暗的角落",p:"hūn àn de jiǎo luò"},{w:"灯光明亮",p:"dēng guāng míng liàng"},{w:"保持距离",p:"bǎo chí jù lí"},
-  {w:"户外活动",p:"hù wài huó dòng"},{w:"检查视力",p:"jiǎn chá shì lì"},{w:"连续工作",p:"lián xù gōng zuò"},
-  {w:"照顾自己",p:"zhào gù zì jǐ"},{w:"光线充足",p:"guāng xiàn chōng zú"},{w:"迷上游戏",p:"mí shàng yóu xì"},
-  {w:"盯着屏幕",p:"dīng zhe píng mù"},{w:"改掉坏习惯",p:"gǎi diào huài xí guàn"},{w:"视力下降",p:"shì lì xià jiàng"},
-  {w:"准备材料",p:"zhǔn bèi cái liào"},{w:"低头沉默",p:"dī tóu chén mò"},{w:"犯错误",p:"fàn cuò wù"},
-  {w:"养育子女",p:"yǎng yù zǐ nǚ"},{w:"爱惜身体",p:"ài xī shēn tǐ"},{w:"安慰朋友",p:"ān wèi péng yǒu"},
-  {w:"生日贺卡",p:"shēng rì hè kǎ"},{w:"捐出食物",p:"juān chū shí wù"},{w:"确保新鲜",p:"què bǎo xīn xiān"},
-  {w:"互不来往",p:"hù bù lái wǎng"},{w:"拒绝开门",p:"jù jué kāi mén"},{w:"觉得奇怪",p:"jué de qí guài"},
-  {w:"引来围观",p:"yǐn lái wéi guān"},{w:"缺少食物",p:"quē shǎo shí wù"},{w:"一叠钞票",p:"yī dié chāo piào"},
-  {w:"捡到手机",p:"jiǎn dào shǒu jī"},{w:"停下脚步",p:"tíng xià jiǎo bù"},{w:"大声求救",p:"dà shēng qiú jiù"},
-  {w:"搭帐篷",p:"dā zhàng peng"},{w:"放松心情",p:"fàng sōng xīn qíng"},{w:"送上祝福",p:"sòng shàng zhù fú"},
-  {w:"转身离开",p:"zhuǎn shēn lí kāi"},{w:"闪闪发光",p:"shǎn shǎn fā guāng"},{w:"一束鲜花",p:"yī shù xiān huā"},
-  {w:"查看日期",p:"chá kàn rì qī"},{w:"新鲜蔬菜",p:"xīn xiān shū cài"},{w:"味道鲜美",p:"wèi dào xiān měi"},
-  {w:"发人深思",p:"fā rén shēn sī"},{w:"充满花香",p:"chōng mǎn huā xiāng"},{w:"身体摇晃",p:"shēn tǐ yáo huàng"},
-  {w:"傻傻站着",p:"shǎ shǎ zhàn zhe"},{w:"上前阻拦",p:"shàng qián zǔ lán"},{w:"伤透脑筋",p:"shāng tòu nǎo jīn"},
-  {w:"等待登机",p:"děng dài dēng jī"},{w:"乱发脾气",p:"luàn fā pí qì"},{w:"喷出水柱",p:"pēn chū shuǐ zhù"},
-  {w:"浮出水面",p:"fú chū shuǐ miàn"},{w:"聚在一起",p:"jù zài yī qǐ"},{w:"围成一圈",p:"wéi chéng yī quān"},
-  {w:"无意间看到",p:"wú yì jiān kàn dào"},{w:"急得团团转",p:"jí de tuán tuán zhuàn"},{w:"衣服湿透",p:"yī fu shī tòu"},
-  {w:"激动欢呼",p:"jī dòng huān hū"},{w:"挥手道别",p:"huī shǒu dào bié"},{w:"空中漂浮",p:"kōng zhōng piāo fú"},
-  {w:"伸懒腰",p:"shēn lǎn yāo"},{w:"想出办法",p:"xiǎng chū bàn fǎ"},{w:"爽快答应",p:"shuǎng kuài dā ying"},
-  {w:"梦想实现",p:"mèng xiǎng shí xiàn"},{w:"动物灭绝",p:"dòng wù miè jué"},{w:"留下足迹",p:"liú xià zú jì"},
-  {w:"发明手机",p:"fā míng shǒu jī"},{w:"制造电脑",p:"zhì zào diàn nǎo"},{w:"浮现在脑海里",p:"fú xiàn zài nǎo hǎi lǐ"},
-  {w:"节省时间",p:"jié shěng shí jiān"},{w:"珍惜时间",p:"zhēn xī shí jiān"},{w:"毫不犹豫",p:"háo bù yóu yù"},
-  {w:"增添乐趣",p:"zēng tiān lè qù"},{w:"观看电影",p:"guān kàn diàn yǐng"},{w:"凭票领取",p:"píng piào lǐng qǔ"},
-  {w:"接到命令",p:"jiē dào mìng lìng"},{w:"打败敌人",p:"dǎ bài dí rén"},{w:"回到家乡",p:"huí dào jiā xiāng"},
-  {w:"了不起的英雄",p:"liǎo bu qǐ de yīng xióng"},{w:"分配角色",p:"fēn pèi jué sè"},{w:"设计海报",p:"shè jì hǎi bào"},
-  {w:"洪水淹没",p:"hóng shuǐ yān mò"},{w:"冒着危险",p:"mào zhe wēi xiǎn"},{w:"安排好时间",p:"ān pái hǎo shí jiān"},
-  {w:"利用好时间",p:"lì yòng hǎo shí jiān"}
- ],
- sentences:[], tips:[]},
-{id:"g5-19", grade:5, lesson:19, title:"5B词语搭配",
- words:[
-  {w:"网络平台",p:"wǎng luò píng tái"},{w:"控制自己",p:"kòng zhì zì jǐ"},{w:"不停唠叨",p:"bù tíng láo dao"},
-  {w:"童年往事",p:"tóng nián wǎng shì"},{w:"丰盛午餐",p:"fēng shèng wǔ cān"},{w:"鼻子一酸",p:"bí zi yī suān"},
-  {w:"感到惭愧",p:"gǎn dào cán kuì"},{w:"学会感恩",p:"xué huì gǎn ēn"},{w:"辛苦工作",p:"xīn kǔ gōng zuò"},
-  {w:"认真对待",p:"rèn zhēn duì dài"},{w:"良好品格",p:"liáng hǎo pǐn gé"},{w:"优秀学业",p:"yōu xiù xué yè"},
-  {w:"为校争光",p:"wèi xiào zhēng guāng"},{w:"舒展身体",p:"shū zhǎn shēn tǐ"},{w:"基本知识",p:"jī běn zhī shi"},
-  {w:"人数有限",p:"rén shù yǒu xiàn"},{w:"详细情况",p:"xiáng xì qíng kuàng"},{w:"不顾一切",p:"bù gù yī qiè"},
-  {w:"一溜烟地跑",p:"yī liù yān de pǎo"},{w:"赢得奖项",p:"yíng dé jiǎng xiàng"},{w:"旅游手册",p:"lǚ yóu shǒu cè"},
-  {w:"宽阔舞台",p:"kuān kuò wǔ tái"},{w:"表演队伍",p:"biǎo yǎn duì wu"},{w:"激动人心",p:"jī dòng rén xīn"},
-  {w:"天色渐暗",p:"tiān sè jiàn àn"},{w:"精彩节目",p:"jīng cǎi jié mù"},{w:"献上祝福",p:"xiàn shàng zhù fú"},
-  {w:"欢乐气氛",p:"huān lè qì fēn"},{w:"推向高潮",p:"tuī xiàng gāo cháo"},{w:"密切关系",p:"mì qiè guān xi"},
-  {w:"点燃希望",p:"diǎn rán xī wàng"},{w:"繁华城市",p:"fán huá chéng shì"},{w:"产生影响",p:"chǎn shēng yǐng xiǎng"},
-  {w:"根据统计",p:"gēn jù tǒng jì"},{w:"独特艺术",p:"dú tè yì shù"},{w:"建造花园",p:"jiàn zào huā yuán"},
-  {w:"十分满意",p:"shí fēn mǎn yì"},{w:"探索世界",p:"tàn suǒ shì jiè"},{w:"创造文字",p:"chuàng zào wén zì"},
-  {w:"遇到困难",p:"yù dào kùn nán"},{w:"耐心教导",p:"nài xīn jiào dǎo"},{w:"加倍努力",p:"jiā bèi nǔ lì"},
-  {w:"积极训练",p:"jī jí xùn liàn"},{w:"了解情况",p:"liǎo jiě qíng kuàng"},{w:"打工赚钱",p:"dǎ gōng zhuàn qián"},
-  {w:"视线模糊",p:"shì xiàn mó hu"},{w:"相处愉快",p:"xiāng chǔ yú kuài"},{w:"栽种树木",p:"zāi zhòng shù mù"},
-  {w:"宽阔道路",p:"kuān kuò dào lù"},{w:"散发香味",p:"sàn fā xiāng wèi"},{w:"粗壮枝条",p:"cū zhuàng zhī tiáo"},
-  {w:"挺直身体",p:"tǐng zhí shēn tǐ"},{w:"串串果实",p:"chuàn chuàn guǒ shí"},{w:"撑开大伞",p:"chēng kāi dà sǎn"},
-  {w:"冬暖夏凉",p:"dōng nuǎn xià liáng"},{w:"传统建筑",p:"chuán tǒng jiàn zhù"},{w:"减少伤亡",p:"jiǎn shǎo shāng wáng"},
-  {w:"攻击敌人",p:"gōng jī dí rén"},{w:"避开野兽",p:"bì kāi yě shòu"},{w:"环境恶劣",p:"huán jìng è liè"},
-  {w:"体形矮小",p:"tǐ xíng ǎi xiǎo"},{w:"获取食物",p:"huò qǔ shí wù"},{w:"衣服宽大",p:"yī fu kuān dà"},
-  {w:"交通工具",p:"jiāo tōng gōng jù"},{w:"发生变化",p:"fā shēng biàn huà"},{w:"到达目的地",p:"dào dá mù dì dì"},
-  {w:"惊喜发现",p:"jīng xǐ fā xiàn"},{w:"细心寻找",p:"xì xīn xún zhǎo"},{w:"记录资料",p:"jì lù zī liào"},
-  {w:"挥手告别",p:"huī shǒu gào bié"},{w:"独特感受",p:"dú tè gǎn shòu"},{w:"互相对照",p:"hù xiāng duì zhào"},
-  {w:"默默守护",p:"mò mò shǒu hù"},{w:"吸引游客",p:"xī yǐn yóu kè"}
- ],
- sentences:[], tips:[]},
-
-// 补充易错词单元：收录学生反映较难掌握的词语，通过SRS高频复习巩固
-{id:"g5-20", grade:5, lesson:20, title:"补充易错词",
- words:[
-  {w:"武功",p:"wǔ gōng"},{w:"旋转",p:"xuán zhuǎn"},{w:"观察",p:"guān chá"},
-  {w:"咳嗽",p:"ké sou"},{w:"雪糕",p:"xuě gāo"},{w:"射击",p:"shè jī"},
-  {w:"螃蟹",p:"páng xiè"},{w:"特权",p:"tè quán"},{w:"迎面走来",p:"yíng miàn zǒu lái"},
-  {w:"后悔",p:"hòu huǐ"},{w:"抓耳挠腮",p:"zhuā ěr náo sāi"},{w:"敲打",p:"qiāo dǎ"},
-  {w:"玻璃窗",p:"bō li chuāng"},{w:"攀岩",p:"pān yán"},{w:"黑眼圈",p:"hēi yǎn quān"},
-  {w:"妖魔",p:"yāo mó"},{w:"捧着鲜花",p:"pěng zhe xiān huā"},
-  {w:"戴帽子",p:"dài mào zi"},{w:"阅读",p:"yuè dú"},{w:"纷纷离开",p:"fēn fēn lí kāi"},
-  {w:"模型",p:"mó xíng"},{w:"到达终点",p:"dào dá zhōng diǎn"},{w:"播放乐曲",p:"bō fàng yuè qǔ"},
-  {w:"饮料",p:"yǐn liào"},{w:"理睬",p:"lǐ cǎi"},{w:"随手",p:"suí shǒu"},
-  {w:"塑料",p:"sù liào"},{w:"地铁",p:"dì tiě"},{w:"一段时间",p:"yī duàn shí jiān"},
-  {w:"咳嗽",p:"ké sou"},{w:"洗漱",p:"xǐ shù"}
- ],
- sentences:[], tips:[]},
-
-// ============ 六年级 ============
-{id:"g6-1", grade:6, lesson:1, title:"加油！加油！",
- words:[
-  {w:"克服",p:"kè fú"},{w:"锻炼",p:"duàn liàn"},{w:"做梦",p:"zuò mèng"},{w:"严格",p:"yán gé"},
-  {w:"懒惰",p:"lǎn duò"},{w:"鲜艳",p:"xiān yàn"},{w:"柔弱",p:"róu ruò"},{w:"产生",p:"chǎn shēng"},
-  {w:"恶劣",p:"è liè"},{w:"意志",p:"yì zhì"},{w:"榜样",p:"bǎng yàng"},{w:"坚强",p:"jiān qiáng"},
-  {w:"顽强",p:"wán qiáng"},{w:"放弃",p:"fàng qì"}
- ],
- sentences:[
-  {t:"它好像把世界上所有的红色都吸引到自己身上，红得那么鲜艳，红得那么耀眼。",f:"耀眼"},
-  {t:"小花又挺起腰，优雅地站着。",f:"优雅"},
-  {t:"小花在这么恶劣的环境下，不放弃，凭着顽强的意志，克服种种困难，是我学习的榜样。",f:"凭着"}
- ], tips:["「析」（分析）和「折」（折磨）字形相近，注意右半部不同"]},
-
-{id:"g6-2", grade:6, lesson:2, title:"祖孙情",
- words:[
-  {w:"祖孙",p:"zǔ sūn"},{w:"牵手",p:"qiān shǒu"},{w:"促进",p:"cù jìn"},{w:"家庭",p:"jiā tíng"},
-  {w:"拨打电话",p:"bō dǎ diàn huà"},{w:"倾斜",p:"qīng xié"},{w:"踩水",p:"cǎi shuǐ"},{w:"笑眯眯",p:"xiào mī mī"},
-  {w:"湿透",p:"shī tòu"},{w:"换衣服",p:"huàn yī fu"},{w:"撑伞",p:"chēng sǎn"},{w:"惊讶",p:"jīng yà"},
-  {w:"了如指掌",p:"liǎo rú zhǐ zhǎng"},{w:"仍然",p:"réng rán"}
- ],
- sentences:[
-  {t:"家有一老，如有一宝。"},
-  {t:"他脸色苍白，冷得全身发抖，一连打了好几个喷嚏。",f:"喷嚏"},
-  {t:"我看见外公的嘴唇微微抖动，双眼闪着泪光。",f:"抖动"},
-  {t:"那是一把倾斜的伞，一把充满温情的伞，这把伞给我增添了许多美好的回忆，我会永远珍惜它，爱护它。",f:"增添"}
- ], tips:[]},
-
-{id:"g6-3", grade:6, lesson:3, title:"美食小侦探",
- words:[
-  {w:"清蒸鱼",p:"qīng zhēng yú"},{w:"脆皮烧鸡",p:"cuì pí shāo jī"},{w:"炒豆苗",p:"chǎo dòu miáo"},
-  {w:"苦瓜煎蛋",p:"kǔ guā jiān dàn"},{w:"酸辣汤",p:"suān là tāng"},{w:"皮蛋瘦肉粥",p:"pí dàn shòu ròu zhōu"},
-  {w:"科学家",p:"kē xué jiā"},{w:"模仿",p:"mó fǎng"},{w:"除了",p:"chú le"},{w:"例如",p:"lì rú"},
-  {w:"使劲",p:"shǐ jìn"},{w:"硬如铁",p:"yìng rú tiě"},{w:"伟大",p:"wěi dà"},{w:"海南鸡饭",p:"hǎi nán jī fàn"},
-  {w:"肉骨茶",p:"ròu gǔ chá"},{w:"年糕",p:"nián gāo"},{w:"忙忙碌碌",p:"máng máng lù lù"},
-  {w:"大功告成",p:"dà gōng gào chéng"},{w:"仿佛",p:"fǎng fú"}
- ],
- sentences:[
-  {t:"他们不费吹灰之力就把筷子折断了。",f:"折断"},
-  {t:"他们使劲折，用了九牛二虎之力，都无法折断。",f:"九牛二虎之力"},
-  {t:"三个儿子恍然大悟，惭愧地低下了头。",f:"惭愧"},
-  {t:"吃年糕时，家里充满了浓浓的祖孙情。",f:"充满"}
- ], tips:[]},
-
-{id:"g6-4", grade:6, lesson:4, title:"宝贵的礼物",
- words:[
-  {w:"珍珠项链",p:"zhēn zhū xiàng liàn"},{w:"价钱",p:"jià qián"},{w:"便宜",p:"pián yi"},
-  {w:"免费送货",p:"miǎn fèi sòng huò"},{w:"质量",p:"zhì liàng"},{w:"好修理",p:"hǎo xiū lǐ"},
-  {w:"逛街",p:"guàng jiē"},{w:"走一趟",p:"zǒu yī tàng"},{w:"打扰",p:"dǎ rǎo"},{w:"态度",p:"tài dù"},
-  {w:"普通",p:"pǔ tōng"},{w:"趁您不注意",p:"chèn nín bù zhù yì"},{w:"反而",p:"fǎn ér"},
-  {w:"日思夜想",p:"rì sī yè xiǎng"},{w:"又惊又喜",p:"yòu jīng yòu xǐ"},{w:"珍惜",p:"zhēn xī"},{w:"友情",p:"yǒu qíng"}
- ],
- sentences:[
-  {t:"母亲把事情的经过详细地告诉了我。",f:"详细"},
-  {t:"她擦洗干净后，猛然发现项链不翼而飞了。",f:"不翼而飞"},
-  {t:"人非圣贤，孰能无过。",f:"孰能无过"},
-  {t:"千里送鹅毛，礼轻情意重。",f:"情意"}
- ], tips:[]},
-
-{id:"g6-5", grade:6, lesson:5, title:"宝贵的礼物（续）",
- words:[
-  {w:"选择",p:"xuǎn zé"},{w:"方式",p:"fāng shì"},{w:"创意",p:"chuàng yì"},{w:"肥猫",p:"féi māo"},
-  {w:"说谎",p:"shuō huǎng"},{w:"披着",p:"pī zhe"},{w:"性别",p:"xìng bié"},{w:"牢固",p:"láo gù"},
-  {w:"掩耳盗铃",p:"yǎn ěr dào líng"},{w:"贪财",p:"tān cái"},{w:"砸碎",p:"zá suì"},{w:"捂着",p:"wǔ zhe"},
-  {w:"很笨",p:"hěn bèn"},{w:"毫不在意",p:"háo bù zài yì"},{w:"立即",p:"lì jí"},{w:"对联",p:"duì lián"},
-  {w:"文章",p:"wén zhāng"},{w:"胡闹",p:"hú nào"},{w:"得意洋洋",p:"dé yì yáng yáng"},{w:"满不在乎",p:"mǎn bù zài hu"},
-  {w:"虚心",p:"xū xīn"},{w:"著名",p:"zhù míng"},{w:"望子成龙",p:"wàng zǐ chéng lóng"},
-  {w:"哑口无言",p:"yǎ kǒu wú yán"},{w:"自言自语",p:"zì yán zì yǔ"}
- ],
- sentences:[
-  {t:"读书破万卷，下笔如有神。",f:"万卷"},
-  {t:"胸中有墨水，文章自然来。",f:"墨水"},
-  {t:"苏东坡不禁飘飘然，骄傲起来。",f:"飘飘然"},
-  {t:"父亲的朋友都赞不绝口，称他是个神童。",f:"赞不绝口"}
- ], tips:[]},
-
-{id:"g6-6", grade:6, lesson:6, title:"精彩三国",
- words:[
-  {w:"对抗",p:"duì kàng"},{w:"杰出",p:"jié chū"},{w:"智慧",p:"zhì huì"},{w:"英俊",p:"yīng jùn"},
-  {w:"帅气",p:"shuài qì"},{w:"妒忌",p:"dù jì"},{w:"能够",p:"néng gòu"},{w:"受罚",p:"shòu fá"},
-  {w:"犯罪",p:"fàn zuì"},{w:"催促",p:"cuī cù"},{w:"埋伏",p:"mái fú"},{w:"遵命",p:"zūn mìng"},
-  {w:"特征",p:"tè zhēng"},{w:"奸诈",p:"jiān zhà"},{w:"威武有力",p:"wēi wǔ yǒu lì"},{w:"赤胆忠心",p:"chì dǎn zhōng xīn"},
-  {w:"尘土飞扬",p:"chén tǔ fēi yáng"},{w:"若无其事",p:"ruò wú qí shì"},{w:"足智多谋",p:"zú zhì duō móu"},
-  {w:"神机妙算",p:"shén jī miào suàn"},{w:"千方百计",p:"qiān fāng bǎi jì"},{w:"怀恨在心",p:"huái hèn zài xīn"}
- ],
- sentences:[
-  {t:"煮豆燃豆萁，豆在釜中泣。本是同根生，相煎何太急。",moxie:true}
- ], tips:[]},
-
-{id:"g6-7", grade:6, lesson:7, title:"世界走透透",
- words:[
-  {w:"高峰",p:"gāo fēng"},{w:"避暑胜地",p:"bì shǔ shèng dì"},{w:"冬季",p:"dōng jì"},{w:"跨国",p:"kuà guó"},
-  {w:"倾泻",p:"qīng xiè"},{w:"名胜古迹",p:"míng shèng gǔ jì"},{w:"流连忘返",p:"liú lián wàng fǎn"},
-  {w:"包含",p:"bāo hán"},{w:"甚至",p:"shèn zhì"},{w:"治疗",p:"zhì liáo"},{w:"一股",p:"yī gǔ"},
-  {w:"厉害",p:"lì hai"},{w:"五彩缤纷",p:"wǔ cǎi bīn fēn"},{w:"万紫千红",p:"wàn zǐ qiān hóng"},
-  {w:"多姿多彩",p:"duō zī duō cǎi"},{w:"世界市场",p:"shì jiè shì chǎng"},{w:"讨价还价",p:"tǎo jià huán jià"},
-  {w:"巴刹",p:"bā shā"}
- ],
- sentences:[
-  {t:"死海风景宜人，平坦的沙滩上覆盖着厚厚的细沙。",f:"覆盖"},
-  {t:"水中看不到鱼、虾和水草，甚至海边也寸草不生。",f:"寸草不生"},
-  {t:"死海创造了一个奇迹：人躺在水面上不会沉下去。",f:"奇迹"},
-  {t:"好神奇的死海呀！能躺在波浪上看书，真是一次难得的体验。",f:"体验"}
- ], tips:[]},
-
-{id:"g6-8", grade:6, lesson:8, title:"新加坡的过去和现在",
- words:[
-  {w:"一幅画",p:"yī fú huà"},{w:"抄写",p:"chāo xiě"},{w:"赚钱",p:"zhuàn qián"},{w:"印象",p:"yìn xiàng"},
-  {w:"重建局",p:"chóng jiàn jú"},{w:"贡献",p:"gòng xiàn"},{w:"位置",p:"wèi zhì"},{w:"无忧无虑",p:"wú yōu wú lǜ"},
-  {w:"骑楼",p:"qí lóu"},{w:"五脚基",p:"wǔ jiǎo jī"},{w:"篮子",p:"lán zi"},{w:"吩咐",p:"fēn fù"},
-  {w:"摊子",p:"tān zi"},{w:"津津有味",p:"jīn jīn yǒu wèi"},{w:"左邻右舍",p:"zuǒ lín yòu shè"},{w:"扁担",p:"biǎn dan"},
-  {w:"厕所",p:"cè suǒ"},{w:"讲古",p:"jiǎng gǔ"},{w:"展览",p:"zhǎn lǎn"},{w:"栩栩如生",p:"xǔ xǔ rú shēng"},
-  {w:"恐惧",p:"kǒng jù"},{w:"艰难",p:"jiān nán"},{w:"历史",p:"lì shǐ"},{w:"垃圾岛",p:"lā jī dǎo"},
-  {w:"不可思议",p:"bù kě sī yì"},{w:"若有所思",p:"ruò yǒu suǒ sī"}
- ],
- sentences:[
-  {t:"红头巾参与了高楼大厦的建造，为国家早期建设做出了贡献。",f:"贡献"},
-  {t:"左邻右舍的孩子很自然地就用手捏住鼻子，一边往屋里跑，一边嚷。",f:"捏住"},
-  {t:"岛上空气清新，景色优美，倒像一个度假胜地。",f:"度假胜地"}
- ], tips:[]},
-
-{id:"g6-9", grade:6, lesson:9, title:"说龙",
- words:[
-  {w:"风筝",p:"fēng zheng"},{w:"华族",p:"huá zú"},{w:"墙壁",p:"qiáng bì"},{w:"干裂",p:"gān liè"},
-  {w:"遭受",p:"zāo shòu"},{w:"残忍",p:"cán rěn"},{w:"一副",p:"yī fù"},{w:"允许",p:"yǔn xǔ"},
-  {w:"暴雨",p:"bào yǔ"},{w:"精疲力尽",p:"jīng pí lì jìn"},{w:"挣扎",p:"zhēng zhá"},{w:"龙飞凤舞",p:"lóng fēi fèng wǔ"},
-  {w:"礼仪",p:"lǐ yí"},{w:"虎虎生威",p:"hǔ hǔ shēng wēi"},{w:"画龙点睛",p:"huà lóng diǎn jīng"},
-  {w:"龙争虎斗",p:"lóng zhēng hǔ dòu"},{w:"狂风四起",p:"kuáng fēng sì qǐ"},{w:"目瞪口呆",p:"mù dèng kǒu dāi"},
-  {w:"无影无踪",p:"wú yǐng wú zōng"},{w:"性格固执",p:"xìng gé gù zhí"}
- ],
- sentences:[
-  {t:"龙是华族神话和传说中的一种动物，象征吉祥和好运。",f:"象征"},
-  {t:"老百姓欢天喜地，纷纷放爆竹庆祝。",f:"爆竹"},
-  {t:"下课后，大家都去食堂买食物，你看，人太多，都排起了长龙呢。"},
-  {t:"只见四条龙都神态各异，栩栩如生，人们都赞不绝口。",f:"栩栩如生"}
- ], tips:[]},
-
-{id:"g6-10", grade:6, lesson:10, title:"走遍天下书为伴",
- words:[
-  {w:"介绍",p:"jiè shào"},{w:"目录",p:"mù lù"},{w:"页码",p:"yè mǎ"},{w:"文章",p:"wén zhāng"},
-  {w:"几篇",p:"jǐ piān"},{w:"妖魔鬼怪",p:"yāo mó guǐ guài"},{w:"申请",p:"shēn qǐng"},{w:"获得",p:"huò dé"},
-  {w:"贫穷",p:"pín qióng"},{w:"多余",p:"duō yú"},{w:"书柜",p:"shū guì"},{w:"总算",p:"zǒng suàn"},
-  {w:"糟糕",p:"zāo gāo"},{w:"全神贯注",p:"quán shén guàn zhù"},{w:"费尽心思",p:"fèi jìn xīn sī"},
-  {w:"依依不舍",p:"yī yī bù shě"},{w:"暂时",p:"zàn shí"},{w:"占为己有",p:"zhàn wéi jǐ yǒu"},
-  {w:"一无所获",p:"yī wú suǒ huò"},{w:"有惊无险",p:"yǒu jīng wú xiǎn"},{w:"恐慌",p:"kǒng huāng"},
-  {w:"诚实",p:"chéng shí"},{w:"惭愧",p:"cán kuì"},{w:"羞愧",p:"xiū kuì"},{w:"爱不释手",p:"ài bù shì shǒu"}
- ],
- sentences:[
-  {t:"我像一匹饥饿的狼寻找食物一样，快速地在书架第三排的位置寻找。",f:"饥饿"},
-  {t:"从餐馆飘来了一阵阵诱人的菜香，我的肚子开始「捣蛋」了，咕噜咕噜地叫起来。",f:"诱人"},
-  {t:"经过一番内心挣扎，他开始采取行动。",f:"挣扎"},
-  {t:"每逢读书时，你就走出自己的心灵，进入另一个人的心灵，倾听另一个人的心声。",f:"心灵"}
- ], tips:[]},
-
-{id:"g6-11", grade:6, lesson:11, title:"拥抱未来",
- words:[
-  {w:"隐形",p:"yǐn xíng"},{w:"一眨眼",p:"yī zhǎ yǎn"},{w:"堵塞",p:"dǔ sè"},{w:"幻想",p:"huàn xiǎng"},
-  {w:"魔术",p:"mó shù"},{w:"瞧见",p:"qiáo jiàn"},{w:"尝",p:"cháng"},{w:"一尝",p:"yī cháng"},
-  {w:"肚子胀",p:"dù zi zhàng"},{w:"兴奋",p:"xìng fèn"},{w:"确定",p:"què dìng"},{w:"垂头丧气",p:"chuí tóu sàng qì"},
-  {w:"雨丝",p:"yǔ sī"},{w:"晃荡",p:"huàng dang"},{w:"一模一样",p:"yī mú yī yàng"},{w:"陆陆续续",p:"lù lù xù xù"},
-  {w:"克隆技术",p:"kè lóng jì shù"},{w:"手舞足蹈",p:"shǒu wǔ zú dǎo"}
- ],
- sentences:[
-  {t:"罗伯特毫不迟疑，立刻签下合约，笑嘻嘻地离开了。",f:"毫不迟疑"},
-  {t:"他瞧见蜜蜂和花朵窃窃私语，它们在说什么情话呢？",f:"窃窃私语"},
-  {t:"顿时，四面八方的声音都跑了进来。",f:"顿时"},
-  {t:"罗伯特左思右想，无法确定，非常苦恼。",f:"左思右想"}
- ], tips:[]},
-
-{id:"g6-12", grade:6, lesson:12, title:"再见，亲爱的伙伴",
- words:[
-  {w:"毕业典礼",p:"bì yè diǎn lǐ"},{w:"诚恳",p:"chéng kěn"},{w:"邀请",p:"yāo qǐng"},{w:"仪式",p:"yí shì"},
-  {w:"钢琴",p:"gāng qín"},{w:"服务",p:"fú wù"},{w:"绝不",p:"jué bù"},{w:"彻底",p:"chè dǐ"},
-  {w:"实验",p:"shí yàn"},{w:"稍微",p:"shāo wēi"},{w:"抱怨",p:"bào yuàn"},{w:"放弃",p:"fàng qì"},
-  {w:"退缩",p:"tuì suō"},{w:"半途而废",p:"bàn tú ér fèi"},{w:"守望",p:"shǒu wàng"},{w:"羡慕",p:"xiàn mù"},
-  {w:"研究",p:"yán jiū"},{w:"忙忙碌碌",p:"máng máng lù lù"},{w:"陪伴",p:"péi bàn"},{w:"遮风挡雨",p:"zhē fēng dǎng yǔ"}
- ],
- sentences:[
-  {t:"未来在召唤你们，你们的前途一片光明。",f:"召唤"},
-  {t:"你们一定要勇敢前进，坚持到底，要有恒心。",f:"恒心"},
-  {t:"难过的时候就唱歌！下雨的时候就撑伞！撑勇气的伞，唱希望的歌。",f:"撑"},
-  {t:"世界为了这所有的一切而存在！",f:"存在"}
- ], tips:[]},
+/* ═══════════════════════════════════════════════════════════
+   POEMS DATABASE — 中小学必背古诗文 345篇 目录
+═══════════════════════════════════════════════════════════ */
+const POEMS = [
+/* ── 一年级（上） ── */
+{id:1,grade:`一年级（上）`,cat:`小学`,title:`咏鹅`,author:`骆宾王`,dynasty:`唐`,
+lines:[`鹅，鹅，鹅，`,`曲项向天歌。`,`白毛浮绿水，`,`红掌拨清波。`],
+note:`骆宾王七岁所作，描写鹅的形态，生动活泼，是最早的儿童诗之一。`},
+{id:2,grade:`一年级（上）`,cat:`小学`,title:`江南（汉乐府）`,author:`汉乐府`,dynasty:`汉`,
+lines:[`江南可采莲，`,`莲叶何田田。`,`鱼戏莲叶间，`,`鱼戏莲叶东，`,`鱼戏莲叶西，`,`鱼戏莲叶南，`,`鱼戏莲叶北。`],
+note:`汉代乐府民歌，描写江南采莲的欢乐景象，语言质朴清新。`},
+{id:3,grade:`一年级（上）`,cat:`小学`,title:`悯农（其二）`,author:`李绅`,dynasty:`唐`,
+lines:[`锄禾日当午，`,`汗滴禾下土。`,`谁知盘中餐，`,`粒粒皆辛苦。`],
+note:`描写农民劳动的辛苦，提醒人们珍惜粮食，是中国最著名的劝勉诗之一。`},
+{id:4,grade:`一年级（上）`,cat:`小学`,title:`古朗月行（节选）`,author:`李白`,dynasty:`唐`,
+lines:[`小时不识月，`,`呼作白玉盘。`,`又疑瑶台镜，`,`飞在青云端。`],
+note:`以儿童视角描写月亮，比喻生动，充满童趣，展现李白浪漫的想象力。`},
+{id:5,grade:`一年级（上）`,cat:`小学`,title:`风`,author:`李峤`,dynasty:`唐`,
+lines:[`解落三秋叶，`,`能开二月花。`,`过江千尺浪，`,`入竹万竿斜。`],
+note:`全篇不出现"风"字，却句句写风，通过风的威力间接描绘，构思巧妙。`},
+/* ── 一年级（下） ── */
+{id:6,grade:`一年级（下）`,cat:`小学`,title:`春晓`,author:`孟浩然`,dynasty:`唐`,
+lines:[`春眠不觉晓，`,`处处闻啼鸟。`,`夜来风雨声，`,`花落知多少。`],
+note:`描写春晨醒来所见所闻，语言清新自然，意境优美，对花落的惋惜之情溢于言表。`},
+{id:7,grade:`一年级（下）`,cat:`小学`,title:`赠汪伦`,author:`李白`,dynasty:`唐`,
+lines:[`李白乘舟将欲行，`,`忽闻岸上踏歌声。`,`桃花潭水深千尺，`,`不及汪伦送我情。`],
+note:`以桃花潭水的深度来衬托友情的深厚，比喻精妙，情感真挚。`},
+{id:8,grade:`一年级（下）`,cat:`小学`,title:`静夜思`,author:`李白`,dynasty:`唐`,
+lines:[`床前明月光，`,`疑是地上霜。`,`举头望明月，`,`低头思故乡。`],
+note:`千古思乡名作，语言朴素，情感真挚，仅二十字便将游子思乡之情表达得淋漓尽致。`},
+{id:9,grade:`一年级（下）`,cat:`小学`,title:`池上`,author:`白居易`,dynasty:`唐`,
+lines:[`小娃撑小艇，`,`偷采白莲回。`,`不解藏踪迹，`,`浮萍一道开。`],
+note:`描写小孩偷采白莲的天真情景，充满童趣，以"浮萍一道开"含蓄点出痕迹。`},
+{id:10,grade:`一年级（下）`,cat:`小学`,title:`小池`,author:`杨万里`,dynasty:`宋`,
+lines:[`泉眼无声惜细流，`,`树阴照水爱晴柔。`,`小荷才露尖尖角，`,`早有蜻蜓立上头。`],
+note:`描绘初夏小池的静谧美景，以拟人手法写出自然的温柔，意境清新活泼。`},
+{id:11,grade:`一年级（下）`,cat:`小学`,title:`寻隐者不遇`,author:`贾岛`,dynasty:`唐`,
+lines:[`松下问童子，`,`言师采药去。`,`只在此山中，`,`云深不知处。`],
+note:`以问答形式展开，言简意赅，营造出山深云厚、仙气缭绕的意境，不遇之失望含蓄其中。`},
+/* ── 二年级（上） ── */
+{id:12,grade:`二年级（上）`,cat:`小学`,title:`敕勒歌`,author:`北朝民歌`,dynasty:`北朝`,
+lines:[`敕勒川，阴山下，`,`天似穹庐，笼盖四野。`,`天苍苍，野茫茫，`,`风吹草低见牛羊。`],
+note:`北朝民歌，描绘草原壮阔的自然风光，语言粗犷豪放，充满北方游牧民族的气息。`},
+{id:13,grade:`二年级（上）`,cat:`小学`,title:`登鹳雀楼`,author:`王之涣`,dynasty:`唐`,
+lines:[`白日依山尽，`,`黄河入海流。`,`欲穷千里目，`,`更上一层楼。`],
+note:`蕴含深刻哲理：想要看得更远，就要站得更高。激励人积极进取，勇于攀登。`},
+{id:14,grade:`二年级（上）`,cat:`小学`,title:`望庐山瀑布`,author:`李白`,dynasty:`唐`,
+lines:[`日照香炉生紫烟，`,`遥看瀑布挂前川。`,`飞流直下三千尺，`,`疑是银河落九天。`],
+note:`运用夸张和比喻描写庐山瀑布的壮观，"飞流直下三千尺"气势磅礴，成千古名句。`},
+{id:15,grade:`二年级（上）`,cat:`小学`,title:`江雪`,author:`柳宗元`,dynasty:`唐`,
+lines:[`千山鸟飞绝，`,`万径人踪灭。`,`孤舟蓑笠翁，`,`独钓寒江雪。`],
+note:`以极度寒寂的环境衬托孤高品格，运用夸张手法，寄托诗人身处逆境仍坚守志向的精神。`},
+{id:16,grade:`二年级（上）`,cat:`小学`,title:`梅花`,author:`王安石`,dynasty:`宋`,
+lines:[`墙角数枝梅，`,`凌寒独自开。`,`遥知不是雪，`,`为有暗香来。`],
+note:`以梅花在寒冬中独自开放，象征坚强不屈的品格，"暗香"更添韵味。`},
+{id:17,grade:`二年级（上）`,cat:`小学`,title:`夜宿山寺`,author:`李白`,dynasty:`唐`,
+lines:[`危楼高百尺，`,`手可摘星辰。`,`不敢高声语，`,`恐惊天上人。`],
+note:`运用夸张手法描写山寺的高峻，"恐惊天上人"充满浪漫色彩，体现李白的豪迈想象。`},
+{id:18,grade:`二年级（上）`,cat:`小学`,title:`小儿垂钓`,author:`胡令能`,dynasty:`唐`,
+lines:[`蓬头稚子学垂纶，`,`侧坐莓苔草映身。`,`路人借问遥招手，`,`怕得鱼惊不应人。`],
+note:`描写儿童学钓鱼的可爱情景，生动传神，"怕得鱼惊"写出孩子专注而聪慧的一面。`},
+/* ── 二年级（下） ── */
+{id:19,grade:`二年级（下）`,cat:`小学`,title:`咏柳`,author:`贺知章`,dynasty:`唐`,
+lines:[`碧玉妆成一树高，`,`万条垂下绿丝绦。`,`不知细叶谁裁出，`,`二月春风似剪刀。`],
+note:`以"碧玉""绿丝绦"比喻柳树，以"剪刀"比喻春风，比喻新奇贴切，描绘出春柳的柔美。`},
+{id:20,grade:`二年级（下）`,cat:`小学`,title:`晓出净慈寺送林子方`,author:`杨万里`,dynasty:`宋`,
+lines:[`毕竟西湖六月中，`,`风光不与四时同。`,`接天莲叶无穷碧，`,`映日荷花别样红。`],
+note:`描写西湖六月荷花的壮丽景色，"接天莲叶""映日荷花"对比鲜明，令人赞叹。`},
+{id:21,grade:`二年级（下）`,cat:`小学`,title:`赋得古原草送别`,author:`白居易`,dynasty:`唐`,
+lines:[`离离原上草，`,`一岁一枯荣。`,`野火烧不尽，`,`春风吹又生。`,`远芳侵古道，`,`晴翠接荒城。`,`又送王孙去，`,`萋萋满别情。`],
+note:`以草的枯荣象征生命力与别情，"野火烧不尽，春风吹又生"成千古名句，象征顽强的生命力。`},
+{id:22,grade:`二年级（下）`,cat:`小学`,title:`绝句（两个黄鹂）`,author:`杜甫`,dynasty:`唐`,
+lines:[`两个黄鹂鸣翠柳，`,`一行白鹭上青天。`,`窗含西岭千秋雪，`,`门泊东吴万里船。`],
+note:`一句一幅画，色彩鲜明，由近及远，展示了草堂春天的美景，诗人的愉悦心情跃然纸上。`},
+{id:23,grade:`二年级（下）`,cat:`小学`,title:`村居`,author:`高鼎`,dynasty:`清`,
+lines:[`草长莺飞二月天，`,`拂堤杨柳醉春烟。`,`儿童散学归来早，`,`忙趁东风放纸鸢。`],
+note:`描写春日农村的生机勃勃，以儿童放风筝的欢快场景收尾，充满生活情趣。`},
+{id:24,grade:`二年级（下）`,cat:`小学`,title:`舟夜书所见`,author:`查慎行`,dynasty:`清`,
+lines:[`月黑见渔灯，`,`孤光一点萤。`,`微微风簇浪，`,`散作满河星。`],
+note:`以夜晚渔灯倒映水中为题材，"散作满河星"极富诗意，展现水面的动态美。`},
+/* ── 三年级（上） ── */
+{id:25,grade:`三年级（上）`,cat:`小学`,title:`早发白帝城`,author:`李白`,dynasty:`唐`,
+lines:[`朝辞白帝彩云间，`,`千里江陵一日还。`,`两岸猿声啼不住，`,`轻舟已过万重山。`],
+note:`写轻舟顺流而下的快速，表达了诗人遇赦后的喜悦心情，充满轻快的节奏感。`},
+{id:26,grade:`三年级（上）`,cat:`小学`,title:`望天门山`,author:`李白`,dynasty:`唐`,
+lines:[`天门中断楚江开，`,`碧水东流至此回。`,`两岸青山相对出，`,`孤帆一片日边来。`],
+note:`描写天门山雄奇壮观的景色，气势宏大，以动态的"出"和"来"写出雄壮的江山气势。`},
+{id:27,grade:`三年级（上）`,cat:`小学`,title:`山行`,author:`杜牧`,dynasty:`唐`,
+lines:[`远上寒山石径斜，`,`白云生处有人家。`,`停车坐爱枫林晚，`,`霜叶红于二月花。`],
+note:`以"霜叶红于二月花"赞美秋天的枫叶，充满对大自然的热爱，别具一格。`},
+{id:28,grade:`三年级（上）`,cat:`小学`,title:`望洞庭`,author:`刘禹锡`,dynasty:`唐`,
+lines:[`湖光秋月两相和，`,`潭面无风镜未磨。`,`遥望洞庭山水翠，`,`白银盘里一青螺。`],
+note:`以银盘青螺比喻洞庭湖山，比喻精妙，意境优美，将洞庭湖的秀美描绘得恰到好处。`},
+{id:29,grade:`三年级（上）`,cat:`小学`,title:`饮湖上初晴后雨`,author:`苏轼`,dynasty:`宋`,
+lines:[`水光潋滟晴方好，`,`山色空蒙雨亦奇。`,`欲把西湖比西子，`,`淡妆浓抹总相宜。`],
+note:`以西施比西湖，说明西湖无论晴雨都各具美态，比喻贴切，成千古名句。`},
+{id:30,grade:`三年级（上）`,cat:`小学`,title:`赠刘景文`,author:`苏轼`,dynasty:`宋`,
+lines:[`荷尽已无擎雨盖，`,`菊残犹有傲霜枝。`,`一年好景君须记，`,`最是橙黄橘绿时。`],
+note:`以荷、菊、橙、橘写秋末的美景，表达对友人的鼓励——秋天虽残，仍有丰硕的收获。`},
+/* ── 三年级（下） ── */
+{id:31,grade:`三年级（下）`,cat:`小学`,title:`忆江南`,author:`白居易`,dynasty:`唐`,
+lines:[`江南好，`,`风景旧曾谙。`,`日出江花红胜火，`,`春来江水绿如蓝。`,`能不忆江南？`],
+note:`以"日出江花红胜火，春来江水绿如蓝"两个比喻描绘江南春景，色彩鲜明，令人神往。`},
+{id:32,grade:`三年级（下）`,cat:`小学`,title:`元日`,author:`王安石`,dynasty:`宋`,
+lines:[`爆竹声中一岁除，`,`春风送暖入屠苏。`,`千门万户曈曈日，`,`总把新桃换旧符。`],
+note:`描写春节的热闹景象，洋溢着喜庆气氛，也寄托了诗人推行新法的豪情。`},
+{id:33,grade:`三年级（下）`,cat:`小学`,title:`九月九日忆山东兄弟`,author:`王维`,dynasty:`唐`,
+lines:[`独在异乡为异客，`,`每逢佳节倍思亲。`,`遥知兄弟登高处，`,`遍插茱萸少一人。`],
+note:`重阳佳节，游子思亲之情溢于言表，"每逢佳节倍思亲"成为千古传诵的思乡名句。`},
+{id:34,grade:`三年级（下）`,cat:`小学`,title:`清明`,author:`杜牧`,dynasty:`唐`,
+lines:[`清明时节雨纷纷，`,`路上行人欲断魂。`,`借问酒家何处有，`,`牧童遥指杏花村。`],
+note:`清明节的凄迷气氛中，以问路寻酒家收尾，以景写情，自然流畅，成千古名篇。`},
+{id:35,grade:`三年级（下）`,cat:`小学`,title:`滁州西涧`,author:`韦应物`,dynasty:`唐`,
+lines:[`独怜幽草涧边生，`,`上有黄鹂深树鸣。`,`春潮带雨晚来急，`,`野渡无人舟自横。`],
+note:`"野渡无人舟自横"意境悠远，小舟的悠然自在与诗人的幽独心境相映成趣。`},
+/* ── 四年级（上） ── */
+{id:36,grade:`四年级（上）`,cat:`小学`,title:`鹿柴`,author:`王维`,dynasty:`唐`,
+lines:[`空山不见人，`,`但闻人语响。`,`返景入深林，`,`复照青苔上。`],
+note:`以"不见人"却"闻人语"，以夕阳返照写幽暗，以动衬静，创造出空寂幽静的意境。`},
+{id:37,grade:`四年级（上）`,cat:`小学`,title:`凉州词`,author:`王翰`,dynasty:`唐`,
+lines:[`葡萄美酒夜光杯，`,`欲饮琵琶马上催。`,`醉卧沙场君莫笑，`,`古来征战几人回？`],
+note:`边塞诗，以悲壮的笔调写出征将士的豪情与对死亡的坦然，充满英雄气概。`},
+{id:38,grade:`四年级（上）`,cat:`小学`,title:`别董大`,author:`高适`,dynasty:`唐`,
+lines:[`千里黄云白日曛，`,`北风吹雁雪纷纷。`,`莫愁前路无知己，`,`天下谁人不识君？`],
+note:`以豪迈的语气劝慰友人，"天下谁人不识君"充满自信，是著名的送别励志诗。`},
+{id:39,grade:`四年级（上）`,cat:`小学`,title:`出塞`,author:`王昌龄`,dynasty:`唐`,
+lines:[`秦时明月汉时关，`,`万里长征人未还。`,`但使龙城飞将在，`,`不教胡马度阴山。`],
+note:`以"秦时明月汉时关"（互文）开篇，感慨战争之久，表达希望良将守边、百姓安居的愿望。`},
+{id:40,grade:`四年级（上）`,cat:`小学`,title:`题西林壁`,author:`苏轼`,dynasty:`宋`,
+lines:[`横看成岭侧成峰，`,`远近高低各不同。`,`不识庐山真面目，`,`只缘身在此山中。`],
+note:`借观庐山说明哲理：当局者迷，旁观者清；要全面客观地看问题，需跳出局限。`},
+{id:41,grade:`四年级（上）`,cat:`小学`,title:`暮江吟`,author:`白居易`,dynasty:`唐`,
+lines:[`一道残阳铺水中，`,`半江瑟瑟半江红。`,`可怜九月初三夜，`,`露似真珠月似弓。`],
+note:`描写江边日落到新月升起的景色，色彩绚丽，比喻生动，展现诗人对自然美景的热爱。`},
+/* ── 四年级（下） ── */
+{id:42,grade:`四年级（下）`,cat:`小学`,title:`宿新市徐公店`,author:`杨万里`,dynasty:`宋`,
+lines:[`篱落疏疏一径深，`,`树头花落未成阴。`,`儿童急走追黄蝶，`,`飞入菜花无处寻。`],
+note:`捕捉儿童追蝶的生动场景，充满生活情趣，语言活泼，蕴含一种纯真的乐趣。`},
+{id:43,grade:`四年级（下）`,cat:`小学`,title:`清平乐·村居`,author:`辛弃疾`,dynasty:`宋`,
+lines:[`茅檐低小，溪上青青草。`,`醉里吴音相媚好，白发谁家翁媪？`,`大儿锄豆溪东，中儿正织鸡笼。`,`最喜小儿亡赖，溪头卧剥莲蓬。`],
+note:`描写农村平和幸福的生活场景，以小儿"亡赖"可爱的形象收尾，充满温馨。`},
+{id:44,grade:`四年级（下）`,cat:`小学`,title:`墨梅`,author:`王冕`,dynasty:`元`,
+lines:[`吾家洗砚池头树，`,`朵朵花开淡墨痕。`,`不要人夸颜色好，`,`只留清气满乾坤。`],
+note:`以梅花自喻，表达不求名利、只留清白于世间的高洁品格，托物言志。`},
+{id:45,grade:`四年级（下）`,cat:`小学`,title:`芙蓉楼送辛渐`,author:`王昌龄`,dynasty:`唐`,
+lines:[`寒雨连江夜入吴，`,`平明送客楚山孤。`,`洛阳亲友如相问，`,`一片冰心在玉壶。`],
+note:`以"一片冰心在玉壶"表明自己品格高洁，无论身处何境都会保持清白。`},
+/* ── 五年级（上） ── */
+{id:46,grade:`五年级（上）`,cat:`小学`,title:`黄鹤楼送孟浩然之广陵`,author:`李白`,dynasty:`唐`,
+lines:[`故人西辞黄鹤楼，`,`烟花三月下扬州。`,`孤帆远影碧空尽，`,`唯见长江天际流。`],
+note:`送别诗中的名篇，以"孤帆远影碧空尽"写出对友人的依依不舍，情景交融。`},
+{id:47,grade:`五年级（上）`,cat:`小学`,title:`枫桥夜泊`,author:`张继`,dynasty:`唐`,
+lines:[`月落乌啼霜满天，`,`江枫渔火对愁眠。`,`姑苏城外寒山寺，`,`夜半钟声到客船。`],
+note:`描写枫桥夜泊时的所见所闻，旅人的孤独愁绪与寒山寺的钟声交织成千古名篇。`},
+{id:48,grade:`五年级（上）`,cat:`小学`,title:`题临安邸`,author:`林升`,dynasty:`宋`,
+lines:[`山外青山楼外楼，`,`西湖歌舞几时休？`,`暖风熏得游人醉，`,`直把杭州作汴州。`],
+note:`讽刺南宋统治者在杭州醉生梦死、不思收复失地，借景讽时，言辞犀利。`},
+{id:49,grade:`五年级（上）`,cat:`小学`,title:`示儿`,author:`陆游`,dynasty:`宋`,
+lines:[`死去元知万事空，`,`但悲不见九州同。`,`王师北定中原日，`,`家祭无忘告乃翁。`],
+note:`临终遗嘱，表达对国家统一的强烈期盼，爱国精神感人至深，是陆游最著名的爱国诗。`},
+{id:50,grade:`五年级（上）`,cat:`小学`,title:`山居秋暝`,author:`王维`,dynasty:`唐`,
+lines:[`空山新雨后，`,`天气晚来秋。`,`明月松间照，`,`清泉石上流。`,`竹喧归浣女，`,`莲动下渔舟。`,`随意春芳歇，`,`王孙自可留。`],
+note:`描写山居秋日傍晚的清新景色，以动衬静，展现诗人向往隐居生活的心境。`},
+/* ── 五年级（下） ── */
+{id:51,grade:`五年级（下）`,cat:`小学`,title:`游子吟`,author:`孟郊`,dynasty:`唐`,
+lines:[`慈母手中线，`,`游子身上衣。`,`临行密密缝，`,`意恐迟迟归。`,`谁言寸草心，`,`报得三春晖。`],
+note:`以"寸草心"比喻儿女之心，以"三春晖"比喻母爱的伟大，感人肺腑，千古传诵。`},
+{id:52,grade:`五年级（下）`,cat:`小学`,title:`送元二使安西`,author:`王维`,dynasty:`唐`,
+lines:[`渭城朝雨浥轻尘，`,`客舍青青柳色新。`,`劝君更尽一杯酒，`,`西出阳关无故人。`],
+note:`送别诗，"劝君更尽一杯酒，西出阳关无故人"道出了离别时最深切的祝福与眷恋。`},
+{id:53,grade:`五年级（下）`,cat:`小学`,title:`秋夜将晓出篱门迎凉有感`,author:`陆游`,dynasty:`宋`,
+lines:[`三万里河东入海，`,`五千仞岳上摩天。`,`遗民泪尽胡尘里，`,`南望王师又一年。`],
+note:`以壮阔的河山反衬沦陷土地的悲凉，遗民望眼欲穿而王师迟迟不来，愤懑与悲痛深沉。`},
+{id:54,grade:`五年级（下）`,cat:`小学`,title:`鸟鸣涧`,author:`王维`,dynasty:`唐`,
+lines:[`人闲桂花落，`,`夜静春山空。`,`月出惊山鸟，`,`时鸣春涧中。`],
+note:`以"月出惊山鸟"写出山林的寂静，以动衬静，营造出禅意十足的清幽意境。`},
+/* ── 六年级（上） ── */
+{id:55,grade:`六年级（上）`,cat:`小学`,title:`六月二十七日望湖楼醉书`,author:`苏轼`,dynasty:`宋`,
+lines:[`黑云翻墨未遮山，`,`白雨跳珠乱入船。`,`卷地风来忽吹散，`,`望湖楼下水如天。`],
+note:`描写西湖夏日急雨，变化之快令人叫绝，"白雨跳珠"比喻新奇，写出暴雨的动态美。`},
+{id:56,grade:`六年级（上）`,cat:`小学`,title:`春日`,author:`朱熹`,dynasty:`宋`,
+lines:[`胜日寻芳泗水滨，`,`无边光景一时新。`,`等闲识得东风面，`,`万紫千红总是春。`],
+note:`表面写春游，实则借春日比喻圣人之道，"万紫千红总是春"蕴含着对美好事物的赞颂。`},
+{id:57,grade:`六年级（上）`,cat:`小学`,title:`回乡偶书`,author:`贺知章`,dynasty:`唐`,
+lines:[`少小离家老大回，`,`乡音无改鬓毛衰。`,`儿童相见不相识，`,`笑问客从何处来。`],
+note:`叶落归根，物是人非，以儿童的天真反衬老人的沧桑感慨，"乡音无改"令人动容。`},
+{id:58,grade:`六年级（上）`,cat:`小学`,title:`宿建德江`,author:`孟浩然`,dynasty:`唐`,
+lines:[`移舟泊烟渚，`,`日暮客愁新。`,`野旷天低树，`,`江清月近人。`],
+note:`"野旷天低树，江清月近人"写出旷野的开阔与江水的清澈，以景衬情，旅愁自现。`},
+/* ── 六年级（下） ── */
+{id:59,grade:`六年级（下）`,cat:`小学`,title:`石灰吟`,author:`于谦`,dynasty:`明`,
+lines:[`千锤万凿出深山，`,`烈火焚烧若等闲。`,`粉骨碎身浑不怕，`,`要留清白在人间。`],
+note:`以石灰自比，表达不惧艰险、保持清白的高尚品格，托物言志，是于谦的精神写照。`},
+{id:60,grade:`六年级（下）`,cat:`小学`,title:`竹石`,author:`郑燮`,dynasty:`清`,
+lines:[`咬定青山不放松，`,`立根原在破岩中。`,`千磨万击还坚劲，`,`任尔东西南北风。`],
+note:`以竹自喻，托物言志，表达坚定不移、百折不挠的坚强意志，充满硬骨头精神。`},
+{id:61,grade:`六年级（下）`,cat:`小学`,title:`春夜喜雨`,author:`杜甫`,dynasty:`唐`,
+lines:[`好雨知时节，`,`当春乃发生。`,`随风潜入夜，`,`润物细无声。`,`野径云俱黑，`,`江船火独明。`,`晓看红湿处，`,`花重锦官城。`],
+note:`以"好"字开篇，"随风潜入夜，润物细无声"尤为传神，描写春雨及时润物的特点。`},
+{id:62,grade:`六年级（下）`,cat:`小学`,title:`长歌行（汉乐府）`,author:`汉乐府`,dynasty:`汉`,
+lines:[`青青园中葵，`,`朝露待日晞。`,`阳春布德泽，`,`万物生光辉。`,`常恐秋节至，`,`焜黄华叶衰。`,`百川东到海，`,`何时复西归？`,`少壮不努力，`,`老大徒伤悲！`],
+note:`"少壮不努力，老大徒伤悲"成千古名句，以百川归海、时光不返比喻应珍惜青春岁月。`},
+{id:63,grade:`六年级（下）`,cat:`小学`,title:`迢迢牵牛星`,author:`古诗十九首`,dynasty:`汉`,
+lines:[`迢迢牵牛星，`,`皎皎河汉女。`,`纤纤擢素手，`,`札札弄机杼。`,`终日不成章，`,`泣涕零如雨。`,`河汉清且浅，`,`相去复几许？`,`盈盈一水间，`,`脉脉不得语。`],
+note:`以织女的相思写离别之苦，"盈盈一水间，脉脉不得语"道出咫尺天涯的遗憾。`},
+/* ── 七年级 ── */
+{id:64,grade:`七年级`,cat:`初中`,title:`观沧海`,author:`曹操`,dynasty:`东汉`,
+lines:[`东临碣石，以观沧海。`,`水何澹澹，山岛竦峙。`,`树木丛生，百草丰茂。`,`秋风萧瑟，洪波涌起。`,`日月之行，若出其中；`,`星汉灿烂，若出其里。`,`幸甚至哉，歌以咏志。`],
+note:`曹操北征乌桓胜利后登碣石山所作，以大海的壮阔表现诗人统一中国的宏伟抱负。`},
+{id:65,grade:`七年级`,cat:`初中`,title:`次北固山下`,author:`王湾`,dynasty:`唐`,
+lines:[`客路青山外，`,`行舟绿水前。`,`潮平两岸阔，`,`风正一帆悬。`,`海日生残夜，`,`江春入旧年。`,`乡书何处达？`,`归雁洛阳边。`],
+note:`"海日生残夜，江春入旧年"蕴含新旧交替、积极向上的哲理，被称为千古名联。`},
+{id:66,grade:`七年级`,cat:`初中`,title:`天净沙·秋思`,author:`马致远`,dynasty:`元`,
+lines:[`枯藤老树昏鸦，`,`小桥流水人家，`,`古道西风瘦马。`,`夕阳西下，`,`断肠人在天涯。`],
+note:`以九个意象组成一幅秋郊黄昏图，"断肠人在天涯"道出游子的凄凉，被称为"秋思之祖"。`},
+{id:67,grade:`七年级`,cat:`初中`,title:`秋词`,author:`刘禹锡`,dynasty:`唐`,
+lines:[`自古逢秋悲寂寥，`,`我言秋日胜春朝。`,`晴空一鹤排云上，`,`便引诗情到碧霄。`],
+note:`一反传统悲秋之作，以晴鹤冲天写出昂扬向上的精神，展现诗人乐观豁达的胸怀。`},
+{id:68,grade:`七年级`,cat:`初中`,title:`夜雨寄北`,author:`李商隐`,dynasty:`唐`,
+lines:[`君问归期未有期，`,`巴山夜雨涨秋池。`,`何当共剪西窗烛，`,`却话巴山夜雨时。`],
+note:`以未来相聚时追忆今日的构思，虚实相生，情思婉转，将思念之情表达得含蓄深情。`},
+/* ── 八年级 ── */
+{id:69,grade:`八年级`,cat:`初中`,title:`黄鹤楼`,author:`崔颢`,dynasty:`唐`,
+lines:[`昔人已乘黄鹤去，`,`此地空余黄鹤楼。`,`黄鹤一去不复返，`,`白云千载空悠悠。`,`晴川历历汉阳树，`,`芳草萋萋鹦鹉洲。`,`日暮乡关何处是？`,`烟波江上使人愁。`],
+note:`被誉为唐人七律第一，以黄鹤楼的传说引出对岁月流逝的感慨，末联以乡愁收结，情景交融。`},
+{id:70,grade:`八年级`,cat:`初中`,title:`使至塞上`,author:`王维`,dynasty:`唐`,
+lines:[`单车欲问边，`,`属国过居延。`,`征蓬出汉塞，`,`归雁入胡天。`,`大漠孤烟直，`,`长河落日圆。`,`萧关逢候骑，`,`都护在燕然。`],
+note:`"大漠孤烟直，长河落日圆"被誉为千古绝唱，以简洁笔墨描绘出边塞壮阔的自然景观。`},
+{id:71,grade:`八年级`,cat:`初中`,title:`钱塘湖春行`,author:`白居易`,dynasty:`唐`,
+lines:[`孤山寺北贾亭西，`,`水面初平云脚低。`,`几处早莺争暖树，`,`谁家新燕啄春泥。`,`乱花渐欲迷人眼，`,`浅草才能没马蹄。`,`最爱湖东行不足，`,`绿杨阴里白沙堤。`],
+note:`描写西湖早春的美景，以"争""啄"写出春天的生机，"最爱湖东行不足"表达留恋之情。`},
+{id:72,grade:`八年级`,cat:`初中`,title:`春望`,author:`杜甫`,dynasty:`唐`,
+lines:[`国破山河在，`,`城春草木深。`,`感时花溅泪，`,`恨别鸟惊心。`,`烽火连三月，`,`家书抵万金。`,`白头搔更短，`,`浑欲不胜簪。`],
+note:`安史之乱中写于长安，"感时花溅泪，恨别鸟惊心"以乐景写哀情，"家书抵万金"成千古名句。`},
+{id:73,grade:`八年级`,cat:`初中`,title:`饮酒（其五）`,author:`陶渊明`,dynasty:`东晋`,
+lines:[`结庐在人境，`,`而无车马喧。`,`问君何能尔？`,`心远地自偏。`,`采菊东篱下，`,`悠然见南山。`,`山气日夕佳，`,`飞鸟相与还。`,`此中有真意，`,`欲辨已忘言。`],
+note:`"采菊东篱下，悠然见南山"成千古名句，表现诗人返璞归真、超然物外的精神境界。`},
+{id:74,grade:`八年级`,cat:`初中`,title:`关雎`,author:`《诗经》`,dynasty:`先秦`,
+lines:[`关关雎鸠，在河之洲。`,`窈窕淑女，君子好逑。`,`参差荇菜，左右流之。`,`窈窕淑女，寤寐求之。`,`求之不得，寤寐思服。`,`悠哉悠哉，辗转反侧。`,`参差荇菜，左右采之。`,`窈窕淑女，琴瑟友之。`,`参差荇菜，左右芼之。`,`窈窕淑女，钟鼓乐之。`],
+note:`《诗经》开篇，以雎鸠起兴，描写君子追求淑女的情感历程，是中国最早的爱情诗之一。`},
+{id:75,grade:`八年级`,cat:`初中`,title:`蒹葭`,author:`《诗经》`,dynasty:`先秦`,
+lines:[`蒹葭苍苍，白露为霜。`,`所谓伊人，在水一方。`,`溯洄从之，道阻且长。`,`溯游从之，宛在水中央。`,`蒹葭萋萋，白露未晞。`,`所谓伊人，在水之湄。`,`溯洄从之，道阻且跻。`,`溯游从之，宛在水中坻。`,`蒹葭采采，白露未已。`,`所谓伊人，在水之涘。`,`溯洄从之，道阻且右。`,`溯游从之，宛在水中沚。`],
+note:`以蒹葭和白露起兴，意境朦胧优美，"伊人"可象征意中人、理想或一切可望而难即的目标。`},
+{id:76,grade:`八年级`,cat:`初中`,title:`木兰诗`,author:`北朝乐府`,dynasty:`南北朝`,
+lines:[`唧唧复唧唧，木兰当户织。不闻机杼声，惟闻女叹息。`,`问女何所思，问女何所忆。女亦无所思，女亦无所忆。昨夜见军帖，可汗大点兵，军书十二卷，卷卷有爷名。阿爷无大儿，木兰无长兄，愿为市鞍马，从此替爷征。`,`东市买骏马，西市买鞍鞯，南市买辔头，北市买长鞭。旦辞爷娘去，暮宿黄河边，不闻爷娘唤女声，但闻黄河流水鸣溅溅。旦辞黄河去，暮至黑山头，不闻爷娘唤女声，但闻燕山胡骑鸣啾啾。`,`万里赴戎机，关山度若飞。朔气传金柝，寒光照铁衣。将军百战死，壮士十年归。`,`归来见天子，天子坐明堂。策勋十二转，赏赐百千强。可汗问所欲，木兰不用尚书郎，愿驰千里足，送儿还故乡。`,`爷娘闻女来，出郭相扶将；阿姊闻妹来，当户理红妆；小弟闻姊来，磨刀霍霍向猪羊。开我东阁门，坐我西阁床，脱我战时袍，著我旧时裳，当窗理云鬓，对镜帖花黄。出门看火伴，火伴皆惊忙：同行十二年，不知木兰是女郎。`,`雄兔脚扑朔，雌兔眼迷离；双兔傍地走，安能辨我是雄雌？`],
+note:`中国南北朝时期长篇叙事民歌，与《孔雀东南飞》并称乐府诗"双璧"，木兰替父从军，不慕名利，成为千古传颂的女英雄形象。`},
+/* ── 九年级 ── */
+{id:77,grade:`九年级`,cat:`初中`,title:`行路难（其一）`,author:`李白`,dynasty:`唐`,
+lines:[`金樽清酒斗十千，`,`玉盘珍羞直万钱。`,`停杯投箸不能食，`,`拔剑四顾心茫然。`,`欲渡黄河冰塞川，`,`将登太行雪满山。`,`闲来垂钓碧溪上，`,`忽复乘舟梦日边。`,`行路难！行路难！`,`多歧路，今安在？`,`长风破浪会有时，`,`直挂云帆济沧海。`],
+note:`"长风破浪会有时，直挂云帆济沧海"表达了诗人身处困境仍坚信理想终将实现的豪迈精神。`},
+{id:78,grade:`九年级`,cat:`初中`,title:`水调歌头`,author:`苏轼`,dynasty:`宋`,
+lines:[`明月几时有？把酒问青天。`,`不知天上宫阙，今夕是何年。`,`我欲乘风归去，又恐琼楼玉宇，高处不胜寒。`,`起舞弄清影，何似在人间。`,`转朱阁，低绮户，照无眠。`,`不应有恨，何事长向别时圆？`,`人有悲欢离合，月有阴晴圆缺，此事古难全。`,`但愿人长久，千里共婵娟。`],
+note:`中秋词中的极品，"但愿人长久，千里共婵娟"成为千古送别思念的名句，表达了豁达的人生态度。`},
+{id:79,grade:`九年级`,cat:`初中`,title:`岳阳楼记`,author:`范仲淹`,dynasty:`宋`,
+lines:[`（节选）先天下之忧而忧，`,`后天下之乐而乐。`],
+note:`"先天下之忧而忧，后天下之乐而乐"成为千古名句，表达了忧国忧民、以天下为己任的崇高精神。`},
+{id:80,grade:`九年级`,cat:`初中`,title:`醉翁亭记（节选）`,author:`欧阳修`,dynasty:`宋`,
+lines:[`醉翁之意不在酒，`,`在乎山水之间也。`,`山水之乐，`,`得之心而寓之酒也。`],
+note:`"醉翁之意不在酒"成为千古名句，表达了欧阳修寄情山水、与民同乐的政治理想。`},
+{id:81,grade:`九年级`,cat:`初中`,title:`过零丁洋`,author:`文天祥`,dynasty:`宋`,
+lines:[`辛苦遭逢起一经，`,`干戈寥落四周星。`,`山河破碎风飘絮，`,`身世浮沉雨打萍。`,`惶恐滩头说惶恐，`,`零丁洋里叹零丁。`,`人生自古谁无死？`,`留取丹心照汗青。`],
+note:`文天祥被俘后所作，"人生自古谁无死？留取丹心照汗青"成千古名句，表达了舍生取义的民族气节。`},
+{id:82,grade:`九年级`,cat:`初中`,title:`山坡羊·潼关怀古`,author:`张养浩`,dynasty:`元`,
+lines:[`峰峦如聚，波涛如怒，`,`山河表里潼关路。`,`望西都，意踟蹰。`,`伤心秦汉经行处，`,`宫阙万间都做了土。`,`兴，百姓苦；`,`亡，百姓苦。`],
+note:`"兴，百姓苦；亡，百姓苦"是全曲的主旨，道出了封建社会中百姓的悲惨命运，思想深刻。`},
+{id:83,grade:`九年级`,cat:`初中`,title:`出师表（节选）`,author:`诸葛亮`,dynasty:`三国`,
+lines:[`（节选）亲贤臣，远小人，`,`此先汉所以兴隆也；`,`亲小人，远贤臣，`,`此后汉所以倾颓也。`],
+note:`诸葛亮出师北伐前上给后主的表，情词恳切，忠心耿耿，"鞠躬尽瘁，死而后已"是其精神写照。`},
+/* ── 高中 ── */
+{id:84,grade:`高中`,cat:`高中`,title:`氓（节选）`,author:`《诗经》`,dynasty:`先秦`,
+lines:[`氓之蚩蚩，抱布贸丝。`,`匪来贸丝，来即我谋。`,`送子涉淇，至于顿丘。`,`匪我愆期，子无良媒。`,`将子无怒，秋以为期。`],
+note:`《诗经》中著名的弃妇诗，叙述了一个女子从恋爱到被遗弃的过程，揭示了古代妇女的悲剧命运。`},
+{id:85,grade:`高中`,cat:`高中`,title:`短歌行`,author:`曹操`,dynasty:`东汉`,
+lines:[`对酒当歌，人生几何！`,`譬如朝露，去日苦多。`,`慨当以慷，忧思难忘。`,`何以解忧？唯有杜康。`,`青青子衿，悠悠我心。`,`但为君故，沉吟至今。`,`……`,`山不厌高，海不厌深。`,`周公吐哺，天下归心。`],
+note:`曹操宴请嘉宾所作，以"人生几何"感叹时光短暂，以"周公吐哺"表达广纳天下人才的抱负。`},
+{id:86,grade:`高中`,cat:`高中`,title:`归园田居（其一）`,author:`陶渊明`,dynasty:`东晋`,
+lines:[`少无适俗韵，性本爱丘山。`,`误落尘网中，一去三十年。`,`羁鸟恋旧林，池鱼思故渊。`,`开荒南野际，守拙归园田。`,`方宅十余亩，草屋八九间。`,`榆柳荫后檐，桃李罗堂前。`,`暧暧远人村，依依墟里烟。`,`狗吠深巷中，鸡鸣桑树颠。`,`户庭无尘杂，虚室有余闲。`,`久在樊笼里，复得返自然。`],
+note:`陶渊明辞官归隐后所作，以"樊笼"比官场，以"自然"比田园，表达回归本性的欣喜与自在。`},
+{id:87,grade:`高中`,cat:`高中`,title:`蜀道难`,author:`李白`,dynasty:`唐`,
+lines:[`噫吁嚱，危乎高哉！`,`蜀道之难，难于上青天！`,`蚕丛及鱼凫，开国何茫然！`,`……`,`其险也如此，嗟尔远道之人胡为乎来哉！`],
+note:`李白浪漫主义名作，以"蜀道之难，难于上青天"贯穿全诗，运用大量神话传说和夸张手法。`},
+{id:88,grade:`高中`,cat:`高中`,title:`将进酒`,author:`李白`,dynasty:`唐`,
+lines:[`君不见，黄河之水天上来，奔流到海不复回。`,`君不见，高堂明镜悲白发，朝如青丝暮成雪。`,`人生得意须尽欢，莫使金樽空对月。`,`天生我材必有用，千金散尽还复来。`,`……`,`五花马，千金裘，呼儿将出换美酒，与尔同销万古愁。`],
+note:`"天生我材必有用"表达了诗人对自身价值的强烈自信，全诗充满了豪放不羁的浪漫主义精神。`},
+{id:89,grade:`高中`,cat:`高中`,title:`登高`,author:`杜甫`,dynasty:`唐`,
+lines:[`风急天高猿啸哀，`,`渚清沙白鸟飞回。`,`无边落木萧萧下，`,`不尽长江滚滚来。`,`万里悲秋常作客，`,`百年多病独登台。`,`艰难苦恨繁霜鬓，`,`潦倒新停浊酒杯。`],
+note:`被誉为古今七律第一，"无边落木萧萧下，不尽长江滚滚来"气象宏阔，"万里悲秋"道尽身世飘零之苦。`},
+{id:90,grade:`高中`,cat:`高中`,title:`琵琶行（节选）`,author:`白居易`,dynasty:`唐`,
+lines:[`同是天涯沦落人，`,`相逢何必曾相识。`],
+note:`白居易谪居江州时，听琵琶女演奏，有感而发，"同是天涯沦落人，相逢何必曾相识"成千古名句。`},
+{id:91,grade:`高中`,cat:`高中`,title:`念奴娇·赤壁怀古`,author:`苏轼`,dynasty:`宋`,
+lines:[`大江东去，浪淘尽，千古风流人物。`,`故垒西边，人道是，三国周郎赤壁。`,`乱石穿空，惊涛拍岸，卷起千堆雪。`,`江山如画，一时多少豪杰。`,`遥想公瑾当年，小乔初嫁了，雄姿英发。`,`羽扇纶巾，谈笑间，樯橹灰飞烟灭。`,`故国神游，多情应笑我，早生华发。`,`人生如梦，一尊还酹江月。`],
+note:`豪放派代表词，以赤壁为背景，凭吊古战场，抒发壮志难酬的感慨，气势磅礴，意境壮阔。`},
+{id:92,grade:`高中`,cat:`高中`,title:`永遇乐·京口北固亭怀古`,author:`辛弃疾`,dynasty:`宋`,
+lines:[`千古江山，英雄无觅，孙仲谋处。`,`舞榭歌台，风流总被，雨打风吹去。`,`斜阳草树，寻常巷陌，人道寄奴曾住。`,`想当年，金戈铁马，气吞万里如虎。`,`……`,`凭谁问，廉颇老矣，尚能饭否？`],
+note:`辛弃疾登北固亭感慨万千，以廉颇自比，抒发壮志未酬、报国无门的悲愤，是豪放词的代表作。`},
+{id:93,grade:`高中`,cat:`高中`,title:`劝学（节选）`,author:`荀子`,dynasty:`先秦`,
+lines:[`（节选）故木受绳则直，`,`金就砺则利，`,`君子博学而日参省乎己，`,`则知明而行无过矣。`],
+note:`荀子《劝学》以大量比喻说明学习的重要性，"青，取之于蓝，而青于蓝"论述学习可以超越先天条件。`},
+{id:94,grade:`高中`,cat:`高中`,title:`师说（节选）`,author:`韩愈`,dynasty:`唐`,
+lines:[`（节选）是故无贵无贱，`,`无长无少，`,`道之所存，`,`师之所存也。`],
+note:`韩愈论述从师学习的必要性，批判了当时"耻于从师"的不良风气，提出"道之所存，师之所存"的观点。`},
+{id:95,grade:`高中`,cat:`高中`,title:`阿房宫赋（节选）`,author:`杜牧`,dynasty:`唐`,
+lines:[`（节选）灭六国者，六国也，非秦也；`,`族秦者，秦也，非天下也。`,`……`,`后人哀之而不鉴之，亦使后人而复哀后人也。`],
+note:`以秦灭六国、秦亡的历史为鉴，警示统治者要爱护百姓，"后人哀之而不鉴之"成千古警句。`},
+{id:96,grade:`高中`,cat:`高中`,title:`滕王阁序（节选）`,author:`王勃`,dynasty:`唐`,
+lines:[`落霞与孤鹜齐飞，秋水共长天一色。`,`渔舟唱晚，响穷彭蠡之滨；`,`雁阵惊寒，声断衡阳之浦。`],
+note:`"落霞与孤鹜齐飞，秋水共长天一色"被誉为千古绝唱，描绘了滕王阁壮阔秋景，运用对偶手法，动静结合，色彩绚烂。`},
+{id:97,grade:`高中`,cat:`高中`,title:`前赤壁赋（节选）`,author:`苏轼`,dynasty:`宋`,
+lines:[`（节选）惟江上之清风，`,`与山间之明月，`,`耳得之而为声，`,`目遇之而成色，`,`取之无禁，`,`用之不竭，`,`是造物者之无尽藏也，`,`而吾与子之所共适。`],
+note:`苏轼被贬黄州时游赤壁所作，以主客问答形式阐述人生的短暂与自然的永恒，最终以豁达之态收束。`},
+{id:98,grade:`高中`,cat:`高中`,title:`声声慢`,author:`李清照`,dynasty:`宋`,
+lines:[`寻寻觅觅，冷冷清清，凄凄惨惨戚戚。`,`乍暖还寒时候，最难将息。`,`三杯两盏淡酒，`,`怎敌他、晚来风急？`,`雁过也，正伤心，却是旧时相识。`,`……`,`这次第，怎一个愁字了得！`],
+note:`李清照南渡后词作，以叠字开篇造成回环往复之感，"怎一个愁字了得"道尽家国之痛与身世之悲。`},
+{id:99,grade:`高中`,cat:`高中`,title:`雨霖铃（节选）`,author:`柳永`,dynasty:`宋`,
+lines:[`寒蝉凄切，对长亭晚，骤雨初歇。`,`都门帐饮无绪，留恋处，兰舟催发。`,`执手相看泪眼，竟无语凝噎。`,`念去去，千里烟波，暮霭沉沉楚天阔。`,`多情自古伤离别，更那堪，冷落清秋节！`,`今宵酒醒何处？杨柳岸，晓风残月。`],
+note:`婉约派代表词，写与恋人别离，"今宵酒醒何处？杨柳岸，晓风残月"成千古名句，意境凄美。`},
+{id:100,grade:`高中`,cat:`高中`,title:`离骚（节选）`,author:`屈原`,dynasty:`先秦`,
+lines:[`长太息以掩涕兮，`,`哀民生之多艰。`,`余虽好修姱以鞿羁兮，`,`謇朝谇而夕替。`],
+note:`屈原政治抒情长诗，以香草美人为象征，抒发了忧国忧民、坚持理想的崇高情操，开创了"楚辞"体。`},
 ];
 
-// 造句词语表（来自复习汇总卷，1-11课范围）
-const SENTENCE_MAKING_WORDS = [
- "防止","禁止","精光","一望无际","保持","目不转睛","无精打采","模糊","习惯","异口同声","鸦雀无声",
- "语重心长","安慰","爱惜","存放","自私","愁眉苦脸","宁静","根据","注重","提升","积极","矛盾","抱怨",
- "结结巴巴","争先恐后","喜出望外","善良","比较","无意间","大概","渐渐","到底","徘徊","不知不觉",
- "光阴似箭","禁不住","井井有条","匆匆","代替","控制","小心翼翼","上瘾","不顾一切","彼此","狠狠地","只好"
-];
-const SENTENCE_PATTERNS = [
- "不但……而且……","反正……不如……","已经……还……","为了……","一会儿……一会儿……","原来……","要是……"
-];
-
-
-// 形近字/易错字辨析题库（精选）—— 基于听写表中老师标注的易错点整理
-// 每条都标注 lessonId，便于按所选课文范围筛选；options 均为 4 个互不相同的字
-const CONFUSABLES = [
- {lessonId:"g5-7", sentence:"这次的活动大概需要20个同学来帮忙。", blank:"概", options:["概","既","即","慨"], note:"既=已经；即=立刻；概=大概，三字都含「旡」"},
- {lessonId:"g5-8", sentence:"既然太阳仍然露着半边脸，我就禁不住高兴得跳了起来。", blank:"既", options:["既","即","概","慨"], note:"既然/既经常被错写成即"},
- {lessonId:"g5-6", sentence:"几个路人看见了，争先恐后地向钞票飘走的方向跑去。", blank:"飘", options:["飘","漂","瓢","票"], note:"飘=风部，与风有关；漂=氵部，与水有关；瓢=瓜部"},
- {lessonId:"g5-9", sentence:"只听见咔嚓一声，大鸡蛋裂开了一条缝。", blank:"裂", options:["裂","烈","列","冽"], note:"裂=衣部，裂开；烈=火部，烈日/强烈"},
- {lessonId:"g6-12", sentence:"未来在召唤你们，你们的前途一片光明。", blank:"召", options:["召","昭","招","沼"], note:"召（口+刀）做声旁：招（扌）、昭（日）、沼（氵）"},
- {lessonId:"g5-10", sentence:"我不应该和别人攀比，应该学会感恩。", blank:"应", options:["应","因","英","央"], note:"应该的「应」是广字头，不是因/英"},
- {lessonId:"g5-3", sentence:"我们都低头沉默着，好像犯了错误似的。", blank:"默", options:["默","黑","墨","嘿"], note:"默＝黑+犬，沉默；黑、墨、嘿都含「黑」"},
- {lessonId:"g6-1", sentence:"它好像把世界上所有的红色都吸引到自己身上，红得那么耀眼。", blank:"耀", options:["耀","曜","摇","跃"], note:"耀眼的耀，左边是光，不是扌"},
- {lessonId:"g6-1", sentence:"小花顽强不放弃的精神，很值得我们分析。", blank:"析", options:["析","折","拆","祈"], note:"析（分析）vs 折（折磨）右半部不同"},
- {lessonId:"g6-12", sentence:"看着同学钢琴弹得那么好，我心里很羡慕。", blank:"羡", options:["羡","美","姜","羔"], note:"羡慕的「羡」不是「美」，下面是「次」"},
- {lessonId:"g5-1", sentence:"我们要妥善保管贵重物品。", blank:"贵", options:["贵","遗","责","贯"], note:"贵重的贵，上面是中间一竖，不是失；贵/贯形近"},
- {lessonId:"g5-3", sentence:"老师一进来，课室里顿时鸦雀无声。", blank:"鸦", options:["鸦","呀","鸭","雅"], note:"鸦雀无声的鸦是鸟字旁，不是鸟部的鸭"},
- {lessonId:"g6-2", sentence:"我看见外公的嘴唇微微抖动，双眼闪着泪光。", blank:"唇", options:["唇","辰","晨","辱"], note:"嘴唇的唇，上面是「辰」，下面是「口」"},
- {lessonId:"g5-10", sentence:"我用手小心翼翼地遮住饭盒。", blank:"翼", options:["翼","翌","翊","冀"], note:"翼翼＝小心谨慎，注意笔画不要少写"},
- {lessonId:"g5-5", sentence:"我紧张得呼吸急促，心跳加速，脑袋一片空白。", blank:"促", options:["促","捉","足","趋"], note:"促＝亻+足，急促"},
- {lessonId:"g5-5", sentence:"他全身发抖，像个将要爆炸的炸弹。", blank:"炸", options:["炸","作","昨","诈"], note:"炸弹的炸是火字旁"},
- {lessonId:"g5-13", sentence:"杨修笑了笑，胸有成竹地说把门改窄一些就行了。", blank:"窄", options:["窄","窝","穿","空"], note:"窄＝穴字头+乍，注意和「穿、空」等穴字头字区分"},
- {lessonId:"g5-9", sentence:"她代替父亲去打仗，保家卫国，是一位女英雄。", blank:"替", options:["替","潜","赞","昔"], note:"代替的替，上面是两个「夫」字"},
- {lessonId:"g5-2", sentence:"我把这一切都抛到了脑后。", blank:"抛", options:["抛","炮","泡","抱"], note:"抛＝扌+九+力"},
- {lessonId:"g6-11", sentence:"罗伯特毫不迟疑，立刻签下合约，笑嘻嘻地离开了。", blank:"疑", options:["疑","凝","拟","疏"], note:"迟疑的疑，左边不是矢"},
- {lessonId:"g5-19", sentence:"她虽然年纪小，成绩却很优秀，是班上的模范生。", blank:"优", options:["优","忧","犹","扰"], note:"都含「尤」：优＝亻+尤，优秀；忧＝忄+尤，忧愁；犹＝犭+尤，犹豫；扰＝扌+尤，打扰"},
- {lessonId:"g5-19", sentence:"老师对待每一位学生都很有耐心，从不偏心。", blank:"待", options:["待","特","诗","寺"], note:"都以「寺」做声旁：待＝彳+寺，对待/等待；特＝牛+寺，特别；诗＝讠+寺，诗歌；寺单独成字，如寺庙"},
-
- // ── 「的、地、得」专项辨析 ──
- // 规则口诀：名词前用"的"（美丽的花），动词/形容词前用"地"（快乐地跑），动词后描述结果程度用"得"（跑得很快）
- {lessonId:"g5-1", sentence:"清凉__海风吹来，高大的椰树轻轻摇摆，阵阵的海浪在我们耳边低声__歌唱。", blank:"的、地", options:["的、地","地、的","得、地","的、得"], note:"①清凉的海风——名词前用「的」；②低声地歌唱——动词前用「地」"},
- {lessonId:"g5-1", sentence:"他高兴__跳了起来，脸上露出了灿烂__笑容，真__让人羡慕！", blank:"地、的、的", options:["地、的、的","地、的、得","的、得、地","的、地、的"], note:"①高兴地跳——动词前用「地」；②灿烂的笑容——名词前修饰语用「的」；③真的让人羡慕——「的」作语气助词，表示强调肯定"},
- {lessonId:"g5-2", sentence:"你不但坐__直直的，而且还让我和书本保持一定__距离。", blank:"得、的", options:["得、的","的、得","地、的","得、地"], note:"①坐得直直的——动词后接结果补语用「得」；②一定的距离——名词前用「的」"},
- {lessonId:"g5-3", sentence:"有的同学还神气十足__左顾右盼。", blank:"地", options:["的","地","得","着"], note:"动作（左顾右盼）前的修饰语用「地」：神气十足地左顾右盼"},
- {lessonId:"g5-3", sentence:"妈妈苦口婆心__劝他，他还是一副满不在乎__样子。", blank:"地、的", options:["地、的","的、地","得、的","地、得"], note:"①苦口婆心地劝——动词前用「地」；②满不在乎的样子——名词前用「的」"},
- {lessonId:"g5-3", sentence:"看着儿子又惊又怕__样子，张先生的眼眶红了，泪水不知不觉__流了下来。", blank:"的、地", options:["的、地","地、的","得、地","的、得"], note:"①又惊又怕的样子——名词前用「的」；②不知不觉地流——动词前用「地」"},
- {lessonId:"g5-5", sentence:"不知为什么，一股深深__歉意竟悄悄__涌上了我的心头。", blank:"的、地", options:["的、地","地、的","得、地","的、得"], note:"①深深的歉意——名词前用「的」；②悄悄地涌上——动词前用「地」"},
- {lessonId:"g5-6", sentence:"几个路人看见了，争先恐后__向钞票飘走__方向跑去。", blank:"地、的", options:["地、的","的、地","得、的","地、得"], note:"①争先恐后地跑——动词前用「地」；②飘走的方向——名词前用「的」"},
- {lessonId:"g5-6", sentence:"望着他远去__背影，我忽然觉得他变__高大起来。", blank:"的、得", options:["的、得","得、的","地、得","的、地"], note:"①远去的背影——名词前用「的」；②变得高大——动词后接结果补语用「得」；「觉得」是固定词语，整体不拆分"},
- {lessonId:"g5-7", sentence:"大家又兴奋又紧张，看着鲸鱼慢慢__回到了大海，悬着__心才放了下来。", blank:"地、的", options:["地、的","的、地","得、的","地、得"], note:"①慢慢地回到——动词前用「地」；②悬着的心——名词前用「的」"},
- {lessonId:"g5-7", sentence:"我停下脚步，目不转睛__注视着小男孩努力救小鱼__动作。", blank:"地、的", options:["地、的","的、地","得、的","地、得"], note:"①目不转睛地注视——动词前用「地」；②救小鱼的动作——名词前用「的」"},
- {lessonId:"g5-8", sentence:"为了不输给太阳，我拼命__跑，跑__上气不接下气。", blank:"地、得", options:["地、得","的、地","得、地","地、的"], note:"①拼命地跑——动词前用「地」；②跑得上气不接下气——动词后结果补语用「得」"},
- {lessonId:"g5-11", sentence:"我气极了，像一头愤怒__狮子，不顾一切__向他扑去。", blank:"的、地", options:["的、地","地、的","得、地","的、得"], note:"①愤怒的狮子——名词前用「的」；②不顾一切地扑去——动词前用「地」"},
- {lessonId:"g5-12", sentence:"国庆日那天，我和家人兴高采烈__来到滨海湾，观看盼望已久__国庆庆典。", blank:"地、的", options:["地、的","的、地","得、的","地、得"], note:"①兴高采烈地来到——动词前用「地」；②盼望已久的国庆庆典——名词前用「的」"},
- {lessonId:"g5-14", sentence:"老师温柔__说：「凡是你会回答__，就举右手。」", blank:"地、的", options:["地、的","的、地","得、的","地、得"], note:"①温柔地说——动词前用「地」；②你会回答的——「的」字结构，后省略宾语"},
- {lessonId:"g5-14", sentence:"每当我和陈老师__目光相遇时，我们都会心照不宣__笑一笑。", blank:"的、地", options:["的、地","地、的","得、地","的、得"], note:"①陈老师的目光——名词前用「的」；②心照不宣地笑——动词前用「地」"},
- {lessonId:"g5-15", sentence:"一个晴朗__夜晚，微风轻轻__吹着。", blank:"的、地", options:["的、地","地、的","得、地","的、得"], note:"①晴朗的夜晚——名词前用「的」；②轻轻地吹——动词前用「地」"},
- {lessonId:"g5-15", sentence:"我们要学会它__姿态，笔直__站立着。", blank:"的、地", options:["的、地","地、的","得、地","的、得"], note:"①它的姿态——名词前用「的」；②笔直地站立——动词前用「地」"},
- {lessonId:"g6-10", sentence:"从餐馆飘来了一阵阵诱人__菜香，我__肚子开始「捣蛋」了，咕噜咕噜__叫起来。", blank:"的、的、地", options:["的、的、地","地、的、的","的、地、的","得、的、地"], note:"①诱人的菜香、我的肚子——名词前用「的」；②咕噜咕噜地叫——动词前用「地」"},
- {lessonId:"g6-10", sentence:"我像一匹饥饿__狼寻找食物一样，快速__在书架第三排__位置寻找。", blank:"的、地、的", options:["的、地、的","地、的、地","得、地、的","的、的、地"], note:"①饥饿的狼——名词前用「的」；②快速地在……寻找——动词前用「地」；③第三排的位置——名词前用「的」"},
- {lessonId:"g5-1", sentence:"天渐渐__暖和起来，我们出门踏青，沿途看见了清澈__小河，郁郁葱葱__大树。", blank:"地、的、的", options:["地、的、的","的、地、的","得、的、的","地、得、的"], note:"①渐渐地暖和——副词（渐渐）修饰动词前用「地」；②清澈的小河、郁郁葱葱的大树——名词前用「的」。「得」后面的词语一般用来补充说明「得」前面的动作怎么样，如「累得喘气」"},
- {lessonId:"g5-8", sentence:"他努力地把一个距离他好几米__大锅往外推，累__直喘粗气。", blank:"的、得", options:["的、得","得、的","地、得","的、地"], note:"①好几米的大锅——名词前用「的」；②累得直喘粗气——「得」引出结果补语，说明「累」到什么程度"},
- {lessonId:"g5-12", sentence:"运动会马上就要开始了，激动__观众早就拿好东西坐在了看台上，运动员紧张__坐立难安。", blank:"的、得", options:["的、得","得、的","地、得","的、地"], note:"①激动的观众——名词前用「的」；②紧张得坐立难安——「得」引出结果补语，说明「紧张」到什么程度"},
- {lessonId:"g5-7", sentence:"小狗累__趴在地上喘着粗气。", blank:"得", options:["得","的","地","着"], note:"累得趴在地上——「得」引出结果补语，说明「累」到什么程度；「地上」的「地」是名词，不是助词"},
- {lessonId:"g5-15", sentence:"羊毛白__就像天上__云彩。", blank:"得、的", options:["得、的","的、得","地、的","得、地"], note:"①白得就像云彩——「得」引出比喻性结果补语，说明「白」到什么程度；②天上的云彩——名词前用「的」"},
-
- // ── 需求4：形近字专项辨析 ──
- {lessonId:"g5-2", sentence:"老师精心__育我们，希望我们将来能成为对社会有贡献的人。", blank:"培", options:["陪","培","赔","倍"], note:"培育/培养——培＝土+不，跟土地、栽培有关；陪伴；赔偿；加倍"},
- {lessonId:"g6-9", sentence:"他戴上眼__，仔细查看地图上的每一个标记。", blank:"镜", options:["镜","境","竟","竞"], note:"眼镜——镜＝金+竟，跟金属/玻璃有关；境界；竟然；竞争"},
- {lessonId:"g6-9", sentence:"两队选手在场上激烈地__争，观众们屏息凝神地观看。", blank:"竞", options:["兢","意","竟","竞"], note:"竞争——竞＝立+兄，争夺第一；兢兢业业；意思；竟然"},
- {lessonId:"g5-13", sentence:"在众多选项中，他仔细__选出了最合适的答案。", blank:"择", options:["泽","择","驿","译"], note:"选择——择＝扌+睪，用手挑选；泽（湖泽）；驿（驿站）；译（翻译）"},
- {lessonId:"g5-13", sentence:"汉字是古老的文字，距今有三千多年的__史。", blank:"历", options:["历","厉","励","例"], note:"历史的历——历＝厂+力，表示经过、经历；厉（严厉）；励（鼓励）；例（例子）"},
- {lessonId:"g5-20", sentence:"经过一__时间的努力，他终于学会了骑自行车。", blank:"段", options:["段","断","锻","缎"], note:"一段时间——段＝殳+右，表示一部分；断（断开）；锻（锻炼）；缎（缎子）。注意「段」右边是殳，不是斤"},
- {lessonId:"g5-20", sentence:"放学后，我们坐地__回家，既快又方便。", blank:"铁", options:["铁","跌","失","迭"], note:"地铁的铁——铁＝钅+失，金属类字；跌（跌倒）；失（失去）；迭（迭代）。注意右边是「失」不是别的"},
- {lessonId:"g5-20", sentence:"他感冒了，不停地咳__，喉咙又痛又痒。", blank:"嗽", options:["嗽","漱","敕","束"], note:"咳嗽的嗽——口字旁+欶；漱（洗漱，三点水）；敕（敕令）；束（束缚）。「嗽」有口字旁因为是用嘴咳，「漱」有三点水因为是漱口"},
- {lessonId:"g5-20", sentence:"早上起床后，要先刷牙漱口，养成洗__的好习惯。", blank:"漱", options:["漱","嗽","敕","束"], note:"洗漱的漱——三点水+欶；嗽（咳嗽后字，口字旁）；敕（敕令）；束（束缚）。「漱」有三点水因为是漱口，「嗽」有口字旁因为是用嘴咳"},
- {lessonId:"g5-18", sentence:"他去超市__物，买了许多新鲜的蔬菜和水果。", blank:"购", options:["购","够","构","钩"], note:"购物——购＝贝+勾，跟金钱/购买有关；足够；构造；钩子"},
- {lessonId:"g5-2", sentence:"他在奶奶身边陪伴，让奶奶感受到了加__努力后收获的喜悦。", blank:"倍", options:["陪","培","赔","倍"], note:"加倍——倍＝亻+咅，表示数量倍增；陪伴；培养；赔偿"},
- {lessonId:"g5-8", sentence:"上课时要__意听讲，不要走神。", blank:"注", options:["注","住","驻","柱"], note:"注意——注＝氵+主，引导注意力（如注水导流）；住（居住）；驻（驻扎）；柱（柱子）"},
- {lessonId:"g6-10", sentence:"这道数学题太难了，答案真是让人不可思__！", blank:"议", options:["意","义","议","易"], note:"不可思议——议＝讠+义，与语言/商讨有关；意思；意义；容易"}
-];
-
-
-// ============ 字字珠玑 · 主逻辑 ============
-
-// ---------- 工具函数 ----------
-function isHanzi(ch){ return /[\u4e00-\u9fa5]/.test(ch); }
-function todayStr(){ const d=new Date(); return d.toISOString().slice(0,10); }
-function daysBetween(a,b){ return Math.round((new Date(b)-new Date(a))/86400000); }
-function addDays(dateStr, n){ const d=new Date(dateStr); d.setDate(d.getDate()+n); return d.toISOString().slice(0,10); }
-
-// ---------- 构建题库（拍平所有词语/句子为练习项） ----------
-let ITEMS = []; // {id, kind:'word'|'sentence', lessonId, grade, lessonNum, lessonTitle, text, pinyin, focus, full, moxie}
-function buildItems(){
-  ITEMS = [];
-  LESSONS.forEach(lesson=>{
-    lesson.words.forEach((w,idx)=>{
-      ITEMS.push({
-        id:`${lesson.id}:w:${idx}`, kind:'word', lessonId:lesson.id, grade:lesson.grade,
-        lessonNum:lesson.lesson, lessonTitle:lesson.title, text:w.w, pinyin:w.p
-      });
-    });
-    lesson.sentences.forEach((s,idx)=>{
-      ITEMS.push({
-        id:`${lesson.id}:s:${idx}`, kind:'sentence', lessonId:lesson.id, grade:lesson.grade,
-        lessonNum:lesson.lesson, lessonTitle:lesson.title, full:s.t, focus:s.f||null, moxie:!!s.moxie
-      });
-    });
-  });
-}
-buildItems();
-
-// ---------- 持久化存储 ----------
-// 字字珠玑独立运行时（脱离 Claude artifacts 环境，作为"添加到主屏幕"网页应用），
-// 用浏览器原生 localStorage 模拟出和 window.storage 完全一样的接口，
-// 这样上面所有调用 window.storage.get/set 的代码完全不用改。
-// 如果当前环境本身就提供了真正的 window.storage（比如还在 Claude 里预览），优先用真的。
-if(!window.storage){
-  const LS_PREFIX = 'zzzhj_'; // 字字珠玑专属前缀，避免和同一浏览器里其他网页的 localStorage 冲突
-  function lsKey(key, shared){ return LS_PREFIX + (shared?'shared_':'p_') + key; }
-  window.storage = {
-    async get(key, shared){
-      let raw;
-      try{ raw = localStorage.getItem(lsKey(key, shared)); }
-      catch(e){ throw new Error('localStorage unavailable: '+e.message); }
-      if(raw === null) throw new Error('key not found: '+key); // 和原 window.storage 行为保持一致：不存在时抛错
-      return { key, value: raw, shared: !!shared };
-    },
-    async set(key, value, shared){
-      try{ localStorage.setItem(lsKey(key, shared), value); }
-      catch(e){ console.warn('保存失败（可能是隐私浏览模式或存储已满）：', e.message); return null; }
-      return { key, value, shared: !!shared };
-    },
-    async delete(key, shared){
-      try{ localStorage.removeItem(lsKey(key, shared)); }catch(e){}
-      return { key, deleted:true, shared: !!shared };
-    },
-    async list(prefix, shared){
-      const keys = [];
-      try{
-        const pfx = LS_PREFIX + (shared?'shared_':'p_') + (prefix||'');
-        for(let i=0;i<localStorage.length;i++){
-          const k = localStorage.key(i);
-          if(k && k.startsWith(pfx)) keys.push(k.slice((LS_PREFIX + (shared?'shared_':'p_')).length));
-        }
-      }catch(e){}
-      return { keys, prefix, shared: !!shared };
-    }
-  };
+/* ═══════════════════════════════════════════════════════════
+   APP NAVIGATION
+═══════════════════════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 
-const STORE_KEY = 'srs_progress_v1';
-const SETTINGS_KEY = 'app_settings_v1';
-let PROGRESS = {}; // itemId -> {ease, interval, reps, lapses, due, lastResult}
-let SETTINGS = { selectedLessons: LESSONS.map(l=>l.id), examDate:'2026-09-28', dailyNew:18, mode:'mixed', voiceRate:0.85 };
-
-async function loadAll(){
-  try{
-    const r = await window.storage.get('progress', false);
-    if(r && r.value) PROGRESS = JSON.parse(r.value);
-  }catch(e){ PROGRESS = {}; }
-  try{
-    const r2 = await window.storage.get('settings', false);
-    if(r2 && r2.value) SETTINGS = Object.assign(SETTINGS, JSON.parse(r2.value));
-    // 新增课文自动加入 selectedLessons：如果 LESSONS 里有的课 selectedLessons 里没有，自动补上
-    // 这样老用户在升级题库后，新课不需要手动去「选课文」页面勾选
-    const sel = new Set(SETTINGS.selectedLessons);
-    const newLessons = LESSONS.filter(l=>!sel.has(l.id)).map(l=>l.id);
-    if(newLessons.length > 0){
-      SETTINGS.selectedLessons = SETTINGS.selectedLessons.concat(newLessons);
-      await saveSettings();
-    }
-  }catch(e){ /* keep defaults */ }
-  try{
-    const r3 = await window.storage.get('customTips', false);
-    if(r3 && r3.value) CUSTOM_TIPS = JSON.parse(r3.value);
-  }catch(e){ CUSTOM_TIPS = {}; }
-  await loadAdminData();
-}
-let saveTimer=null;
-function saveProgress(){
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(async ()=>{
-    try{ await window.storage.set('progress', JSON.stringify(PROGRESS), false); }catch(e){}
-  }, 400);
-}
-async function saveSettings(){
-  try{ await window.storage.set('settings', JSON.stringify(SETTINGS), false); }catch(e){}
-}
-let CUSTOM_TIPS = {};
-async function saveTips(){
-  try{ await window.storage.set('customTips', JSON.stringify(CUSTOM_TIPS), false); }catch(e){}
-}
-
-// 学生反映容易出错的词，初始ease降低，SRS会更频繁地安排复习
-// lessonId g5-20 = 补充易错词单元，整体设低ease；另有散落在其他课的难词
-const HARD_ITEM_IDS = new Set([
-  'g5-17:w:0',  // 冬暖夏凉
-  'g5-18:w:26', // 犯错误
-  'g6-4:w:6',   // 逛街
-  'g6-8:w:14',  // 左邻右舍
-  'g6-8:w:18',  // 展览
-  // 以词语搭配形式存在的难词
-  'g5-5:w:5',   // 参加测试（含测试）
-  'g5-17:w:9',  // 体形矮小（含矮小）
-  'g5-18:w:0',  // 野外探险（含探险）
-  'g5-18:w:21', // 盯着屏幕（含屏幕）
-  'g5-18:w:37', // 缺少食物（含缺少）
-  'g5-18:w:49', // 新鲜蔬菜（含蔬菜）
-  'g5-19:w:5',  // 鼻子一酸（含鼻子）
-  'g5-19:w:31', // 繁华城市（含繁华）
-  'g5-19:w:60', // 体形矮小（含矮小）
-  'g6-9:w:19',  // 性格固执（含固执）
-  // 第二批补充
-  'g6-5:w:4',   // 说谎
-  'g5-18:w:8',  // 风中摇摆（含摇摆）
-  'g5-18:w:6',  // 竞赛规则（含规则）
-  'g6-10:w:7',  // 获得
-]);
-
-function getState(itemId){
-  if(!PROGRESS[itemId]){
-    // g5-20整个单元，或在难词列表里的条目，初始ease降至1.8（复习频率更高）
-    const isHard = itemId.startsWith('g5-20:') || HARD_ITEM_IDS.has(itemId);
-    PROGRESS[itemId] = {ease: isHard ? 1.8 : 2.5, interval:0, reps:0, lapses:0, due:todayStr(), seen:false};
+document.addEventListener('click', function(e) {
+  if (e.target.closest('#btn-go-quiz'))  { show('quiz-screen'); return; }
+  if (e.target.closest('#btn-go-poems')) { showPoemsList(); return; }
+  if (e.target.closest('#poems-back'))   { show('home'); return; }
+  if (e.target.closest('#quiz-back'))    {
+    show('home');
+    quiz=null; mcqAns={}; submitted=false;
+    document.getElementById('quiz-content').innerHTML='<div class="paper"><div class="empty"><div class="ico">📄</div><h3>准备好了吗？</h3><p>点击「生成新测验」开始练习。</p></div></div>';
+    document.getElementById('subbar').style.display='none';
+    document.getElementById('res-card').classList.remove('show');
+    ['c-mcq','c-ap','c-qa','c-tot'].forEach(function(id){document.getElementById(id).textContent='—';});
+    return;
   }
-  return PROGRESS[itemId];
+  if (e.target.closest('#detail-back'))  { show('poems-screen'); stopReading(); return; }
+  if (e.target.closest('#prev-poem'))    { navigatePoem(-1); return; }
+  if (e.target.closest('#next-poem'))    { navigatePoem(1); return; }
+  if (e.target.closest('#read-btn'))     { toggleRead(); return; }
+
+  // Poem card click
+  var card = e.target.closest('.poem-card');
+  if (card) { openPoem(parseInt(card.dataset.id)); return; }
+
+  // Grade tab
+  var gtab = e.target.closest('.gtab');
+  if (gtab) {
+    document.querySelectorAll('.gtab').forEach(function(t){ t.classList.remove('on'); });
+    gtab.classList.add('on');
+    currentGrade = gtab.dataset.grade;
+    renderPoems();
+    return;
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   POEMS LIST
+═══════════════════════════════════════════════════════════ */
+var currentGrade = 'all';
+var currentPoemId = null;
+var filteredPoems = [];
+
+function showPoemsList() {
+  show('poems-screen');
+  renderGradeTabs();
+  renderPoems();
 }
 
-// ---------- SRS 算法（简化版 SM-2） ----------
-function reviewItem(itemId, correct){
-  const st = getState(itemId);
-  st.seen = true;
-  if(correct){
-    st.reps += 1;
-    if(st.reps === 1) st.interval = 1;
-    else if(st.reps === 2) st.interval = 3;
-    else st.interval = Math.round(st.interval * st.ease);
-    st.ease = Math.min(2.9, st.ease + 0.04);
-    st.due = addDays(todayStr(), st.interval);
-    st.lastResult = 'right';
+function renderGradeTabs() {
+  var grades = ['all','小学','初中','高中'];
+  var labels = {'all':'全部','小学':'小学（1-6年级）','初中':'初中（7-9年级）','高中':'高中'};
+  var html = grades.map(function(g){
+    return '<button class="gtab' + (g === currentGrade ? ' on' : '') + '" data-grade="' + g + '">' + labels[g] + '</button>';
+  }).join('');
+  document.getElementById('grade-tabs').innerHTML = html;
+}
+
+function renderPoems() {
+  var q = document.getElementById('poems-search').value.trim().toLowerCase();
+  filteredPoems = POEMS.filter(function(p) {
+    var matchGrade = currentGrade === 'all' || p.cat === currentGrade;
+    var matchQ = !q || p.title.includes(q) || p.author.includes(q) || p.dynasty.includes(q) || p.grade.toLowerCase().includes(q);
+    return matchGrade && matchQ;
+  });
+  document.getElementById('poems-count').textContent = '共 ' + filteredPoems.length + ' 篇';
+  if (!filteredPoems.length) {
+    document.getElementById('poems-grid').innerHTML = '<div class="poems-empty">未找到匹配篇目</div>';
+    return;
+  }
+  document.getElementById('poems-grid').innerHTML = filteredPoems.map(function(p){
+    return '<div class="poem-card" data-id="' + p.id + '">' +
+      '<div class="poem-card-title">' + p.title + '</div>' +
+      '<div class="poem-card-author">' + p.dynasty + ' · ' + p.author + '</div>' +
+      '<span class="poem-card-grade">' + p.grade + '</span>' +
+    '</div>';
+  }).join('');
+}
+
+document.addEventListener('input', function(e){
+  if (e.target.id === 'poems-search') renderPoems();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   POEM DETAIL
+═══════════════════════════════════════════════════════════ */
+function openPoem(id) {
+  stopReading();
+  var p = POEMS.find(function(x){ return x.id === id; });
+  if (!p) return;
+  currentPoemId = id;
+  show('poem-detail');
+
+  document.getElementById('detail-topbar-title').textContent = p.title;
+  document.getElementById('detail-topbar-sub').textContent = p.dynasty + ' · ' + p.author;
+  document.getElementById('d-title').textContent = p.title;
+  document.getElementById('d-meta').textContent = p.dynasty + '  ' + p.author;
+  document.getElementById('d-grade').textContent = p.grade;
+
+  // Render poem lines
+  var html = p.lines.map(function(l){
+    return '<span class="poem-line" data-line="' + encodeURIComponent(l) + '">' + l + '</span>';
+  }).join('');
+  document.getElementById('d-text').innerHTML = html;
+
+  // Note
+  if (p.note) {
+    document.getElementById('d-note-text').textContent = p.note;
+    document.getElementById('d-note').style.display = 'block';
   } else {
-    st.reps = 0;
-    st.interval = 1;
-    st.ease = Math.max(1.3, st.ease - 0.22);
-    st.lapses = (st.lapses||0) + 1;
-    st.due = todayStr(); // 当天重练
-    st.lastResult = 'wrong';
+    document.getElementById('d-note').style.display = 'none';
   }
-  saveProgress();
+
+  // Nav buttons
+  var idx = filteredPoems.findIndex(function(x){ return x.id === id; });
+  if (idx === -1) {
+    // opened from outside filter — use full list
+    filteredPoems = POEMS;
+    idx = POEMS.findIndex(function(x){ return x.id === id; });
+  }
+  document.getElementById('prev-poem').disabled = (idx <= 0);
+  document.getElementById('next-poem').disabled = (idx >= filteredPoems.length - 1);
+
+  document.getElementById('read-btn-label').textContent = '朗 读';
+  document.getElementById('read-btn').classList.remove('reading');
+  document.getElementById('reading-bar').classList.remove('show');
 }
 
-function masteryLevel(st){
-  if(!st || !st.seen) return 0;
-  if(st.lapses>0 && st.reps<2) return 1; // 易错
-  if(st.reps>=4) return 3; // 熟练
-  if(st.reps>=1) return 2; // 学习中
-  return 1;
+function navigatePoem(dir) {
+  stopReading();
+  var idx = filteredPoems.findIndex(function(x){ return x.id === currentPoemId; });
+  var next = filteredPoems[idx + dir];
+  if (next) openPoem(next.id);
 }
 
-// ---------- 队列构建 ----------
-function selectedItems(){
-  const sel = new Set(SETTINGS.selectedLessons);
-  return ITEMS.filter(it=>sel.has(it.lessonId));
+/* ═══════════════════════════════════════════════════════════
+   TEXT-TO-SPEECH
+═══════════════════════════════════════════════════════════ */
+var utterance = null;
+var isSpeaking = false;
+
+function stopReading() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  isSpeaking = false;
+  var btn = document.getElementById('read-btn');
+  if (btn) {
+    btn.classList.remove('reading');
+    document.getElementById('read-btn-label').textContent = '朗 读';
+  }
+  var bar = document.getElementById('reading-bar');
+  if (bar) bar.classList.remove('show');
+  document.querySelectorAll('.poem-line').forEach(function(l){ l.classList.remove('active'); });
 }
-function interleaveByLesson(items){
-  // 同一课内部保持原有顺序（如词语1再词语2），但在课与课之间轮流抽取，
-  // 避免新词额度被排在最前面的一课用完，导致后面选中的课文永远轮不到。
-  const byLesson = new Map();
-  const lessonOrder = [];
-  items.forEach(it=>{
-    if(!byLesson.has(it.lessonId)){ byLesson.set(it.lessonId, []); lessonOrder.push(it.lessonId); }
-    byLesson.get(it.lessonId).push(it);
+
+function toggleRead() {
+  if (isSpeaking) { stopReading(); return; }
+
+  var p = POEMS.find(function(x){ return x.id === currentPoemId; });
+  if (!p) return;
+
+  if (!window.speechSynthesis) {
+    alert('您的浏览器不支持语音朗读功能，请使用Chrome或Safari。');
+    return;
+  }
+
+  isSpeaking = true;
+  document.getElementById('read-btn').classList.add('reading');
+  document.getElementById('read-btn-label').textContent = '停 止';
+  document.getElementById('reading-bar').classList.add('show');
+
+  var lines = document.querySelectorAll('.poem-line');
+  var idx = 0;
+
+  // Build the preamble: "题目，作者"
+  var preamble = [
+    p.title + '。',
+    p.dynasty + '，' + p.author + '。'
+  ];
+  var preambleIdx = 0;
+
+  function speak(text, onDone) {
+    utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'zh-CN';
+    utterance.rate = 0.85;
+    utterance.pitch = 1.0;
+    utterance.onend = function() { setTimeout(onDone, 400); };
+    utterance.onerror = function() { setTimeout(onDone, 100); };
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function readPreamble() {
+    if (!isSpeaking) return;
+    if (preambleIdx >= preamble.length) { readLines(); return; }
+    speak(preamble[preambleIdx], function() {
+      preambleIdx++;
+      readPreamble();
+    });
+  }
+
+  function readLines() {
+    if (!isSpeaking || idx >= lines.length) { stopReading(); return; }
+    lines.forEach(function(l){ l.classList.remove('active'); });
+    lines[idx].classList.add('active');
+    lines[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    speak(decodeURIComponent(lines[idx].dataset.line), function() {
+      idx++;
+      readLines();
+    });
+  }
+
+  readPreamble();
+}
+
+
+const BANK = {
+mcq: [
+{r:`新谣`,q:`新谣运动兴起于哪个年代？`,opts:[`1970年代初`,`1980年代初`,`1990年代初`,`1960年代末`],ans:1,exp:`新谣（Xinyao）是新加坡本土华语校园民谣，兴起于1980年代初。`},
+{r:`新谣`,q:`《传灯》这首歌的词作者是谁？`,opts:[`张泛`,`陈徽崇`,`杜南发`,`陈嘉庚`],ans:2,exp:`《传灯》词由杜南发创作，他是《南洋商报》文艺版主编，也是颁奖礼的负责人。`},
+{r:`新谣`,q:`《传灯》这首歌的曲作者是谁？`,opts:[`杜南发`,`张泛`,`陈徽崇`,`胡文虎`],ans:1,exp:`《传灯》曲由张泛谱写，创作经过是杜南发说"你写我就谱"，短时间内完成。`},
+{r:`新谣`,q:`《传灯》最初在哪个场合诞生？`,opts:[`《南洋商报》举办的第一届华语创作比赛颁奖典礼`,`新加坡国庆晚会`,`新加坡广播局歌唱比赛`,`华中迎新晚会`],ans:0,exp:`《传灯》诞生于1982年8月《南洋商报》举办的第一届华语创作比赛颁奖典礼。`},
+{r:`新谣`,q:`《传灯》后来如何在马来西亚传播开来？`,opts:[`通过马来西亚学生带回，经华文老师陈徽崇传唱`,`通过电台播放`,`通过录音带发行`,`通过报纸刊登歌词`],ans:0,exp:`马来西亚柔佛新山的学生将《传灯》带回，经华文老师陈徽崇传唱，在当地中学中传唱开来。`},
+{r:`新谣`,q:`以下哪项最能概括新谣的风格特征？`,opts:[`旋律清新自然、歌词简朴、反映本土情怀与生活`,`曲调激昂，歌词具有强烈政治色彩`,`节奏强烈，以英文歌词为主`,`改编自传统华族民谣`],ans:0,exp:`新谣的主要特征是旋律清新自然、歌词简朴，并反映新加坡本土情怀与日常生活。`},
+{r:`社会`,q:`《南洋商报》由谁在哪一年创办？`,opts:[`胡文虎，1929年`,`陈嘉庚，1923年`,`李光耀，1965年`,`班固，1983年`],ans:1,exp:`1923年9月6日，"树胶大王"陈嘉庚在新加坡创办《南洋商报》。`},
+{r:`社会`,q:`《星洲日报》由谁在哪一年创办？`,opts:[`陈嘉庚，1923年`,`胡文虎，1929年`,`李光耀，1979年`,`杜南发，1982年`],ans:1,exp:`1929年1月15日，胡文虎创办了《星洲日报》。`},
+{r:`社会`,q:`《南洋商报》与《星洲日报》合并后的新报纸叫什么名字？`,opts:[`《联合早报》`,`《南洋星洲联合早报》`,`《新加坡日报》`,`《华文早报》`],ans:1,exp:`两报于1983年合并，《南洋星洲联合早报》于1983年3月16日面世。`},
+{r:`社会`,q:`两报在哪一年正式合并？`,opts:[`1975年`,`1979年`,`1983年`,`1990年`],ans:2,exp:`具有60年历史的《南洋商报》和54年历史的《星洲日报》于1983年合并。`},
+{r:`社会`,q:`讲华语运动于哪一年由谁发起？`,opts:[`1965年，李显龙`,`1979年，李光耀`,`1983年，吴作栋`,`1975年，拉惹勒南`],ans:1,exp:`讲华语运动于1979年由建国总理李光耀发起。`},
+{r:`社会`,q:`新加坡广播局（SBC）存在的时间段是？`,opts:[`1963—1965年`,`1965—1980年`,`1980—1994年`,`1994—1999年`],ans:2,exp:`新加坡广播局 Singapore Broadcasting Corporation 存在于1980年至1994年。`},
+{r:`社会`,q:`MediaCorp从哪一年开始运营？`,opts:[`1980年`,`1994年`,`1999年`,`2003年`],ans:2,exp:`MediaCorp从1999年开始运营，是新加坡广播电视机构的现名。`},
+{r:`社会`,q:`新加坡实施《报章与印刷馆法令》是哪一年？`,opts:[`1965年`,`1970年`,`1974年`,`1983年`],ans:2,exp:`新加坡于1974年实施《报章与印刷馆法令》，两报在1975年重组为公共公司。`},
+{r:`微型小说`,q:`微型小说起源于哪个国家？`,opts:[`日本`,`中国`,`英国`,`美国`],ans:3,exp:`微型小说起源于美国，于50年代传入日本。`},
+{r:`微型小说`,q:`对微型小说的定义是"不超过多少字，却要具备小说的一切要素"？`,opts:[`五百字`,`一千五百字`,`三千字`,`一万字`],ans:1,exp:`定义是"不超过一千五百字，却要具备小说的一切要素"。`},
+{r:`微型小说`,q:`微型小说四大特点中，"密"指的是什么？`,opts:[`文字精密，不允许有错别字`,`结构紧凑，时间场所人物尽可能集中`,`内容秘密，主题隐晦`,`密度大，每句话都有多重含义`],ans:1,exp:`"密"指结构紧凑，力求时间、场所、人物集中，精巧如微雕工艺品。`},
+{r:`微型小说`,q:`微型小说四大特点中，"奇"主要指什么？`,opts:[`题材奇特，写鬼怪故事`,`人物奇异，描写超自然人物`,`结尾精巧出人意料`,`语言奇特，使用方言`],ans:2,exp:`"奇"指结尾精巧，出人意料，微型小说的特点多半在于一个"奇"字。`},
+{r:`微型小说`,q:`托尔斯泰对微型小说有何评价？`,opts:[`微型小说是最无聊的文学形式`,`小小说是训练写作最好的学校`,`微型小说只适合儿童阅读`,`微型小说是文学的末路`],ans:1,exp:`俄罗斯作家托尔斯泰说："小小说是训练写作最好的学校。"`},
+{r:`微型小说`,q:`在"九流十家"中，小说家被归为第几位？`,opts:[`第一流`,`第五流`,`第九流`,`第十家（不入流）`],ans:3,exp:`小说家虽自成一家，但被视为不入流者，故有"九流十家"之说，小说家是第十家。`},
+{r:`微型小说`,q:`《丈夫支出帐本中的一页》被引用来说明微型小说哪个特点？`,opts:[`新——立意新颖`,`微——篇幅短小却情节完整`,`密——结构紧凑`,`奇——结尾出人意料`],ans:1,exp:`全文仅七行字，却具有长篇小说的全部情节，说明"微"——篇幅短小的特点。`},
+{r:`阅读小说`,q:`哪种叙事观点的叙事者能随意进入任何人物的内心深处？`,opts:[`第一人称主角叙事`,`第一人称非主角叙事`,`全知全能叙事观点`,`第三人称主角叙事`],ans:2,exp:`全知全能叙事观点的叙事者对每一件事都能洞然，能随意进入任何人物的内心深处。`},
+{r:`阅读小说`,q:`第一人称主角叙事观点的最大优点是什么？`,opts:[`可以描写所有人物的内心`,`叙事弹性最高`,`与读者生活经验接近，具有亲切感与真实感`,`可以随意切换时间地点`],ans:2,exp:`第一人称主角叙事的好处是与读者的生活经验非常接近，具有亲切感与真实感。`},
+{r:`阅读小说`,q:`推理小说常采用哪种叙述方式？`,opts:[`顺叙式`,`回溯式`,`时空错综`,`倒叙与插叙结合`],ans:1,exp:`推理小说常采用回溯式——先呈现结局，再由结局推回发生经过。`},
+{r:`阅读小说`,q:`微型小说常采用哪种叙述方式？`,opts:[`顺叙式`,`回溯式`,`时空错综`,`单线顺叙`],ans:2,exp:`微型小说常采用时空错综的叙述方式，以现在与过去两线错综进行。`},
+{r:`阅读小说`,q:`铺垫手法最准确的描述是？`,opts:[`在文章开头交代背景信息`,`为了让后文表达更清楚形象，提前为主要写作对象做的描写`,`在文章结尾作总结升华`,`在文章中间插入回忆`],ans:1,exp:`铺垫是为了让后文的意思表达得更清楚、更形象，提前为主要写作对象做的描写。`},
+{r:`阅读小说`,q:`第一人称非主角叙事观点的主要限制是什么？`,opts:[`无法描写任何人物的外貌`,`叙事者只能从外部观察他人，无法透视他人性格`,`叙事者不能参与故事情节`,`叙事者必须始终在场`],ans:1,exp:`第一人称非主角叙事有限制，叙事者只能从外部观察其他人物，无法透视他人性格。`},
+{r:`人物`,q:`扁平人物与圆形人物的概念由哪位作家提出？`,opts:[`托尔斯泰`,`欧·亨利`,`福斯特（E.M. Forster）`,`陈启佑`],ans:2,exp:`英国小说家福斯特（E.M. Forster）在《小说面面观》中提出了扁平人物与圆形人物的概念。`},
+{r:`人物`,q:`以下哪项是扁平人物的主要特征？`,opts:[`性格复杂多变，有发展过程`,`可以用一个句子加以描述概括，性格单一`,`在小说中都是主角`,`性格善变，难以预测`],ans:1,exp:`扁平人物性格单一，是按照一个简单的意念或特质创造的，常常可以用一个句子加以描述概括。`},
+{r:`人物`,q:`圆形人物的主要特点是什么？`,opts:[`性格简单，容易描述`,`只出现在长篇小说中`,`具有复杂性格特征，性格有形成与发展的过程`,`总是文学作品中的反派`],ans:2,exp:`圆形人物具有复杂性格特征，这类人物性格有形成与发展的过程，打破了简单的好坏分类。`},
+{r:`人物`,q:`福斯特在哪部著作中提出扁平与圆形人物的概念？`,opts:[`《小说的艺术》`,`《小说面面观》`,`《文学理论》`,`《人物论》`],ans:1,exp:`福斯特在《小说面面观》中将小说人物分为扁平和圆形两种。`},
+{r:`人物`,q:`在西方戏剧作品中，扁平人物常被用来做什么？`,opts:[`担任主角`,`充当配角（次要人物）`,`担任旁白`,`代替圆形人物`],ans:1,exp:`在西方国家的戏剧作品中，常常需要扁平人物来充当次要人物（配角）。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》的作者是谁？`,opts:[`奥莱尔（美国）`,`陈启佑（台湾）`,`邱宝建（新加坡）`,`柳宗元（唐代）`],ans:1,exp:`《永远的蝴蝶》的作者是台湾作家陈启佑。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》采用哪种叙事观点？`,opts:[`全知全能叙事`,`第一人称非主角叙事`,`第一人称主角叙事`,`第三人称主角叙事`],ans:2,exp:`《永远的蝴蝶》采用第一人称主角叙事，"我"即主角，读者通过"我"的眼睛了解故事。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》中樱子是如何去世的？`,opts:[`她生了重病`,`她替主角去寄信时过马路被车撞死`,`她在战争中牺牲`,`她因思念而伤心离世`],ans:1,exp:`樱子要帮主角去邮筒寄信，过马路时被车撞死，主角一直后悔没有自己去寄信。`},
+{r:`蝴蝶`,q:`"永远的蝴蝶"的象征意义是什么？`,opts:[`象征自由与飞翔的梦想`,`象征樱子美丽而短暂，永远留在主角记忆中`,`象征战争的残酷`,`象征台湾的自然风光`],ans:1,exp:`樱子就像蝴蝶般美丽而短暂，永远留在主角的记忆中，是对逝去爱人的永恒思念。`},
+{r:`蝴蝶`,q:`《永远的蝴蝶》的叙事结构特点是什么？`,opts:[`纯粹顺叙，按时间先后`,`时空错综，现在与回忆交织`,`回溯式，先呈现结局`,`倒叙，从死亡写起`],ans:1,exp:`《永远的蝴蝶》采用时空错综的叙述结构，现在时间与回忆交织进行，结局出人意料。`},
+{r:`柏林`,q:`《在柏林》的作者是谁？`,opts:[`王勃（唐代诗人）`,`陈子昂（唐代诗人）`,`奥莱尔（美国女作家）`,`陈启佑（台湾作家）`],ans:2,exp:`《在柏林》的作者是美国女作家奥莱尔。`},
+{r:`柏林`,q:`《在柏林》中，老妇人不断重复数着什么？`,opts:[`她丈夫的名字`,`"一、二、三"`,`车站名`,`她的地址`],ans:1,exp:`老妇人不断数着"一、二、三"，这正是她失去的三个儿子的数字，她因此精神崩溃。`},
+{r:`柏林`,q:`《在柏林》中，小说第一次"静"与结尾"静"有何区别？`,opts:[`两次完全相同`,`第一次是真正的平静，第二次是表面平静`,`第一次是小姑娘停止嗤笑的表面平静，第二次是整个车厢被震撼后的内心震动`,`第一次比第二次更令人震惊`],ans:2,exp:`第一次"静"是小姑娘不笑了（表面平静）；第二次"静"是整个车厢被震撼后的内心深处的震动，"静得可怕"。`},
+{r:`柏林`,q:`老兵说"他们的母亲"而非"她"，这样写有何效果？`,opts:[`"他们的母亲"比"她"更简洁`,`说明她是失去三个儿子后精神崩溃的妻子，避免读者误解`,`"她"的语气更正式`,`两者效果完全相同`],ans:1,exp:`若改成"她"，读者可能误以为老兵在管教有精神病的陌生妇女，而非揭示她是因失去三子而崩溃的妻子。`},
+{r:`柏林`,q:`《在柏林》老妇人数"一、二、三"这个细节，在结构上起什么作用？`,opts:[`是铺垫手法，为震撼结局做铺垫`,`说明老妇人喜欢数数`,`表现老妇人的数学能力`,`说明故事发生在课堂上`],ans:0,exp:`老妇人神秘数着"一、二、三"是铺垫手法，与小姑娘的嗤笑一起为震撼的结局做铺垫。`},
+{r:`柏林`,q:`《在柏林》的主题是什么？`,opts:[`歌颂战争中的英雄主义`,`批判两个小姑娘的失礼行为`,`反映战争的残酷与对普通人的摧残，以及人性的冷漠与觉醒`,`赞美老兵的忠诚与勇气`],ans:2,exp:`《在柏林》的主题是战争的残酷与对普通人的摧残，以及人性的冷漠与觉醒。`},
+{r:`生态`,q:`新加坡微型小说创作的"转型期"大约是哪段时间？`,opts:[`70年代`,`80至87年`,`87至90年`,`90年以后`],ans:2,exp:`转型期是87年至90年，这一时期微型小说创作无论量和质都有了飞跃的发展。`},
+{r:`生态`,q:`《永远的门》是哪位新加坡作家的作品？`,opts:[`淡莹`,`希尼尔`,`邱宝建`,`方修`],ans:2,exp:`《永远的门》是新加坡作家邱宝建的微型小说代表作。`},
+{r:`生态`,q:`《永远的门》结局中，搬开花竹书架后发现了什么？`,opts:[`一扇真实可以推开的门`,`一幅画在墙上的门`,`一个秘密通道`,`一封情书`],ans:1,exp:`搬开花竹书架后，发现墙上有扇精巧的紫红色的门，门拉手是黄铜的，但那竟是画在墙上的门！`},
+{r:`生态`,q:`《管宁割席》出自哪部典籍？`,opts:[`《孟子》`,`《聊斋志异》`,`《世说新语》`,`《汉书》`],ans:2,exp:`《管宁割席》出自南朝宋刘义庆所著的《世说新语·德行》。`},
+{r:`生态`,q:`《揠苗助长》出自哪部典籍？`,opts:[`《论语》`,`《孟子·公孙丑上》`,`《庄子》`,`《史记》`],ans:1,exp:`《揠苗助长》出自《孟子·公孙丑上》，讲宋人拔苗助长导致禾苗枯死的故事。`},
+{r:`生态`,q:`新加坡微型小说作者多为华文教师，因此这类作品又常被称为？`,opts:[`"伤痕文学"`,`教育问题小说`,`校园微型小说`,`华文课堂文学`],ans:1,exp:`由于作者多为华文教师，对语文政策转变有切身感受，这类作品故又称"教育问题小说"。`},
+{r:`木兰`,q:`《木兰辞》属于哪个朝代的乐府诗？`,opts:[`唐代`,`宋代`,`北朝（南北朝时期）`,`汉代`],ans:2,exp:`《木兰辞》是中国南北朝时期北方的一首长篇叙事民歌，也是一篇乐府诗。`},
+{r:`木兰`,q:`《木兰辞》与哪首诗并称为乐府诗的"双璧"？`,opts:[`《静夜思》`,`《孔雀东南飞》`,`《长恨歌》`,`《出塞》`],ans:1,exp:`《木兰辞》与《孔雀东南飞》并称为乐府诗的"双璧"。`},
+{r:`木兰`,q:`"将军百战死，壮士十年归"运用了哪种修辞手法？`,opts:[`比喻`,`借代`,`互文`,`排比`],ans:2,exp:`此句是互文，上下两句互相补充，表达将士们经历百战，十年后有的牺牲有的归来。`},
+{r:`木兰`,q:`"巾帼不让须眉"中，"须眉"借代什么？`,opts:[`老人`,`男性`,`女性`,`英雄`],ans:1,exp:`"须眉"借代男性，"巾帼"借代女性，这是借代的修辞手法。`},
+{r:`木兰`,q:`"木兰不用尚书郎，愿驰千里足，送儿还故乡"表现了木兰怎样的品格？`,opts:[`渴望建功立业，留名青史`,`英勇善战，战功赫赫`,`不慕名利、淳朴真诚、眷恋家乡的纯真品格`,`痛恨战争，渴望和平`],ans:2,exp:`木兰拒绝做官，只想回家，表现出她不慕名利、淳朴真诚的纯真品格。`},
+{r:`木兰`,q:`"旦辞爷娘去，暮宿黄河边……旦辞黄河去，暮至黑山头"运用了什么修辞手法？`,opts:[`比喻`,`互文`,`对偶`,`夸张`],ans:2,exp:`此句运用对偶手法，层层递进写出征途遥远，同时体现木兰对家乡和父母的思念。`},
+{r:`木兰`,q:`"扑朔迷离"这个成语出自《木兰辞》的哪个部分？`,opts:[`描写出征的部分`,`描写战场的部分`,`描写回家的部分`,`最后以双兔为喻的部分`],ans:3,exp:`"扑朔迷离"出自《木兰辞》最后以双兔为喻的部分，赞美木兰从军多年不被发现是女郎的谨慎和机智。`},
+{r:`初唐`,q:`初唐四杰指哪四位诗人？`,opts:[`李白、杜甫、白居易、王维`,`王勃、杨炯、卢照邻、骆宾王`,`陈子昂、柳宗元、李涉、王昌龄`,`曹操、曹植、陈子昂、王勃`],ans:1,exp:`初唐四杰是王勃、杨炯、卢照邻、骆宾王，简称"王杨卢骆"。`},
+{r:`初唐`,q:`"海内存知己，天涯若比邻"出自哪首诗？`,opts:[`《登幽州台歌》陈子昂`,`《江雪》柳宗元`,`《送杜少府之任蜀州》王勃`,`《井栏砂宿遇夜客》李涉`],ans:2,exp:`"海内存知己，天涯若比邻"出自王勃的《送杜少府之任蜀州》，是著名的送别名句。`},
+{r:`初唐`,q:`"念天地之悠悠，独怆然而涕下"出自哪首诗？`,opts:[`《送杜少府之任蜀州》王勃`,`《登幽州台歌》陈子昂`,`《江雪》柳宗元`,`《滕王阁序》王勃`],ans:1,exp:`出自陈子昂的《登幽州台歌》，表达了诗人怀才不遇、孤独悲愤的情感。`},
+{r:`初唐`,q:`"千山鸟飞绝，万径人踪灭"运用了什么修辞手法？`,opts:[`对偶`,`比喻`,`夸张`,`借代`],ans:2,exp:`此句运用夸张手法，用"千山""万径"夸大范围，突出环境的空旷与寂静。`},
+{r:`初唐`,q:`《江雪》中"孤舟蓑笠翁"象征什么？`,opts:[`悠闲自在的渔翁生活`,`诗人自己虽孤独身处逆境，仍坚守高洁品格`,`战乱中流离失所的百姓`,`对江南水乡的美好回忆`],ans:1,exp:`"孤舟蓑笠翁"代表诗人自己，虽孤独身处逆境，仍坚守高洁品格，不向环境屈服。`},
+{r:`初唐`,q:`王勃被称为"唐诗喷薄的朝阳"，这暗示了什么？`,opts:[`王勃是唐代最长寿的诗人`,`王勃才华横溢，诗歌充满生机，为盛唐奠定基础，但也英年早逝`,`王勃的诗歌如阳光般温暖`,`王勃是初唐最多产的诗人`],ans:1,exp:`"唐诗喷薄的朝阳"暗示王勃才华横溢，其诗一扫浮靡之风，充满生机，但他英年早逝（故也称"流星"）。`},
+{r:`初唐`,q:`"建安风骨"的风格特点是什么？`,opts:[`汉代宫廷诗歌的华丽风格`,`东汉建安时期诗歌慷慨悲凉、语言刚健有力的风格特点`,`唐代边塞诗的豪迈风格`,`宋代婉约派的写作风格`],ans:1,exp:`"建安风骨"是东汉建安时期诗歌的风格特点，内容上慷慨悲凉，语言刚健有力。`},
+{r:`初唐`,q:`《送杜少府之任蜀州》中"无为在歧路，儿女共沾巾"表达了什么？`,opts:[`对战争的控诉`,`对朋友离别的悲伤哭泣`,`否定柔弱伤感，表现广阔胸襟与豁达精神`,`对蜀地风景的向往`],ans:2,exp:`此句劝朋友不要像普通儿女那样哭泣，体现广阔胸襟与豁达积极的精神，表现深厚友情。`},
+{r:`初唐`,q:`王勃《滕王阁序》属于哪种文体？`,opts:[`律诗`,`词`,`骈文`,`散文`],ans:2,exp:`《滕王阁序》属于骈文，大量使用对偶，以四字句和六字句为主，也叫"四六文"。`},
+{r:`初唐`,q:`刘希夷《代悲白头翁》中"年年岁岁花相似，岁岁年年人不同"运用了什么表现手法？`,opts:[`比喻`,`对比（反衬）`,`借代`,`互文`],ans:1,exp:`此句运用对比（反衬）手法，以花的年年相似来反衬人的年年不同，突出时光流逝、人生无常的感慨。`},
+{r:`初唐`,q:`"年年岁岁花相似，岁岁年年人不同"这句诗表达了诗人怎样的情感？`,opts:[`对春天美景的喜悦`,`感叹时光流逝与人生无常`,`对战争的控诉`,`对友人离别的不舍`],ans:1,exp:`此句感叹时间悄悄流淌，一去不回；人生充满变化，无法像花一样重复，表达了对时光流逝与人生无常的感慨。`},
+{r:`初唐`,q:`张若虚《春江花月夜》被誉为什么？`,opts:[`"诗中的诗，顶峰中的顶峰"`,`"天下第一行书"`,`"乐府诗的双璧"`,`"唐诗喷薄的朝阳"`],ans:0,exp:`《春江花月夜》被誉为"孤篇盖全唐"，闻一多称之为"诗中的诗，顶峰中的顶峰"。`},
+{r:`初唐`,q:`《春江花月夜》的主题思想是什么？`,opts:[`描写战争的残酷，抒发反战情感`,`通过对春江、明月、潮水等自然景物的描写，抒发对人生短暂、时光流逝的感慨，以及淡淡的惆怅与无奈`,`歌颂初唐盛世的繁荣景象`,`表达诗人怀才不遇的愤懑`],ans:1,exp:`《春江花月夜》通过自然景物描写，抒发对人生短暂、时光流逝的感慨，以永恒的江月反衬有限的人生，表达淡淡的惆怅与无奈，同时暗示人类代代相传的生生不息。`},
+{r:`初唐`,q:`《春江花月夜》中"人生代代无穷已，江月年年只相似"用了什么手法？`,opts:[`夸张`,`对比（反衬）`,`借代`,`互文`],ans:1,exp:`此句运用对比（反衬）手法，以永恒不变的江月反衬有限的人生，突出时光流逝的感慨。`},
+{r:`初唐`,q:`李涉《井栏砂宿遇夜客》中诗人对强盗的态度是？`,opts:[`真心赞扬强盗知书达理`,`表面夸赞，实为讽刺当时社会官场比强盗更黑暗虚伪`,`批评强盗打劫的行为`,`同情强盗的悲惨处境`],ans:1,exp:`诗人运用讽刺手法，表面夸强盗"知闻"，实际是讽刺当时社会黑暗，暗示官场中许多人比强盗更坏、更虚伪。`},
+{r:`初唐`,q:`"他时不用逃名姓，世上于今半是君"这两句诗中，"世上于今半是君"的含义是？`,opts:[`世界上有一半的人都认识你`,`世界上如今有一半的人都像你一样（是强盗）`,`世界上到处都是你的朋友`,`你的名声已传遍天下`],ans:1,exp:`"半是君"意指世上有一半的人都像这位强盗一样，这是讽刺——暗指官场和社会中有很多人比强盗更坏、行为更不道德。`},
+{r:`生态`,q:`《快刀》中，盗贼在临刑前主动对兵士说什么？`,opts:[`"请放了我"`,`"求你来杀我"`,`"你的刀不快"`,`"我不怕死"`],ans:1,exp:`盗贼听闻该兵士快刀厉害，主动对兵士说"求你来杀我"，结果一刀落下，头落后仍大赞"好快刀！"。`},
+{r:`生态`,q:`《快刀》选自哪部作品？作者是谁？`,opts:[`《世说新语》，刘义庆`,`《孟子》，孟子`,`《聊斋志异》，蒲松龄`,`《汉书》，班固`],ans:2,exp:`《快刀》选自清代蒲松龄所著的《聊斋志异》，全书共491篇，大部分写狐仙鬼怪，表面讲神，实际反映现实社会。`},
+{r:`生态`,q:`《快刀》这则故事主要体现了微型小说的哪个写作特点？`,opts:[`微——篇幅短小`,`新——立意新颖`,`密——结构紧凑`,`奇——结尾出人意料`],ans:3,exp:`《快刀》的盗贼头落地后仍大赞"好快刀！"，结尾极为出人意料，典型体现了微型小说"奇"的特点。`},
+{r:`生态`,q:`《揠苗助长》的故事启示是什么？`,opts:[`做事要积极主动，不怕困难`,`事物有其客观规律，欲速则不达，必须按规律行事`,`帮助他人是高尚的品德`,`农业生产需要科学技术`],ans:1,exp:`《揠苗助长》启示：事物有其客观规律，光靠愿望和热情是不够的，欲速则不达；必须按客观规律发挥主观能动性。`},
+{r:`生态`,q:`《揠苗助长》中宋人拔苗助长的结果是什么？`,opts:[`禾苗长得更快了`,`禾苗没有变化`,`禾苗都枯死了`,`禾苗第二天长高了一倍`],ans:2,exp:`宋人一天内把禾苗都拔高，结果"苗则槁矣"——禾苗全都枯死了，说明违背自然规律必然失败。`},
+,
+{r:`微型小说`,q:`微型小说的别名中不包括以下哪一个？`,opts:[`超短篇小说`,`一分钟小说`,`袖珍小说`,`长篇小说`],ans:3,exp:`微型小说的别名包括：微观小说、超短篇小说、一分钟小说、袖珍小说等，"长篇小说"不是微型小说的别名。`},
+{r:`微型小说`,q:`微型小说的文体性质被界定为介于什么之间的一种边缘性文学体裁？`,opts:[`边缘散文和诗歌之间`,`边缘小说和散文之间`,`小说和戏剧之间`,`诗歌和报告文学之间`],ans:1,exp:`微型小说被界定为"介于边缘小说和散文之间的一种边缘性的现代新兴文学体裁"。`},
+{r:`微型小说`,q:`微型小说"微"的特点中，"以______尽传精神"指的是什么？`,opts:[`以一当十`,`以少胜多`,`以简驭繁`,`以小见大`],ans:0,exp:`微型小说人物简略，突出人物形象的一个完整侧面，"以一当十，尽传精神"。`},
+{r:`微型小说`,q:`微型小说内容特点中，以什么为主，语言简洁、精练？`,opts:[`以描写为主`,`以叙述为主`,`以对话为主`,`以议论为主`],ans:2,exp:`微型小说的内容特点：以对话为主，语言简洁、精练，具有内在节奏，提供读者联想的空间。`},
+{r:`微型小说`,q:`欧·亨利（O.Henry）认为优秀微型小说的结尾特点是？`,opts:[`结尾悲剧，令人落泪`,`结尾出人意料`,`结尾点题，直抒胸臆`,`结尾开放，留白处理`],ans:1,exp:`欧·亨利认为优秀微型小说：立意清新，结构严密，结尾出人意料。`},
+{r:`微型小说`,q:`微型小说"新"的特点中，"立意______，风格清新"，横线上应填什么？`,opts:[`深刻`,`新颖`,`独特`,`简单`],ans:1,exp:`微型小说"新"的特点：立意新颖，风格清新；主题有时并不是一眼能看出，有时主题并非一个，是多元的。`},
+{r:`微型小说`,q:`微型小说"密"的特点要求时间、场所、人物尽可能地______、集中。`,opts:[`丰富`,`精确`,`集中`,`统一`],ans:2,exp:`微型小说"密"的特点：结构紧凑，作者在结构上应力求时间、场所、人物都尽可能地集中，使作品结构紧凑、精巧，如同微雕工艺品一样。`},
+{r:`社会`,q:`《南洋商报》和《星洲日报》的终极效忠对象都是什么？`,opts:[`中国`,`英国`,`新加坡`,`马来西亚`],ans:2,exp:`《南洋商报》和《星洲日报》的终极效忠对象都是新加坡，希望通过提倡教育和实业"促进侨民的利益"。`},
+{r:`社会`,q:`1977年两报先后公开售股上市后，哪个时代宣告结束？`,opts:[`国营华文报时代`,`家族华文报时代`,`政府管控报业时代`,`英文报主导时代`],ans:1,exp:`1977年两报先后公开售股挂牌上市，由家族华文报的时代也从此结束。`},
+{r:`社会`,q:`《传灯》这首歌歌颂的是什么？`,opts:[`新加坡建国精神`,`华族文化源远流长的生命力`,`新谣运动的发展历程`,`颁奖礼的盛况`],ans:1,exp:`《传灯》歌颂华族文化源远流长的生命力；呼唤华族子弟肩负传承华族文化的使命。`},
+{r:`社会`,q:`《传灯》颁奖礼当晚，来自马来西亚哪个地方的学生将这首歌带回去传唱？`,opts:[`吉隆坡`,`槟城`,`柔佛新山`,`马六甲`],ans:2,exp:`当晚在颁奖礼座上，有几位来自马来西亚柔佛新山的学生，深受歌曲感动，将其带回传唱。`},
+{r:`阅读小说`,q:`以下关于"主题"的描述，哪项最准确？`,opts:[`故事情节的发展顺序`,`小说所表达的中心思想，是作者所要表达的理念`,`小说的叙事观点`,`小说的背景设定`],ans:1,exp:`主题是小说所表达的中心思想，是作者所要表达的理念。福斯特认为"国王死了，王后也伤心而死"才是情节（有因果关系），而非单纯故事。`},
+{r:`阅读小说`,q:`"国王死了，王后也伤心而死"与"国王死了，然后王后也死了"，哪句是"情节"？`,opts:[`两句都是情节`,`"国王死了，然后王后也死了"，因为有时间先后`,`"国王死了，王后也伤心而死"，因为有因果关系`,`两句都不是情节`],ans:2,exp:`"情节"须有因果关系，"国王死了，王后也伤心而死"有因果，是情节；"然后"只有时间先后，是故事。`},
+{r:`阅读小说`,q:`小说的"背景"指的是什么？`,opts:[`作者的生平经历`,`故事情节发生的时间和地点`,`小说的主题思想`,`小说的叙事方式`],ans:1,exp:`小说的背景指故事情节发生的时间、地点（时代背景与地理环境）。`},
+{r:`阅读小说`,q:`"对话"在小说中有哪些功能？`,opts:[`只用于交代故事背景`,`包含语言描写，可交代情节、刻划人物、表现主题`,`只用于表现人物外貌`,`只用于推动情节发展`],ans:1,exp:`对话包含语言描写，在小说中可以交代情节、刻划人物性格、表现主题，是重要的叙事手法。`},
+{r:`人物`,q:`塑造人物时，"外型塑造"包括哪些方面？`,opts:[`对话、动作、心理`,`容貌、衣饰、神态`,`家庭背景、社会地位、教育程度`,`语言、行为、思想`],ans:1,exp:`外型塑造包含容貌、衣饰、神态三个方面，是塑造人物的基本方法之一。`},
+{r:`人物`,q:`通过什么来表现人物性格是最常见的表现手法，在其中不但可见人的内在性格思想？`,opts:[`外型描写`,`心理描写`,`对话`,`环境描写`],ans:2,exp:`通过对话表性格是常见的表现手法，在对话中不但可见人的内在性格思想，也可从人物在现场的行为动作中，反映出他的意图。`},
+{r:`人物`,q:`任何小说均是描绘______，人物描绘成功小说才能成功。`,opts:[`社会`,`人生`,`历史`,`自然`],ans:1,exp:`任何小说均是描绘人生，人物描绘成功小说才能成功；故事和情节都只是用来说明人物在生活中的遭遇、思想、感情所发生的变化。`},
+{r:`木兰`,q:`"东市买骏马，西市买鞍鞯，南市买辔头，北市买长鞭"用了什么修辞手法？`,opts:[`对偶与比喻`,`互文与排比`,`借代与夸张`,`反问与对偶`],ans:1,exp:`此句用了互文和排比的修辞手法，表现了木兰出征前紧张又充分的准备情况，渲染了即将出征的气氛。`},
+{r:`木兰`,q:`在《木兰辞》第一段，木兰叹息的根本原因是什么？`,opts:[`她不喜欢织布`,`当时征兵，军帖上有父亲的名字，父亲年老又没有长兄，木兰愿意替父从军`,`她想游历天下`,`她喜欢战争`],ans:1,exp:`当时征兵，每卷军帖上都有父亲的名字。父亲年老，又没有长兄，木兰愿意去集市买马，替父从军。`},
+{r:`木兰`,q:`"朔气传金柝，寒光照铁衣"描写了什么？`,opts:[`木兰在家织布的情景`,`战地生活的艰辛：北方寒风和月光照在铠甲上`,`木兰归家后对镜梳妆`,`战场上激烈的战斗场面`],ans:1,exp:`"朔气传金柝，寒光照铁衣"描写战地生活：北方寒风中传来打更的声音，月光映照在战士们的铠甲上，体现了征战生活的艰辛。`},
+{r:`初唐`,q:`张若虚《春江花月夜》中"江月年年只相似"与"人生代代无穷已"形成什么关系？`,opts:[`互文`,`对比（反衬）`,`比喻`,`借代`],ans:1,exp:`以永恒不变的江月反衬有限的人生，运用对比（反衬）手法，突出时光流逝与人生短暂的感慨。`},
+{r:`初唐`,q:`《代悲白头翁》的作者是谁？`,opts:[`王勃`,`陈子昂`,`刘希夷`,`张若虚`],ans:2,exp:`《代悲白头翁》的作者是刘希夷，他是初唐四杰之外的重要诗人之一。`},
+{r:`初唐`,q:`《春江花月夜》的作者是谁？`,opts:[`王勃`,`张若虚`,`柳宗元`,`李涉`],ans:1,exp:`《春江花月夜》的作者是张若虚，被誉为"孤篇盖全唐"，闻一多称之为"诗中的诗，顶峰中的顶峰"。`},
+{r:`生态`,q:`新加坡微型小说发展期（80至87年）中，哪件事对新华文艺起到积极推动作用？`,opts:[`新加坡广播局成立`,`中国文学团体和作家来新进行文学交流`,`南洋大学复办`,`新加坡最后一所华校停办`],ans:1,exp:`83年之后，中国文学团体和作家纷纷前来进行文学交流，开始有系统地评论和介绍新华文艺作品（包括微型小说），对新华文艺起了积极的推动作用。`},
+{r:`生态`,q:`《管宁割席》中，管宁割席的原因是什么？`,opts:[`华歆打扰了他读书`,`华歆看见有钱人经过就放下书本去看热闹，管宁认为他志不同道不合`,`华歆弄脏了席子`,`华歆拿走了他的书`],ans:1,exp:`有乘坐华丽车辆的人经过，管宁读书如故，华歆却放下书出去观看。管宁割席分坐，说"子非吾友也"，认为华歆被金钱名誉所迷惑，志不同道不合。`},
+{r:`生态`,q:`《聊斋志异》共有多少篇？`,opts:[`100篇`,`491篇`,`300篇`,`1000篇`],ans:1,exp:`《聊斋志异》共491篇，大部分写狐仙鬼怪、花妖、神魔与人类之间的故事，表面讲神讲鬼，实际反映现实社会。`},
+,
+{r:`初唐`,q:`《井栏砂宿遇夜客》：暮雨潇潇江上村，______。`,opts:[`他时不用逃名姓`,`绿林豪客夜知闻`,`世上于今半是君`,`但见长江送流水`],ans:1,exp:`全诗：暮雨潇潇江上村，绿林豪客夜知闻。他时不用逃名姓，世上于今半是君。`},
+{r:`初唐`,q:`《井栏砂宿遇夜客》：他时不用逃名姓，______。`,opts:[`世上于今半是君`,`绿林豪客夜知闻`,`暮雨潇潇江上村`,`但见长江送流水`],ans:0,exp:`全诗：暮雨潇潇江上村，绿林豪客夜知闻。他时不用逃名姓，世上于今半是君。`},
+{r:`初唐`,q:`《代悲白头翁》：年年岁岁花相似，______。`,opts:[`江月年年只相似`,`世上于今半是君`,`岁岁年年人不同`,`独怆然而涕下`],ans:2,exp:`"年年岁岁花相似，岁岁年年人不同"——以花的相似反衬人的不同，感叹时光流逝、人生无常。`},
+{r:`初唐`,q:`《送杜少府之任蜀州》：城阙辅三秦，______。`,opts:[`与君离别意`,`风烟望五津`,`海内存知己`,`无为在歧路`],ans:1,exp:`首联：城阙辅三秦，风烟望五津。意为三秦之地护卫长安，你将赴蜀地，是一片风烟迷茫。`},
+{r:`初唐`,q:`《送杜少府之任蜀州》：与君离别意，______。`,opts:[`风烟望五津`,`同是宦游人`,`天涯若比邻`,`儿女共沾巾`],ans:1,exp:`颔联：与君离别意，同是宦游人。意为我与你都充满离别愁意，因为我们都是远离家乡外出做官的人。`},
+{r:`初唐`,q:`《送杜少府之任蜀州》：海内存知己，______。`,opts:[`同是宦游人`,`儿女共沾巾`,`天涯若比邻`,`风烟望五津`],ans:2,exp:`颈联：海内存知己，天涯若比邻。意为四海之中有了解自己的人，即使远在天涯也如近邻。`},
+{r:`初唐`,q:`《送杜少府之任蜀州》：无为在歧路，______。`,opts:[`天涯若比邻`,`同是宦游人`,`儿女共沾巾`,`风烟望五津`],ans:2,exp:`尾联：无为在歧路，儿女共沾巾。劝友人不要在分手时像儿女那样流泪，体现豁达的胸襟。`},
+{r:`木兰`,q:`《木兰辞》：唧唧复唧唧，______。`,opts:[`问女何所思`,`木兰当户织`,`不闻机杼声`,`惟闻女叹息`],ans:1,exp:`《木兰辞》开篇：唧唧复唧唧，木兰当户织。叹息声一声接一声传来，木兰在对着门织布。`},
+{r:`木兰`,q:`《木兰辞》：不闻机杼声，______。`,opts:[`木兰当户织`,`问女何所思`,`惟闻女叹息`,`昨夜见军帖`],ans:2,exp:`"不闻机杼声，惟闻女叹息"——听不到织布声，只听到木兰的叹息声，引出下文木兰的心事。`},
+{r:`木兰`,q:`《木兰辞》：万里赴戎机，______。`,opts:[`朔气传金柝`,`寒光照铁衣`,`关山度若飞`,`将军百战死`],ans:2,exp:`"万里赴戎机，关山度若飞"——奔赴万里之外战场，翻越关山如同飞翔，写出征途之遥远。`},
+{r:`木兰`,q:`《木兰辞》：朔气传金柝，______。`,opts:[`关山度若飞`,`将军百战死`,`寒光照铁衣`,`壮士十年归`],ans:2,exp:`"朔气传金柝，寒光照铁衣"——北方寒风中传来打更的金属声，月光映照在铠甲上，体现战地生活艰辛。`},
+{r:`木兰`,q:`《木兰辞》：将军百战死，______。`,opts:[`关山度若飞`,`寒光照铁衣`,`壮士十年归`,`朔气传金柝`],ans:2,exp:`"将军百战死，壮士十年归"——此句为互文，将士们经历百战，有的牺牲有的十年后归来，体现战斗激烈、时间漫长。`},
+{r:`木兰`,q:`《木兰辞》：归来见天子，天子坐明堂。______。`,opts:[`策勋十二转，赏赐百千强`,`木兰不用尚书郎`,`当窗理云鬓，对镜帖花黄`,`出郭相扶将`],ans:0,exp:`"归来见天子，天子坐明堂。策勋十二转，赏赐百千强"——描写木兰建功受封，天子给予极高的奖赏。`},
+{r:`木兰`,q:`《木兰辞》：开我东阁门，坐我西阁床，______，著我旧时裳。`,opts:[`当窗理云鬓`,`对镜帖花黄`,`脱我战时袍`,`出郭相扶将`],ans:2,exp:`"开我东阁门，坐我西阁床，脱我战时袍，著我旧时裳"——用四个排比句描写木兰归家后恢复女装的过程，体现喜悦与亲切感。`},
+{r:`木兰`,q:`《木兰辞》：当窗理云鬓，______。`,opts:[`脱我战时袍`,`对镜帖花黄`,`坐我西阁床`,`著我旧时裳`],ans:1,exp:`"当窗理云鬓，对镜帖花黄"——对着窗户梳理秀发，对着镜子贴上花黄，生动展现木兰恢复女儿装扮的情景。`},
+{r:`木兰`,q:`《木兰辞》最后一段：雄兔脚扑朔，______；双兔傍地走，安能辨我是雄雌？`,opts:[`雌兔眼迷离`,`雌兔脚扑朔`,`雄兔眼迷离`,`安能辨雌雄`],ans:0,exp:`"雄兔脚扑朔，雌兔眼迷离；双兔傍地走，安能辨我是雄雌？"——以双兔为喻，赞美木兰从军多年不被发现的谨慎与机智，"扑朔迷离"成语出于此。`},
+,
+{r:`初唐`,q:`《春江花月夜》：春江潮水连海平，______。`,opts:[`人生代代无穷已`,`海上明月共潮生`,`不知江月待何人`,`但见长江送流水`],ans:1,exp:`《春江花月夜》：春江潮水连海平，海上明月共潮生。意为春天的江潮浩大，月亮从海面升起，仿佛随着潮水一起生长。`},
+{r:`初唐`,q:`《春江花月夜》：______，江月年年只相似。`,opts:[`春江潮水连海平`,`不知江月待何人`,`人生代代无穷已`,`但见长江送流水`],ans:2,exp:`《春江花月夜》：人生代代无穷已，江月年年只相似。以永恒的江月反衬有限的人生，运用对比（反衬）手法。`},
+{r:`初唐`,q:`《春江花月夜》：______，但见长江送流水。`,opts:[`人生代代无穷已`,`江月年年只相似`,`不知江月待何人`,`海上明月共潮生`],ans:2,exp:`《春江花月夜》：不知江月待何人，但见长江送流水。透露出淡淡的惆怅与无奈，以永恒的江流暗示时间一去不返。`},
+{r:`初唐`,q:`《滕王阁序》：落霞与孤鹜齐飞，______。`,opts:[`但见长江送流水`,`秋水共长天一色`,`物换星移几度秋`,`阁中帝子今何在`],ans:1,exp:`《滕王阁序》千古名句：落霞与孤鹜齐飞，秋水共长天一色。运用对偶手法，描绘滕王阁壮阔秋景，动静结合，色彩绚丽。`},
+{r:`初唐`,q:`《滕王阁序》："时运不齐，______。冯唐易老，李广难封。"横线上应填什么？`,opts:[`命途艰难`,`命途多舛`,`时运不济`,`命运多磨`],ans:1,exp:`《滕王阁序》："时运不齐，命途多舛。冯唐易老，李广难封。"意为时机不对，命运坎坷曲折。`},
+{r:`初唐`,q:`《滕王阁序》："老当益壮，______？穷且益坚，不坠青云之志。"`,opts:[`宁移白首之心`,`岂移白首之心`,`不移白首之心`,`何改白首之心`],ans:0,exp:`《滕王阁序》："老当益壮，宁移白首之心？穷且益坚，不坠青云之志。"意为年纪虽老应更加壮志，怎能改变老年的心志？处境艰难更加坚强，不放弃凌云的壮志。`},
+{r:`初唐`,q:`《滕王阁序》："东隅已逝，______。"意思是？`,opts:[`过去的已经过去，将来的还没来`,`早晨的时光已经失去，但傍晚的时间还未算晚，比喻虽然过去错过了机会，但只要从现在开始努力，还为时未晚`,`东边的太阳已经落山`,`东方的希望已经消逝`],ans:1,exp:`"东隅已逝，桑榆非晚"——东隅指早晨，桑榆指傍晚。意为早晨的时光已经失去，但傍晚的时间还未算晚，比喻虽然过去错过了机会，但只要从现在开始努力，还为时未晚，表达了积极向上、不放弃的态度。`},
+{r:`初唐`,q:`《滕王阁序》中"冯唐易老，李广难封"用了什么手法？表达了什么情感？`,opts:[`比喻，表达对古人的崇敬`,`用典，借冯唐到老才被重用、李广一生未能封侯的典故，表达自己怀才不遇、时运不济的感慨`,`对偶，描写战争的残酷`,`夸张，表达对时光流逝的感叹`],ans:1,exp:`"冯唐易老，李广难封"运用用典手法，借冯唐到老才被重用、李广一生未能封侯的历史典故，表达诗人自己怀才不遇、时运不济的深沉感慨。`},
+{r:`初唐`,q:`《滕王阁序》中"物换星移"的意思是？`,opts:[`换了新的物品，星星移动了位置`,`景物变换，星辰移动，形容时间流逝、岁月更替`,`万物都在变化，星星也在移动`,`物品换了主人，星宿改变了位置`],ans:1,exp:`"物换星移"出自《滕王阁序》"物换星移几度秋"，意为景物变换，星辰移动，形容时间流逝、岁月更替，感慨人事沧桑。`},
+{r:`初唐`,q:`《滕王阁序》中"人杰地灵"的意思是？`,opts:[`人民勤劳，土地肥沃`,`有杰出的人才，这地方的山水也因此而有灵气（指人与环境相互辉映）`,`人才众多，地势险要`,`人口众多，土地广袤`],ans:1,exp:`"人杰地灵"出自《滕王阁序》"人杰地灵，徐孺下陈蕃之榻"，意为有杰出的人才，这地方也因此有了灵气，后用来形容某地山川秀丽、人才辈出，两者相互辉映。`},
+{r:`初唐`,q:`《滕王阁序》："雄州雾列，俊采星驰。萍水相逢，尽是他乡之客。""萍水相逢"的意思是？`,opts:[`在水边相遇`,`像浮萍一样随水漂流相遇，比喻素不相识的人偶然相遇`,`在洪州城的水边相逢`,`经常在水边见面`],ans:1,exp:`"萍水相逢"出自《滕王阁序》，浮萍随水漂流，比喻素不相识的人偶然相遇。"尽是他乡之客"指在场宾客都是从四方来的异乡人，大家都是萍水相逢。`},
+{r:`初唐`,q:`《滕王阁序》"雄州雾列，俊采星驰"描写的是什么？`,opts:[`滕王阁的壮丽秋景`,`洪州（南昌）城的雄伟气势以及英俊才子云集的盛况`,`战场上雾气弥漫、将士飞驰`,`宴会上宾客云集的热闹场面`],ans:1,exp:`"雄州雾列，俊采星驰"——雄伟的洪州城像雾一样矗立，英俊的才子们像星星一样奔驰，描写洪州城雄伟壮观、人才济济的盛况。`},
+
+],
+appreciation: [
+{poem:`海内存知己，\n天涯若比邻。`,source:`王勃《送杜少府之任蜀州》`,ans:`大意：只要四海之中有了解自己的人，即使远在天涯海角也好似亲密近邻。\n\n思想感情：①打破空间的距离感——"天涯"与"比邻"形成强烈对比，以空间之远反衬心灵之近，真正的友谊不受地理距离限制。②体现诗人广阔的胸襟与豁达积极的精神——否定了柔弱伤感的"儿女之态"，鼓励友人勇敢前行，超越一般离愁，洋溢着自信与豪迈。`},
+{poem:`无为在歧路，\n儿女共沾巾。`,source:`王勃《送杜少府之任蜀州》`,ans:`大意：不要在分手的岔路上因离别而感到悲伤，就像那些青年男女一样地流泪沾湿手帕。\n\n思想感情：①体现诗人对朋友的深厚情谊——感情真挚，才不忍以眼泪作别。②表现广阔的胸襟与豪迈气概——否定了柔弱、伤感的"儿女之态"，超越了一般的离别悲愁，显示出豁达乐观的精神风貌。`},
+{poem:`前不见古人，后不见来者。\n念天地之悠悠，独怆然而涕下。`,source:`陈子昂《登幽州台歌》`,ans:`大意：回头看不见过去贤明的君主，向前也看不见未来的明君。想到天地广阔无边与永恒长久，独自悲伤地流下眼泪。\n\n思想感情：运用对比（反衬）手法，以天地的永恒广阔反衬个人的孤独渺小，抒发了怀才不遇、生不逢时的悲愤之情，以及深沉的孤独感。`},
+{poem:`千山鸟飞绝，万径人踪灭。\n孤舟蓑笠翁，独钓寒江雪。`,source:`柳宗元《江雪》`,ans:`大意：所有山上，连一只飞鸟的影子都没有；所有路上，连一个人的脚印都找不到；江面上有一只小船，船上有个穿蓑衣戴斗笠的老翁，他独自一人在漫天飞雪的寒江上钓鱼。\n\n思想感情：运用夸张手法（"千山""万径"），营造出极度寂寥的氛围。诗人借寒江上独自钓鱼的老翁形象抒发被贬后的孤独寂寞，更表现了不向逆境低头、坚守高洁品格的精神。`},
+{poem:`旦辞爷娘去，暮宿黄河边，\n不闻爷娘唤女声，但闻黄河流水鸣溅溅。\n旦辞黄河去，暮至黑山头，\n不闻爷娘唤女声，但闻燕山胡骑鸣啾啾。`,source:`《木兰辞》`,ans:`大意：早晨告别父母出发，傍晚在黄河边宿营，听不到父母呼唤女儿的声音，只听到黄河水哗哗流动的声音。早晨离开黄河，傍晚到达黑山头，听不到父母呼唤女儿的声音，只听到燕山胡人战马的嘶鸣声。\n\n思想感情：运用对偶的修辞手法，两组平行句层层递进写出征途遥远。以"不闻爷娘唤女声"反复表达木兰对父母的深切思念，同时以环境声衬托战争的紧张气氛，体现木兰对家乡的依恋之情。`},
+{poem:`万里赴戎机，关山度若飞。\n朔气传金柝，寒光照铁衣。\n将军百战死，壮士十年归。`,source:`《木兰辞》`,ans:`大意：奔赴万里之外战场，翻越关山如同飞翔。北方寒风传送金属打击的声音，月光映照在铠甲上。将士们经历了无数次战斗，十年后有的牺牲有的归来。\n\n思想感情：运用对偶和互文的修辞手法，高度概括了木兰十年征战的艰苦历程。"朔气传金柝，寒光照铁衣"体现战地生活的艰辛；"将军百战死，壮士十年归"（互文）体现了战斗的激烈与时间的漫长，表现了木兰英勇顽强的精神。`},
+{poem:`木兰不用尚书郎，\n愿驰千里足，送儿还故乡。`,source:`《木兰辞》`,ans:`大意：木兰不想做尚书郎这个官职，只希望骑上千里马，赶快把她送回故乡父母身边。\n\n思想感情：尚书郎是在皇帝身边处理政务的重要官职。木兰建功受封却拒绝做官，只想回家与父母团聚，充分表现了木兰不慕名利、淳朴真诚、不贪功名的纯真品格，以及对父母的深厚情感。`},
+{poem:`城阙辅三秦，风烟望五津。\n与君离别意，同是宦游人。`,source:`王勃《送杜少府之任蜀州》`,ans:`大意：三秦之地护卫着都城长安，你将要奔赴的蜀地是一片风烟迷茫；我与你都充满了离别愁意，因为我们都是远离家乡、外出做官的人。\n\n思想感情：首联描绘出壮阔的送别场景，气势宏大；颔联"同是宦游人"拉近了两人的距离，以共同的处境互相慰藉，表现出诗人对友人深厚的同情与理解，同时流露出淡淡的离别之情，为后面的豪迈送别奠定感情基调。`},
+{poem:`年年岁岁花相似，\n岁岁年年人不同。`,source:`刘希夷《代悲白头翁》`,ans:`大意：每年每年鲜花开放得大致相似，但年复一年，赏花的人却一年比一年不同了。\n\n思想感情：运用对比（反衬）的表现手法，以花的年年相似，来反衬人的年年不同，突出了时光悄悄流淌、一去不回的特点，同时感叹人生充满变化（人会老、会散、会变），无法像花一样年年重复，抒发了对时光流逝与人生无常的深沉感慨。`},
+{poem:`人生代代无穷已，\n江月年年只相似。\n不知江月待何人，\n但见长江送流水。`,source:`张若虚《春江花月夜》`,ans:`大意：人的生命一代接一代，没有穷尽；江上的月亮年年都一样，没有什么变化。不知道江月在哪里等待着谁，只看见长江不停地送走流水。\n\n思想感情：运用对比（反衬）手法，以永恒不变的江月反衬有限的人生，抒发了对人生短暂、时光流逝的深沉感慨。"不知江月待何人"透露出淡淡的惆怅与无奈；"但见长江送流水"则以永恒的江流暗示时间的一去不返，同时也暗含了人类生生不息、代代相传的哲理。`},
+{poem:`他时不用逃名姓，\n世上于今半是君。`,source:`李涉《井栏砂宿遇夜客》`,ans:`大意：以后你也不用再隐瞒自己的名字了，因为世上如今有一半的人都像你一样（是强盗）。\n\n思想感情：运用讽刺的表现手法。诗人表面上是在夸奖强盗"知闻"（懂文化、尊重人），实际上是在讽刺当时社会的黑暗，暗示官场和社会上许多人（尤其是官场中人）比强盗更坏、更虚伪。言辞犀利，一针见血，表达了诗人对社会黑暗现实的强烈不满与批判。`},
+,
+{poem:`落霞与孤鹜齐飞，\n秋水共长天一色。`,source:`王勃《滕王阁序》`,ans:`大意：落日的彩霞与孤雁一起飞翔，秋天的江水与辽阔的天空浑然一色。\n\n思想感情：此句是《滕王阁序》中描写滕王阁秋景的千古名句，运用对偶手法，色彩绚烂，意境壮阔。"落霞"与"孤鹜"、"秋水"与"长天"两两相对，动静结合，上下辉映，将天空与江面连成一片，营造出一幅壮美雄浑的秋日图景。这句话也映衬出诗人豪迈的胸襟，以及对自然之美的由衷赞叹，但壮阔之中也隐含着对人生短暂、世事无常的感慨（与后文"阁中帝子今何在？槛外长江空自流"相照应）。`},
+
+],
+open: [
+{t:`新谣`,q:`简述《传灯》这首歌的创作背景及其主题。`,ans:`《传灯》诞生于1982年8月《南洋商报》举办的第一届华语创作比赛颁奖典礼。词作者杜南发是该报文艺版主编，颁奖礼当晚他觉得应该有一首代表比赛的歌曲，作曲家张泛说"你写我就谱"，两人于是在短暂时间内完成了这首诗乐。《传灯》的主题：①歌颂华族文化源远流长的生命力；②呼唤华族子弟肩负起传承华族文化的使命与责任。`},
+{t:`新谣`,q:`新谣的风格特征是什么？为什么说新谣具有历史价值？`,ans:`新谣的风格特征：旋律清新自然、歌词简朴，真实反映新加坡本土情怀与日常生活。\n\n历史价值：新谣虽然创作意图相对单纯，但只要内容反映当时的现实，就能从中窥探到那个时代的华族社会面貌，因此具备一定的历史价值，能让后人了解当时新加坡华族社群的生活与情感。`},
+{t:`社会`,q:`简述新加坡华文报业的发展历程，重点说明两报合并的背景。`,ans:`1923年陈嘉庚创办《南洋商报》，1929年胡文虎创办《星洲日报》。两报立场相近，终极效忠对象都是新加坡。六七十年代英文迅速崛起，华文地位下滑，华文教育走向没落，两报竞争进入恶性循环。1974年政府实施《报章与印刷馆法令》，两报重组为公共公司。在政府主导下，最终达成合并，《南洋星洲联合早报》于1983年3月16日面世。`},
+{t:`社会`,q:`讲华语运动的宗旨是什么？它与新加坡华文媒体有何关联？`,ans:`讲华语运动于1979年由李光耀发起，宗旨有三：①改善华族新加坡人的语言环境；②促进华族社群之间的团结与理解；③营造利于实施母语政策的大环境。\n\n与华文媒体的关联：新加坡广播局在讲华语运动背景下严令禁止方言歌曲播映，促使华文歌曲转型发展。这些政策变化本身就是社会现实，华文歌曲的内容也反映了这一时期华族社群对语言与身份认同的关注。`},
+{t:`微型小说`,q:`微型小说有哪四大写作特点？请各举一例说明。`,ans:`微型小说的四大特点是"微、新、密、奇"。①微：篇幅短小，注重字句凝炼。如《丈夫支出帐本中的一页》全文仅七行字，却具有长篇小说的全部情节。②新：立意新颖，风格清新，主题可以多元。③密：结构紧凑，时间、场所、人物尽可能集中，如同微雕工艺品，在选材、剪裁和布局上下功夫。④奇：结尾精巧出人意料，如邱宝建的《永远的门》结尾发现"门"原来是画在墙上的，令人拍案叫绝。`},
+{t:`微型小说`,q:`为什么微型小说中的小说家被视为"不入流"？`,ans:`根据班固《汉书·艺文志·诸子略序》，先秦诸家被分为"九流十家"。前九流各有其官职来源，如儒家源于司徒之官，道家源于史家。小说家虽自成一家，但其内容是"街谈巷说，道听途说者之所造也"，来自民间街头巷尾的传言，被认为格调不高，因此被视为不入流，排在第十位（故称"九流十家"）。`},
+{t:`阅读小说`,q:`比较全知全能叙事观点与第一人称主角叙事观点的异同。`,ans:`相同点：两者都是小说常用的叙事观点，都能完整讲述故事。\n\n不同点：①全知全能叙事：以三人称叙述，叙事者洞悉一切，能随意进入任何人物的内心深处，弹性最高。②第一人称主角叙事：以"我"（主人翁）叙述，只能描述"我"所知道的内容，但其好处是与读者的生活经验非常接近，具有亲切感与真实感，令读者更有代入感。`},
+{t:`阅读小说`,q:`什么是铺垫手法？以《在柏林》为例说明其运用。`,ans:`铺垫是为了让后文的意思表达得更清楚、更形象，提前为主要写作对象做的描写。\n\n在《在柏林》中：①老妇人不断神秘地数着"一、二、三"，令人疑惑；②两个小姑娘因为听不懂而不加思索地嗤笑；③老兵狠狠扫了她们一眼，随即车厢平静——这些细节层层铺垫，为结尾老兵揭示妻子因失去三个儿子精神崩溃、即将送她去疯人院的震撼结局做好了充分准备。`},
+{t:`人物`,q:`什么是扁平人物？产生扁平人物的原因有哪些？`,ans:`扁平人物是单一性格的人物，又称类型人物。福斯特认为，扁平人物"是按照一个简单的意念或特质被创造出来的"，常常可以用一个句子加以描述概括。\n\n产生原因：①作品篇幅有限，难以对所有人物详加刻画；②文学作品中，次要人物往往是简单的概括；③西方国家戏剧作品中，常需要扁平人物来充当次要人物；④作家生活底子不厚，无法创造立体的圆形人物。`},
+{t:`蝴蝶`,q:`《永远的蝴蝶》中，"永远的蝴蝶"这个题目有什么象征意义？`,ans:`樱子就像一只美丽的蝴蝶，美丽而短暂：她帮主角去寄信，在过马路时被车撞死，生命就此停格在那一刻。然而她却"永远"地留在了主角的记忆与心中，成为永远无法释怀的遗憾与思念。蝴蝶的意象同时象征美好与易逝，既表现了爱情的美丽，也暗示了生命的脆弱。题目将短暂与永恒并置，深刻揭示了小说的主题。`},
+{t:`柏林`,q:`分析《在柏林》中两次"静"的不同含义。`,ans:`第一次"静"：老兵狠狠扫了两个小姑娘一眼后，车厢里随即平静了——这是一种表面上的平静，是小姑娘们被威慑住而停止嗤笑，是被迫的安静。\n\n第二次"静"：老兵说出真相后，车厢里"一片寂静，静得可怕"——这是整个车厢所有乘客内心被深深震撼后的沉默，是对战争残酷性的震惊与对受害者的怜悯，是从内心深处的震动，远比第一次的"静"更深沉、更令人窒息。`},
+{t:`生态`,q:`简述新加坡微型小说的四个发展时期及各时期的主要特点。`,ans:`①萌芽期（70年代）：篇幅较长的创作无法引起读者兴趣，微型小说因此有了发展空间。②发展期（80至87年）：两大报合并后文艺副刊缩小；中国文学团体来新交流，对新华文艺起积极推动作用。③转型期（87至90年）：创作无论量和质都有飞跃发展，许多写诗、散文的作者纷纷加入；1987年新加坡最后一所华校停办。④多元化发展期（90年后）：伤痕题材兴起；经济发展带来更大创作空间；海内外文化交流更频繁，微型小说走向多元。`},
+{t:`木兰`,q:`《木兰辞》中"互文"是什么修辞手法？请举两个例子说明。`,ans:`互文是古诗中常用的修辞手法，表现为诗中上下两句或一句话中的两个部分，看似各说一件事，其实是互相呼应、互相补充，说的是同一件事。\n\n例1："将军百战死，壮士十年归"——并非将军都战死、壮士都归来，而是将士们经历百战，有的牺牲，有的十年后归来。\n\n例2："秦时明月汉时关"（王昌龄《出塞》）——并非秦代只有明月、汉代只有关，而是那亘古以来的明月照着历经秦汉的边关。`},
+{t:`初唐`,q:`初唐四杰对唐代诗歌发展有什么贡献？`,ans:`初唐四杰是王勃、杨炯、卢照邻、骆宾王。他们都是官小而名大、年少而才高的诗人，贡献主要有：①在题材上，把诗歌从宫廷移到民间，从宫廷模拟移到了江山和塞漠，使诗歌题材大为扩大。②在风格上，一扫前代浮靡之风，变得刚健有力，充满生机与活力。③为盛唐诗歌的繁荣奠定了基础，承前启后，具有重要的历史地位。`},
+{t:`初唐`,q:`分析"海内存知己，天涯若比邻"这两句诗的思想感情。`,ans:`大意：只要四海之中有了解自己的人，即使远在天涯海角也好似亲密近邻。\n\n思想感情：①打破空间的距离感："天涯"与"比邻"形成强烈对比，以空间之远反衬心灵之近，说明真正的友谊不受地理距离的限制。②体现广阔胸襟与豪迈气概：表现了诗人超越一般离愁的豁达精神，对友谊充满自信，鼓励友人勇敢前行，洋溢着积极进取的精神。`},
+{t:`生态`,q:`分析《永远的门》的结局，并说明它体现了微型小说哪个写作特点。`,ans:`《永远的门》的结局：郑若奎突然去世后，邻居们在整理遗物时搬开花竹书架，发现墙上有一扇精巧的紫红色的门，门拉手是黄铜的——但那竟是一幅画在墙上的门！邻居们先是同情化为愤懑，继而是无法言说的惆怅。\n\n这个结局体现了微型小说"奇"的写作特点：结尾精巧，出人意料。读者事前完全没有预料到门只是一幅画，震撼之余引人深思——郑若奎一直默默爱慕着潘雪娥，却始终没有鼓起勇气敲开那扇"门"（象征情感的屏障）。结局揭示了小说的深层主题：爱情的遗憾，以及人们面对感情时的怯懦与错失。`},
+{t:`生态`,q:`《永远的门》中，郑若奎与潘雪娥各是怎样的人物形象？两人的关系体现了什么主题？`,ans:`郑若奎：四五十岁的画师，头发焦黄乱蓬蓬，瘦削，只有一双大眼睛烁着年轻的光。他爱买鲜花插在蓝色高脚花瓶里，内心深处默默爱慕着潘雪娥，却从未主动表白，是一个内敛、孤独、怀有深情却怯于行动的人。\n\n潘雪娥：四十岁左右，身材苗条，瓜子脸，肤色白皙，在花店工作，有权利得到爱却始终没有结婚。她与郑若奎的日常交流仅限于"你早"与"出去啊"，同样保持着距离。\n\n主题：两人之间有着明显的相互欣赏，却始终隔着一堵"墙"。那扇画在墙上的门，象征了郑若奎对爱情的渴望，也象征了他们之间无法逾越的心理屏障。小说的主题是：爱情需要勇气，错失与遗憾往往源于内心的怯懦，令人惋惜。`},
+
+]
+};
+
+let quiz=null, mcqAns={}, submitted=false;
+
+document.querySelectorAll('.ftag').forEach(function(b){
+  b.addEventListener('click', function(){
+    var t = b.dataset.t;
+    if(t==='all'){
+      document.querySelectorAll('.ftag').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+    } else {
+      document.querySelector('[data-t="all"]').classList.remove('on');
+      b.classList.toggle('on');
+      if(!document.querySelectorAll('.ftag.on').length)
+        document.querySelector('[data-t="all"]').classList.add('on');
+    }
   });
-  const result = [];
-  let added = true;
-  while(added){
-    added = false;
-    for(const lid of lessonOrder){
-      const bucket = byLesson.get(lid);
-      if(bucket.length){ result.push(bucket.shift()); added = true; }
+});
+
+function getFilter(){
+  var on=[].slice.call(document.querySelectorAll('.ftag.on')).map(function(b){return b.dataset.t;});
+  return on.indexOf('all')>=0 ? null : on;
+}
+
+function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+
+function tagToKey(label){
+  var m={新谣:'xinrao',社会:'social',微型小说:'micro',阅读小说:'readnovel',人物:'character',蝴蝶:'butterfly',柏林:'berlin',生态:'ecology',木兰:'mulan',初唐:'tang'};
+  return m[label]||label;
+}
+
+function gen(){
+  submitted=false; mcqAns={};
+  document.getElementById('res-card').classList.remove('show');
+  document.getElementById('subbar').style.display='none';
+  ['c-mcq','c-ap','c-qa','c-tot'].forEach(function(id){document.getElementById(id).textContent='—';});
+
+  var filter=getFilter();
+  var pool=BANK.mcq.filter(function(q){return !filter||filter.indexOf(tagToKey(q.r))>=0;});
+  if(pool.length<10) pool=BANK.mcq;
+  var selected=pickBalanced(pool,10);
+
+  var apPool=BANK.appreciation;
+  if(filter && filter.indexOf('mulan')<0 && filter.indexOf('tang')<0) apPool=BANK.appreciation;
+  var ap=rnd(apPool);
+
+  var oPool=BANK.open.filter(function(q){return !filter||filter.indexOf(tagToKey(q.t))>=0;});
+  if(oPool.length<3) oPool=BANK.open;
+  var openQs=pickOpenDiff(oPool,3);
+
+  quiz={mcq:selected,ap:ap,openQs:openQs};
+  render();
+}
+
+function pickBalanced(pool,n){
+  var shuffled=shuffle(pool);
+  var target=shuffle([0,0,1,1,2,2,3,3,0,2]);
+  var result=[];
+  var used={};
+  for(var i=0;i<n;i++){
+    var wantAns=target[i];
+    var found=false;
+    for(var j=0;j<shuffled.length;j++){
+      if(used[j]) continue;
+      if(shuffled[j].ans===wantAns){result.push(Object.assign({},shuffled[j]));used[j]=true;found=true;break;}
+    }
+    if(!found){
+      for(var j=0;j<shuffled.length;j++){
+        if(used[j]) continue;
+        result.push(rotateAnswer(shuffled[j],wantAns));
+        used[j]=true;break;
+      }
     }
   }
   return result;
 }
-function dueQueue(limit, kindFilter){
-  let items = selectedItems();
-  if(kindFilter) items = items.filter(it=>it.kind===kindFilter);
-  const today = todayStr();
-  const due = [];
-  const fresh = [];
-  items.forEach(it=>{
-    const st = PROGRESS[it.id];
-    if(st && (st.tooEasy || 0) >= 3) return; // 永久跳过
-    if(st && st.seen){
-      if(st.due <= today) due.push(it);
-    } else {
-      fresh.push(it);
+
+function rotateAnswer(q,targetAns){
+  var opts=q.opts.slice();
+  var cur=q.ans;
+  if(cur===targetAns) return Object.assign({},q);
+  var tmp=opts[cur]; opts[cur]=opts[targetAns]; opts[targetAns]=tmp;
+  return Object.assign({},q,{opts:opts,ans:targetAns});
+}
+
+function pickOpenDiff(pool,n){
+  var shuffled=shuffle(pool);
+  var result=[]; var usedTopics={};
+  for(var i=0;i<shuffled.length;i++){
+    if(!usedTopics[shuffled[i].t]){result.push(shuffled[i]);usedTopics[shuffled[i].t]=true;if(result.length===n)break;}
+  }
+  if(result.length<n){
+    for(var i=0;i<shuffled.length;i++){
+      if(result.indexOf(shuffled[i])<0){result.push(shuffled[i]);if(result.length===n)break;}
     }
-  });
-  // 优先：错题多的 due 项 > 一般 due 项 > 新项（在所选课文之间轮流抽取，控制每日新词数量）
-  due.sort((a,b)=> (PROGRESS[b.id].lapses||0) - (PROGRESS[a.id].lapses||0));
-  fresh.sort((a,b)=> a.grade-b.grade || a.lessonNum - b.lessonNum || a.id.localeCompare(b.id));
-  const interleavedFresh = interleaveByLesson(fresh);
-  const newBudget = Math.max(0, SETTINGS.dailyNew);
-  const queue = due.concat(interleavedFresh.slice(0, newBudget));
-  // 完整随机打散（Fisher-Yates），让不同设备/不同次打开的题目顺序有明显差异
-  for(let i=queue.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [queue[i],queue[j]]=[queue[j],queue[i]];
   }
-  return limit ? queue.slice(0,limit) : queue;
+  return result;
 }
 
-// ---------- 统计 ----------
-function computeStats(){
-  const items = selectedItems();
-  let mastered=0, learning=0, weak=0, untouched=0;
-  let dueToday=0;
-  const today = todayStr();
-  items.forEach(it=>{
-    const st = PROGRESS[it.id];
-    const lvl = masteryLevel(st);
-    if(lvl===0) untouched++;
-    else if(lvl===1) weak++;
-    else if(lvl===2) learning++;
-    else mastered++;
-    if(st && st.seen && st.due<=today) dueToday++;
-    else if(!st || !st.seen) { /* counted separately as new */ }
-  });
-  const total = items.length;
-  const score = total ? Math.round((weak*0.3 + learning*0.6 + mastered*1.0) / total * 100) : 0;
-  return {total, mastered, learning, weak, untouched, dueToday, newCount: untouched, score};
-}
-function lessonStats(lessonId){
-  const items = ITEMS.filter(it=>it.lessonId===lessonId);
-  let mastered=0, learning=0, weak=0, touched=0;
-  items.forEach(it=>{
-    const st = PROGRESS[it.id];
-    if(st && st.seen){
-      touched++;
-      const lvl = masteryLevel(st);
-      if(lvl===3) mastered++;
-      else if(lvl===2) learning++;
-      else if(lvl===1) weak++;
+function render(){
+  var mcq=quiz.mcq, ap=quiz.ap, openQs=quiz.openQs;
+  var h='';
+  h+='<div class="paper"><div class="sec-hdr"><span class="sec-n">第一节</span><span class="sec-t">选择题（每题1分，共10题）</span><span class="sec-s">10分</span></div>';
+  for(var i=0;i<mcq.length;i++){
+    var q=mcq[i];
+    h+='<div class="qi" id="qi'+i+'">';
+    h+='<div class="qtext"><span class="qn">'+(i+1)+'.</span>'+q.q+'<span class="qtag">'+q.r+'</span></div>';
+    h+='<div class="aopts">';
+    for(var j=0;j<q.opts.length;j++){
+      h+='<button class="abtn" id="a'+i+'-'+j+'" data-qi="'+i+'" data-oi="'+j+'"><span class="al">'+('ABCD'[j])+'</span><span>'+q.opts[j]+'</span></button>';
     }
-  });
-  const total = items.length;
-  // 加权进度分：易错按30%、学习中按60%、已掌握按100%计入，避免"做了很多题但全部显示0%"的误导
-  const score = total ? Math.round((weak*0.3 + learning*0.6 + mastered*1.0) / total * 100) : 0;
-  return {total, touched, mastered, learning, weak, score};
-}
-function hasDueInLesson(lessonId){
-  const today = todayStr();
-  return ITEMS.some(it=>it.lessonId===lessonId && PROGRESS[it.id] && PROGRESS[it.id].seen && PROGRESS[it.id].due<=today);
-}
-
-// ---------- 选择题质量控制：默认屏蔽字 + 用户自定义题库（持久化） ----------
-const DEFAULT_BLOCKED_CHARS = [
- '了','着','在','是','有','我','你','他','她','它','们','这','那','哪',
- '一','二','三','四','五','六','七','八','九','十','百','千','万',
- '不','也','就','都','很','和','与','但','而','又','还','才','子','个','么','吗','呢','吧','啊','呀','并',
- '把','被','给','让','叫','到','去','来','上','下','大','小','多','少','好','人','儿','头','中','之',
- '以','为','于','所','其','可','能','会','要','自','已'
-].filter((v,i,a)=>a.indexOf(v)===i); // 去重
-
-let BLOCKED_CHARS = new Set(DEFAULT_BLOCKED_CHARS);
-let CUSTOM_CONFUSABLES = []; // 用户新增的精选题
-let DELETED_BUILTIN_KEYS = new Set(); // 被用户删除/屏蔽的内置精选题（按其在 CONFUSABLES 中的下标）
-
-async function loadAdminData(){
-  try{
-    const r = await window.storage.get('blockedChars', false);
-    const arr = r && r.value ? JSON.parse(r.value) : DEFAULT_BLOCKED_CHARS;
-    BLOCKED_CHARS = new Set(arr);
-  }catch(e){ BLOCKED_CHARS = new Set(DEFAULT_BLOCKED_CHARS); }
-  try{
-    const r = await window.storage.get('customConfusables', false);
-    CUSTOM_CONFUSABLES = r && r.value ? JSON.parse(r.value) : [];
-  }catch(e){ CUSTOM_CONFUSABLES = []; }
-  try{
-    const r = await window.storage.get('deletedBuiltins', false);
-    DELETED_BUILTIN_KEYS = new Set(r && r.value ? JSON.parse(r.value) : []);
-  }catch(e){ DELETED_BUILTIN_KEYS = new Set(); }
-}
-async function saveBlockedChars(){ try{ await window.storage.set('blockedChars', JSON.stringify(Array.from(BLOCKED_CHARS)), false); }catch(e){} }
-async function saveCustomConfusables(){ try{ await window.storage.set('customConfusables', JSON.stringify(CUSTOM_CONFUSABLES), false); }catch(e){} }
-async function saveDeletedBuiltins(){ try{ await window.storage.set('deletedBuiltins', JSON.stringify(Array.from(DELETED_BUILTIN_KEYS)), false); }catch(e){} }
-
-// 合并内置题库（去掉被删除的）+ 用户自定义题库，统一带上来源标记
-function effectiveConfusables(){
-  const builtin = CONFUSABLES.map((c,idx)=>({...c, _src:'builtin', _key:'cur:'+idx}))
-    .filter(c=>!DELETED_BUILTIN_KEYS.has(c._key));
-  const custom = CUSTOM_CONFUSABLES.map(c=>({...c, _src:'custom', _key:'usr:'+c.id}));
-  return builtin.concat(custom);
-}
-function newCustomId(){ return 'c'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
-
-// ---------- 选择题（形近字辨析）动态出题 ----------
-function buildHanziBank(){
-  const set = new Set();
-  selectedItems().forEach(it=>{
-    const text = it.kind==='word' ? it.text : it.full;
-    text.split('').forEach(ch=>{ if(isHanzi(ch)) set.add(ch); });
-  });
-  return Array.from(set);
-}
-function buildHanziFreq(){
-  const freq = {};
-  selectedItems().forEach(it=>{
-    const text = it.kind==='word' ? it.text : it.full;
-    text.split('').forEach(ch=>{ if(isHanzi(ch)) freq[ch]=(freq[ch]||0)+1; });
-  });
-  return freq;
-}
-function shuffleArr(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
-  return a;
-}
-// 从候选字中挑选出题目标：排除屏蔽字；优先选在所选课文范围内出现频率较低（更有学习价值、更不常见）的字
-function pickTargetChar(candidateChars, hanziFreq){
-  let pool = candidateChars.filter(ch=>!BLOCKED_CHARS.has(ch));
-  if(pool.length===0) pool = candidateChars; // 兜底：如果整词都被屏蔽了，还是要能出题
-  const withFreq = pool.map(ch=>({ch, f: hanziFreq[ch]||1}));
-  const minFreq = Math.min(...withFreq.map(x=>x.f));
-  // 只在"较少见"的那一批字里随机选（频率 <= 最低频率+1 的都算候选），让生僻/有特色的字优先被考
-  const lowFreqOnes = withFreq.filter(x=>x.f <= minFreq + 1).map(x=>x.ch);
-  return lowFreqOnes[Math.floor(Math.random()*lowFreqOnes.length)];
-}
-// 为某个具体的练习条目生成一道选择题：优先使用精选题库（同课文+同字），否则从同一批课文的汉字中动态抽干扰项
-function generateMCQForItem(item, hanziBank, usedKeys, hanziFreq){
-  const sourceText = item.kind==='word' ? item.text : item.full;
-  const targetPool = item.kind==='sentence' && item.focus ? item.focus : sourceText;
-  const candidateChars = targetPool.split('').filter(isHanzi);
-  if(candidateChars.length===0) return null;
-
-  // 1) 尝试匹配精选题库（含用户自定义、排除被删除的内置题）：同课文 + 目标字属于该题的字
-  //    同时做数据完整性校验（例句须含答案字、选项须含答案且互不重复），有问题的条目直接跳过，改走动态生成兜底
-  const allConfusables = effectiveConfusables();
-  const curatedMatches = allConfusables.filter(c=>{
-    if(usedKeys.has(c._key)) return false;
-    // 多空题（blank含顿号，如"地、的、得"）：句子用__占位，不走candidateChars匹配
-    const isMultiBlank = c.blank.includes('、');
-    if(isMultiBlank) return false; // 多空题由专项通道单独触发，不走常规匹配
-    // 单字题：常规校验
-    return c.lessonId===item.lessonId && candidateChars.includes(c.blank) &&
-      (c.sentence.includes(c.blank) || c.sentence.includes('__')) &&
-      c.options.includes(c.blank) && new Set(c.options).size===c.options.length;
-  });
-  if(curatedMatches.length>0){
-    const pick = curatedMatches[Math.floor(Math.random()*curatedMatches.length)];
-    usedKeys.add(pick._key);
-    return {
-      sentence: pick.sentence, blank: pick.blank,
-      options: shuffleArr(pick.options), note: pick.note,
-      key: pick._key
-    };
+    h+='</div><div class="exp" id="ex'+i+'">'+q.exp+'</div></div>';
   }
+  h+='</div>';
 
-  // 2) 动态生成：优先选不常见、更有学习价值的字（排除虚词/简单字），干扰项来自本次所选课文范围内出现过的其它汉字
-  const correct = pickTargetChar(candidateChars, hanziFreq || {});
-  const pool = (hanziBank.length>6 ? hanziBank : Array.from(new Set(hanziBank.concat(['的','地','得','了','着','在']))))
-    .filter(ch=>ch!==correct);
-  const shuffledPool = shuffleArr(pool);
-  const distractors = [];
-  for(const ch of shuffledPool){
-    if(distractors.length>=3) break;
-    if(!distractors.includes(ch)) distractors.push(ch);
+  h+='<div class="paper"><div class="sec-hdr"><span class="sec-n">第二节</span><span class="sec-t">赏析题</span><span class="sec-s">8分</span></div>';
+  h+='<div class="qi"><div class="qtext"><span class="qn">11.</span>写出以下诗句的大意以及所表达的思想感情。</div>';
+  h+='<div class="poem-box">'+ap.poem.replace(/\n/g,'<br>')+'<br><small style="font-size:12px;color:var(--muted)">——'+ap.source+'</small></div>';
+  h+='<textarea class="ta" id="ap-ta" placeholder="大意：……&#10;&#10;思想感情：……"></textarea>';
+  h+='<button class="show-ans-btn" data-ref="ap-ref">查看参考答案</button>';
+  h+='<div class="ref-ans" id="ap-ref">'+ap.ans.replace(/\n/g,'<br>')+'</div></div></div>';
+
+  h+='<div class="paper"><div class="sec-hdr"><span class="sec-n">第三节</span><span class="sec-t">问答题（共3题，每题4分）</span><span class="sec-s">12分</span></div>';
+  for(var i=0;i<openQs.length;i++){
+    var q=openQs[i];
+    h+='<div class="qi"><div class="qtext"><span class="qn">'+(i+12)+'.</span>'+q.q+'<span class="qtag">'+q.t+'</span></div>';
+    h+='<textarea class="ta" id="oq-ta-'+i+'" placeholder="请在此输入答案……"></textarea>';
+    h+='<button class="show-ans-btn" data-ref="oq-ref-'+i+'">查看参考答案</button>';
+    h+='<div class="ref-ans" id="oq-ref-'+i+'">'+q.ans.replace(/\n/g,'<br>')+'</div></div>';
   }
-  const options = shuffleArr([correct, ...distractors]);
-  return {
-    sentence: sourceText, blank: correct, options,
-    note: `本题选自 ${item.grade}年级 第${item.lessonNum}课《${item.lessonTitle}》`,
-    key: 'dyn:'+item.id+':'+correct
-  };
-}
+  h+='</div>';
 
-// ---------- 语音朗读 ----------
-let zhVoice = null;
-function pickVoice(){
-  if(!('speechSynthesis' in window)) return;
-  const voices = speechSynthesis.getVoices();
-  zhVoice = voices.find(v=>v.lang==='zh-CN') || voices.find(v=>v.lang && v.lang.startsWith('zh')) || null;
-}
-if('speechSynthesis' in window){
-  pickVoice();
-  speechSynthesis.onvoiceschanged = pickVoice;
-}
-function speak(text){
-  if(!('speechSynthesis' in window)) return false;
-  try{
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'zh-CN';
-    if(zhVoice) u.voice = zhVoice;
-    u.rate = SETTINGS.voiceRate || 0.85;
-    speechSynthesis.speak(u);
-    return true;
-  }catch(e){ return false; }
+  document.getElementById('quiz').innerHTML=h;
+  document.getElementById('subbar').style.display='flex';
 }
 
-// ---------- 画布手写（米字格） ----------
-function drawGuide(canvas){
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-  ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle = '#D7847C';
-  ctx.setLineDash([4,4]);
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(w/2,0); ctx.lineTo(w/2,h);
-  ctx.moveTo(0,h/2); ctx.lineTo(w,h/2);
-  ctx.moveTo(0,0); ctx.lineTo(w,h);
-  ctx.moveTo(w,0); ctx.lineTo(0,h);
-  ctx.stroke();
-  ctx.setLineDash([]);
-}
-function drawLines(canvas){
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-  ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle = '#D7847C';
-  ctx.setLineDash([4,4]);
-  ctx.lineWidth = 1;
-  const rows = 3;
-  for(let i=1;i<rows;i++){
-    const y = h*i/rows;
-    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+document.addEventListener('click', function(e){
+  var abtn=e.target.closest('.abtn');
+  if(abtn && abtn.dataset.qi!==undefined){
+    var qi=parseInt(abtn.dataset.qi), oi=parseInt(abtn.dataset.oi);
+    if(submitted||mcqAns[qi]!==undefined) return;
+    mcqAns[qi]=oi;
+    var cor=quiz.mcq[qi].ans;
+    for(var j=0;j<4;j++){
+      var b=document.getElementById('a'+qi+'-'+j);
+      b.disabled=true;
+      if(j===cor) b.classList.add(oi===cor?'ok':'sh');
+      if(j===oi&&oi!==cor) b.classList.add('ng');
+    }
+    document.getElementById('ex'+qi).classList.add('show');
+    return;
   }
-  ctx.setLineDash([]);
-}
-function setupInkCanvas(canvas){
-  const ctx = canvas.getContext('2d');
-  ctx.lineWidth = 5;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  ctx.strokeStyle = '#262220';
-  let drawing=false, last=null;
-  function pos(e){
-    const rect = canvas.getBoundingClientRect();
-    const cx = (e.touches? e.touches[0].clientX : e.clientX) - rect.left;
-    const cy = (e.touches? e.touches[0].clientY : e.clientY) - rect.top;
-    return {x: cx * canvas.width/rect.width, y: cy * canvas.height/rect.height};
+  var sab=e.target.closest('.show-ans-btn');
+  if(sab && sab.dataset.ref){
+    var el=document.getElementById(sab.dataset.ref);
+    if(el) el.classList.toggle('show');
+    return;
   }
-  function start(e){ e.preventDefault(); drawing=true; last=pos(e); }
-  function move(e){
-    if(!drawing) return; e.preventDefault();
-    const p = pos(e);
-    ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
-    last = p;
-  }
-  function end(e){ drawing=false; }
-  canvas.addEventListener('pointerdown', start);
-  canvas.addEventListener('pointermove', move);
-  window.addEventListener('pointerup', end);
-  canvas.addEventListener('touchstart', start, {passive:false});
-  canvas.addEventListener('touchmove', move, {passive:false});
-  canvas.addEventListener('touchend', end);
-}
-function clearInk(canvas){
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-}
-
-function buildCellWriter(container, count){
-  container.innerHTML = '';
-  const cells = [];
-  // 动态计算格子边长：每行最多放4个字（超过4个才换行），按实际换行后每行的字数计算尺寸，
-  // 这样长词换行后格子也能尽量大，而不是按"塞满一行"的假设挤压尺寸
-  const gap = 8;
-  const maxPerRow = 3;
-  const rows = Math.ceil(count / maxPerRow) || 1;
-  const perRow = Math.ceil(count / rows); // 实际每行字数（让多行排布更均匀，比如6字=3+3而不是4+2）
-  const containerWidth = container.clientWidth || (window.innerWidth - 56);
-  let size = Math.floor((containerWidth - gap * (perRow - 1)) / perRow);
-  size = Math.max(64, Math.min(112, size)); // 64~112px 之间，不会小到难写，也不会大到离谱
-  for(let i=0;i<count;i++){
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    cell.style.width = size + 'px';
-    cell.style.height = size + 'px';
-    const guide = document.createElement('canvas');
-    guide.className = 'guide'; guide.width=200; guide.height=200;
-    const ink = document.createElement('canvas');
-    ink.width=200; ink.height=200;
-    cell.appendChild(guide); cell.appendChild(ink);
-    container.appendChild(cell);
-    drawGuide(guide);
-    setupInkCanvas(ink);
-    cells.push(ink);
-  }
-  return cells;
-}
-function buildLineWriter(container){
-  container.innerHTML = '';
-  const guide = document.createElement('canvas');
-  guide.width=1040; guide.height=300;
-  const ink = document.createElement('canvas');
-  ink.width=1040; ink.height=300;
-  container.appendChild(guide); container.appendChild(ink);
-  drawLines(guide);
-  setupInkCanvas(ink);
-  return [ink];
-}
-
-// ============ 路由 / 屏幕切换 ============
-let currentScreen = 'home';
-function showScreen(name){
-  currentScreen = name;
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+name).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active', b.dataset.nav===name));
-  window.scrollTo(0,0);
-  if(name==='home') renderHome();
-  if(name==='lessons') renderLessons();
-  if(name==='stats') renderStats();
-  if(name==='admin') renderAdmin();
-}
-document.querySelectorAll('.nav-btn').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    if(b.dataset.nav==='practice'){ startSession(); }
-    else showScreen(b.dataset.nav);
-  });
+  if(e.target.closest('#gbtn')){ gen(); return; }
+  if(e.target.closest('#subbtn')){ submitQuiz(); return; }
 });
 
-// ============ 考试倒计时 ============
-function renderCountdown(){
-  const d = daysBetween(todayStr(), SETTINGS.examDate);
-  document.getElementById('examDays').textContent = d>0 ? d+' 天' : (d===0?'就是今天':'已过');
-}
-
-// ============ 首页 ============
-function renderHome(){
-  const stats = computeStats();
-  const pct = stats.score;
-  const el = document.getElementById('screen-home');
-  el.innerHTML = `
-    <div class="hero">
-      <div class="big-num">${stats.dueToday + Math.min(stats.newCount, SETTINGS.dailyNew)}</div>
-      <div class="big-label">今日待复习项目</div>
-      <div class="stat-row">
-        <div class="stat-box due"><div class="n">${stats.dueToday}</div><div class="l">待复习</div></div>
-        <div class="stat-box"><div class="n">${stats.learning}</div><div class="l">学习中</div></div>
-        <div class="stat-box mastered"><div class="n">${stats.mastered}</div><div class="l">已掌握</div></div>
-        <div class="stat-box"><div class="n">${stats.weak}</div><div class="l">易错</div></div>
-      </div>
-      <button class="btn btn-primary btn-block" style="margin-top:20px;" onclick="startSession()">📝 开始今日复习</button>
-    </div>
-
-    <h2 class="section-title">练习模式 <span class="tag">可多选混合</span></h2>
-    <div class="mode-grid" id="modeGrid"></div>
-
-    <h2 class="section-title">总体进度</h2>
-    <div class="card"><div class="card-inner">
-      <div class="bar-row"><div class="lbl">全部 ${stats.total} 项</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
-        <div class="bar-pct">${pct}%</div></div>
-      <div style="font-size:11.5px;color:var(--ink-soft);margin-top:6px;">学习进度综合了「学习中/易错/已掌握」各阶段，不是只看完全掌握的比例 · 已选 ${SETTINGS.selectedLessons.length} / ${LESSONS.length} 课 · 距考试还有 <b style="color:var(--seal)">${daysBetween(todayStr(),SETTINGS.examDate)}</b> 天</div>
-    </div></div>
-
-    <div class="btn-row">
-      <button class="btn btn-outline btn-block" onclick="showScreen('lessons')">📖 选择课文范围</button>
-      <button class="btn btn-ghost" onclick="openSettings()">⚙️</button>
-    </div>
-  `;
-  const modes = [
-    {id:'mixed', icon:'🎲', t:'综合混合', d:'听写+填空+辨字+造句'},
-    {id:'word', icon:'🖊️', t:'词语听写', d:'听拼音写汉字'},
-    {id:'sentence', icon:'📜', t:'句子默写', d:'挖空/整句默写'},
-    {id:'mcq', icon:'🔍', t:'形近字辨析', d:'选出正确的字'},
-    {id:'sentmaking', icon:'✏️', t:'造句练习', d:'用词语自由造句'},
-  ];
-  const grid = document.getElementById('modeGrid');
-  grid.innerHTML = modes.map(m=>`
-    <div class="mode-card ${SETTINGS.mode===m.id?'active':''}" data-mode="${m.id}">
-      <div class="mi">${m.icon}</div><div class="mt">${m.t}</div><div class="md">${m.d}</div>
-    </div>`).join('');
-  grid.querySelectorAll('.mode-card').forEach(c=>{
-    c.addEventListener('click', ()=>{ SETTINGS.mode=c.dataset.mode; saveSettings(); renderHome(); });
-  });
-}
-
-// ============ 选课文 ============
-let lessonGradeTab = 5;
-function renderLessons(){
-  const el = document.getElementById('screen-lessons');
-  const sel = new Set(SETTINGS.selectedLessons);
-  const g5Count = LESSONS.filter(l=>l.grade===5 && sel.has(l.id)).length;
-  const g6Count = LESSONS.filter(l=>l.grade===6 && sel.has(l.id)).length;
-  const g5Total = LESSONS.filter(l=>l.grade===5).length;
-  const g6Total = LESSONS.filter(l=>l.grade===6).length;
-  el.innerHTML = `
-    <h2 class="section-title">选择要复习的课文</h2>
-    <div class="card" style="margin-bottom:14px;"><div class="card-inner" style="display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-size:12px;color:var(--ink-soft);">当前总共选中</div>
-        <div style="font-family:var(--serif);font-size:26px;color:var(--seal);">${sel.size} <span style="font-size:13px;color:var(--ink-soft);font-family:var(--sans);">/ ${LESSONS.length} 课</span></div>
-      </div>
-      <div style="text-align:right;font-size:12px;color:var(--ink-soft);line-height:1.8;">
-        <div>五年级：<b style="color:${g5Count>0?'var(--bamboo-deep)':'var(--ink-soft)'}">${g5Count}</b> / ${g5Total}</div>
-        <div>六年级：<b style="color:${g6Count>0?'var(--bamboo-deep)':'var(--ink-soft)'}">${g6Count}</b> / ${g6Total}</div>
-      </div>
-    </div></div>
-    ${sel.size===0 ? '<div class="card" style="border-color:var(--seal);"><div class="card-inner" style="color:var(--seal-deep);font-size:13px;">⚠️ 还没有选中任何课文，练习时将无法出题，请至少选择一课。</div></div>' : ''}
-    ${sel.size===LESSONS.length ? '<div class="card" style="border-color:var(--gold);"><div class="card-inner" style="color:var(--ink-soft);font-size:12.5px;">💡 当前是「全部课文」都在复习范围内。如果只想专攻某几课，请先点击下方「清空两个年级」，再点选你要的课文——课文格子是开关，已选中的会显示绿色边框。</div></div>' : ''}
-    <div class="grade-tabs">
-      <div class="grade-tab ${lessonGradeTab===5?'active':''}" data-g="5">五年级（${g5Count}/${g5Total} 已选）</div>
-      <div class="grade-tab ${lessonGradeTab===6?'active':''}" data-g="6">六年级（${g6Count}/${g6Total} 已选）</div>
-    </div>
-    <div class="btn-row">
-      <button class="btn btn-outline" onclick="selectAllLessons(${lessonGradeTab})">全选本年级</button>
-      <button class="btn btn-ghost" onclick="clearAllLessons(${lessonGradeTab})">清空本年级</button>
-    </div>
-    <div class="lesson-grid" id="lessonGrid"></div>
-    <div class="btn-row" style="margin-top:18px;">
-      <button class="btn btn-outline btn-block" onclick="selectAllLessons(5);selectAllLessons(6);">✅ 全选两个年级</button>
-      <button class="btn btn-ghost btn-block" onclick="clearAllLessons(5);clearAllLessons(6);">🗑️ 清空两个年级</button>
-    </div>
-    <div style="margin-top:18px;font-size:12px;color:var(--ink-soft)">💡 红点表示该课有到期待复习的内容。点击课文格子可加入/移出复习范围。切换年级标签查看另一年级的选课情况——上方的总数会随时反映两个年级合计的结果。</div>
-  `;
-  el.querySelectorAll('.grade-tab').forEach(t=>t.addEventListener('click',()=>{lessonGradeTab=+t.dataset.g; renderLessons();}));
-  const grid = document.getElementById('lessonGrid');
-  grid.innerHTML = LESSONS.filter(l=>l.grade===lessonGradeTab).map(l=>{
-    const due = hasDueInLesson(l.id);
-    return `<div class="lesson-chip ${sel.has(l.id)?'sel':''} ${due?'has-due':''}" data-id="${l.id}" title="${l.title}">
-      <span class="dot"></span><span class="num">${l.lesson}</span>${l.title.length>4?l.title.slice(0,4)+'…':l.title}
-    </div>`;
-  }).join('');
-  grid.querySelectorAll('.lesson-chip').forEach(c=>{
-    c.addEventListener('click', ()=>{
-      const id = c.dataset.id;
-      const s = new Set(SETTINGS.selectedLessons);
-      if(s.has(id)) s.delete(id); else s.add(id);
-      SETTINGS.selectedLessons = Array.from(s);
-      saveSettings();
-      renderLessons();
-    });
-  });
-}
-function selectAllLessons(grade){
-  const s = new Set(SETTINGS.selectedLessons);
-  LESSONS.filter(l=>l.grade===grade).forEach(l=>s.add(l.id));
-  SETTINGS.selectedLessons = Array.from(s); saveSettings(); renderLessons();
-}
-function clearAllLessons(grade){
-  const ids = new Set(LESSONS.filter(l=>l.grade===grade).map(l=>l.id));
-  SETTINGS.selectedLessons = SETTINGS.selectedLessons.filter(id=>!ids.has(id));
-  saveSettings(); renderLessons();
-}
-
-// ============ 设置面板 ============
-function openSettings(){
-  document.getElementById('settingsContent').innerHTML = `
-    <div style="margin-bottom:16px;">
-      <label style="font-size:13px;color:var(--ink-soft);">考试日期</label>
-      <input type="date" id="examDateInput" value="${SETTINGS.examDate}" style="display:block;width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid var(--card-line);font-size:14px;">
-    </div>
-    <div style="margin-bottom:16px;">
-      <label style="font-size:13px;color:var(--ink-soft);">每日新学项目数量：<b id="dailyNewVal">${SETTINGS.dailyNew}</b></label>
-      <input type="range" id="dailyNewInput" min="5" max="40" value="${SETTINGS.dailyNew}" style="width:100%;">
-    </div>
-    <div style="margin-bottom:16px;">
-      <label style="font-size:13px;color:var(--ink-soft);">朗读语速：<b id="rateVal">${SETTINGS.voiceRate}</b></label>
-      <input type="range" id="rateInput" min="0.5" max="1.2" step="0.05" value="${SETTINGS.voiceRate}" style="width:100%;">
-    </div>
-    <button class="btn btn-secondary btn-block" style="margin-top:14px;" onclick="closeSettingsThenAdmin()">📋 题库管理（屏蔽简单字 / 编辑选择题）</button>
-    <div class="btn-row" style="margin-top:10px;">
-      <button class="btn btn-outline" onclick="exportBackup()">⬇️ 导出学习记录</button>
-      <button class="btn btn-outline" onclick="document.getElementById('importFileInput').click()">⬆️ 导入学习记录</button>
-    </div>
-    <input type="file" id="importFileInput" accept="application/json" style="display:none;">
-    <div style="font-size:11.5px;color:var(--ink-soft);margin-top:6px;line-height:1.6;">💡 建议每隔一段时间导出一次备份文件保存好。如果换手机、清理了浏览器数据，或者意外丢失了学习记录，可以用"导入"功能恢复。</div>
-    <button class="btn btn-primary btn-block" style="margin-top:14px;" onclick="closeSettings()">完成</button>
-    <button class="btn btn-ghost btn-block" style="margin-top:10px;" onclick="resetProgress()">⚠️ 清空全部学习记录</button>
-  `;
-  document.getElementById('examDateInput').addEventListener('change', e=>{ SETTINGS.examDate=e.target.value; saveSettings(); renderCountdown(); });
-  document.getElementById('dailyNewInput').addEventListener('input', e=>{ SETTINGS.dailyNew=+e.target.value; document.getElementById('dailyNewVal').textContent=e.target.value; saveSettings(); });
-  document.getElementById('rateInput').addEventListener('input', e=>{ SETTINGS.voiceRate=+e.target.value; document.getElementById('rateVal').textContent=e.target.value; saveSettings(); });
-  document.getElementById('importFileInput').addEventListener('change', e=>{
-    const file = e.target.files[0];
-    if(file) importBackup(file);
-    e.target.value = '';
-  });
-  document.getElementById('settingsModal').classList.add('show');
-}
-function closeSettings(){ document.getElementById('settingsModal').classList.remove('show'); renderHome(); }
-function closeSettingsThenAdmin(){ document.getElementById('settingsModal').classList.remove('show'); showScreen('admin'); }
-async function resetProgress(){
-  if(!confirm('确定要清空全部学习记录吗？此操作不可恢复。')) return;
-  PROGRESS = {}; await window.storage.set('progress', JSON.stringify(PROGRESS), false);
-  closeSettings();
-}
-
-// ---------- 学习数据备份（导出/导入） ----------
-// 独立运行（手机"添加到主屏幕"）时数据存在浏览器 localStorage 里，
-// 万一换手机、清了浏览器数据、或者 iOS 本地文件场景下存储行为不稳定，
-// 这里提供手动导出/导入一个 JSON 文件作为保险，避免几个月的学习记录彻底丢失。
-const BACKUP_KEYS = ['progress','settings','customTips','blockedChars','customConfusables','deletedBuiltins'];
-async function exportBackup(){
-  const data = { app:'字字珠玑', exportedAt: new Date().toISOString(), version:1, data:{} };
-  for(const key of BACKUP_KEYS){
-    try{
-      const r = await window.storage.get(key, false);
-      if(r && r.value!=null) data.data[key] = r.value;
-    }catch(e){ /* 该项没有数据，跳过 */ }
-  }
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  const dateStr = todayStr();
-  a.href = url;
-  a.download = `字字珠玑备份_${dateStr}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(()=>URL.revokeObjectURL(url), 1000);
-  toast('已导出备份文件，请保存好');
-}
-async function importBackup(file){
-  try{
-    const text = await file.text();
-    const parsed = JSON.parse(text);
-    if(!parsed || !parsed.data || parsed.app !== '字字珠玑'){
-      alert('这不是字字珠玑的备份文件，无法导入。');
-      return;
-    }
-    if(!confirm('导入备份会覆盖当前手机上的学习记录，确定要继续吗？')) return;
-    for(const key of BACKUP_KEYS){
-      if(parsed.data[key]!=null){
-        await window.storage.set(key, parsed.data[key], false);
+function submitQuiz(){
+  if(!quiz) return;
+  submitted=true;
+  for(var i=0;i<quiz.mcq.length;i++){
+    if(mcqAns[i]===undefined){
+      for(var j=0;j<4;j++){
+        var b=document.getElementById('a'+i+'-'+j);
+        b.disabled=true;
+        if(j===quiz.mcq[i].ans) b.classList.add('sh');
       }
+      document.getElementById('ex'+i).classList.add('show');
     }
-    toast('导入成功，正在刷新…');
-    setTimeout(()=>location.reload(), 800);
-  }catch(e){
-    alert('导入失败：文件格式不正确或已损坏。');
   }
+  var score=0;
+  for(var i=0;i<quiz.mcq.length;i++){if(mcqAns[i]===quiz.mcq[i].ans)score++;}
+  document.getElementById('c-mcq').textContent=score;
+  document.getElementById('c-ap').textContent='自评';
+  document.getElementById('c-qa').textContent='自评';
+  document.getElementById('c-tot').textContent=score+'+自评';
+  document.getElementById('res-tot').textContent=score;
+  document.getElementById('r-mcq').textContent=score;
+  document.getElementById('r-ap').textContent='自评';
+  document.getElementById('r-qa').textContent='自评';
+  document.getElementById('res-card').classList.add('show');
+  document.getElementById('res-card').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('subbtn').disabled=true;
+  document.getElementById('subbtn').textContent='已提交';
 }
-document.getElementById('settingsModal').addEventListener('click', e=>{ if(e.target.id==='settingsModal') closeSettings(); });
-
-renderCountdown();
-
-
-// ============ 练习会话引擎 ============
-let SESSION = { queue:[], idx:0, correct:0, wrong:0, active:false, usedMCQKeys:new Set(), usedSentMaking:new Set(), hanziBank:[], hanziFreq:{} };
-
-function startSession(){
-  if(SETTINGS.selectedLessons.length===0){
-    showScreen('lessons');
-    return;
-  }
-  if(SETTINGS.mode==='sentmaking'){
-    const pool = SENTENCE_MAKING_WORDS.length + SENTENCE_PATTERNS.length;
-    const sessionLen = Math.min(SETTINGS.dailyNew || 12, pool);
-    SESSION = { queue:new Array(sessionLen).fill(null), idx:0, correct:0, wrong:0, active:true,
-      sessionLen, usedMCQKeys:new Set(), usedSentMaking:new Set(), hanziBank:[], hanziFreq:{} };
-    showScreen('practice');
-    renderCard();
-    return;
-  }
-  const kindFilter = (SETTINGS.mode==='word' || SETTINGS.mode==='sentence') ? SETTINGS.mode : null;
-  const baseQueue = dueQueue(40, kindFilter);
-  if(baseQueue.length===0){
-    showScreen('practice');
-    renderSessionDone(true);
-    return;
-  }
-  SESSION = { queue: baseQueue, idx:0, correct:0, wrong:0, active:true, sessionLen: baseQueue.length,
-    usedMCQKeys:new Set(), usedSentMaking:new Set(), hanziBank: buildHanziBank(), hanziFreq: buildHanziFreq() };
-  showScreen('practice');
-  renderCard();
-}
-
-function sessionProgressHTML(){
-  const pct = SESSION.sessionLen? Math.round((SESSION.idx/SESSION.sessionLen)*100) : 0;
-  return `<div class="progress-bar-track"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
-  <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-soft);">
-    <span>第 ${Math.min(SESSION.idx+1, SESSION.sessionLen)} / ${SESSION.sessionLen} 题</span>
-    <span>✓ ${SESSION.correct} &nbsp; ✗ ${SESSION.wrong}</span>
-  </div>`;
-}
-
-function renderCard(){
-  const el = document.getElementById('screen-practice');
-  if(!SESSION.active || SESSION.idx >= SESSION.sessionLen){
-    renderSessionDone(false);
-    return;
-  }
-  if(SETTINGS.mode==='sentmaking'){
-    renderSentMakingCard(el);
-    return;
-  }
-  const item = SESSION.queue[SESSION.idx];
-  if(SETTINGS.mode==='mcq'){
-    const q = generateMCQForItem(item, SESSION.hanziBank, SESSION.usedMCQKeys, SESSION.hanziFreq);
-    if(q){ renderMCQCard(el, item, q); return; }
-    // 极少数情况下该条目无法出选择题（没有合适的汉字），退化为对应的听写卡
-    if(item.kind==='word') renderWordCard(el, item); else renderSentenceCard(el, item);
-    return;
-  }
-  if(SETTINGS.mode==='word' || SETTINGS.mode==='sentence'){
-    if(item.kind==='word') renderWordCard(el, item); else renderSentenceCard(el, item);
-    return;
-  }
-  // 综合混合模式：按条目本身的类型渲染，小概率转为选择题（仍取材于同一条目）
-  // 每隔约5题，插入一道「的/地/得」专项辨析题（独立触发，不依赖词语匹配）
-  const deDiDePool = effectiveConfusables().filter(c=>('的地得'.includes(c.blank) || c.blank.includes('的') || c.blank.includes('地') || c.blank.includes('得')) && !SESSION.usedMCQKeys.has(c._key));
-  const insertDeDiDe = deDiDePool.length > 0 && SESSION.idx > 0 && SESSION.idx % 5 === 0;
-  if(insertDeDiDe){
-    const pick = deDiDePool[Math.floor(Math.random()*deDiDePool.length)];
-    SESSION.usedMCQKeys.add(pick._key);
-    const q = { sentence:pick.sentence, blank:pick.blank, options:pick.options, note:pick.note, key:pick._key };
-    renderMCQCard(el, item, q);
-    return;
-  }
-  const mcqChance = item.kind==='word' ? 0.22 : 0.15;
-  if(Math.random() < mcqChance){
-    const q = generateMCQForItem(item, SESSION.hanziBank, SESSION.usedMCQKeys, SESSION.hanziFreq);
-    if(q){ renderMCQCard(el, item, q); return; }
-  }
-  if(item.kind==='word') renderWordCard(el, item); else renderSentenceCard(el, item);
-}
-
-function lessonTagHTML(it){
-  return `<div class="lesson-tag">${it.grade}年级 第${it.lessonNum}课 <b>《${it.lessonTitle}》</b></div>`;
-}
-
-// ---------- 词语听写卡 ----------
-function renderWordCard(el, item){
-  const chars = item.text.split('').filter(isHanzi);
-  el.innerHTML = `
-    ${sessionProgressHTML()}
-    <div class="prompt-card">
-      ${lessonTagHTML(item)}
-      <div class="pinyin-display">${item.pinyin}</div>
-      <button class="speak-btn" id="speakBtn">🔊 朗读</button>
-      <div class="hint-text">听拼音 / 朗读发音，在田字格中写出汉字</div>
-      <div class="write-zone">
-        <div class="grid-cells" id="cellWrap"></div>
-        <div class="write-tools">
-          <button class="tool-btn" id="clearBtn">🧹 重写</button>
-        </div>
-      </div>
-      <div class="answer-reveal" id="revealBox">
-        <div class="answer-hanzi">${item.text}</div>
-        <div class="answer-pinyin">${item.pinyin}</div>
-      </div>
-      <div id="actionArea" style="margin-top:16px;">
-        <button class="btn btn-primary btn-block" id="revealBtn">👁️ 显示答案</button>
-      </div>
-    </div>
-  `;
-  const cells = buildCellWriter(document.getElementById('cellWrap'), chars.length);
-  document.getElementById('speakBtn').addEventListener('click', ()=>speak(item.text));
-  document.getElementById('clearBtn').addEventListener('click', ()=>cells.forEach(clearInk));
-  document.getElementById('revealBtn').addEventListener('click', ()=>{
-    document.getElementById('revealBox').classList.add('show');
-    showSelfMark(item.id);
-  });
-  speak(item.text);
-}
-
-// ---------- 句子默写/填空卡 ----------
-function renderSentenceCard(el, item){
-  const isBlankMode = !!item.focus && !item.moxie;
-  let displayHTML;
-  if(item.moxie && !item.focus){
-    displayHTML = `<div class="context-sentence" id="ctxSentence">（听朗读，凭记忆写出整句）</div>`;
-  } else if(item.focus){
-    const escaped = item.full.split(item.focus).join(`<span class="blank-marker" id="blankSpan">${item.focus}</span>`);
-    displayHTML = `<div class="context-sentence" id="ctxSentence">${escaped}</div>`;
-  } else {
-    displayHTML = `<div class="context-sentence" id="ctxSentence">（听朗读，凭记忆写出整句）</div>`;
-  }
-  el.innerHTML = `
-    ${sessionProgressHTML()}
-    <div class="prompt-card">
-      ${lessonTagHTML(item)}
-      <button class="speak-btn" id="speakBtn">🔊 朗读整句</button>
-      ${displayHTML}
-      <div class="hint-text">${item.focus? '请在格子中写出空白处的词语' : '请在下方写出完整句子'}</div>
-      <div class="write-zone">
-        ${item.focus ? `<div class="grid-cells" id="cellWrap"></div>` : `<div class="lined-area" id="lineWrap"></div>`}
-        <div class="write-tools"><button class="tool-btn" id="clearBtn">🧹 重写</button></div>
-      </div>
-      <div class="answer-reveal" id="revealBox">
-        <div class="answer-full">${item.full.split(item.focus||'\u0000').join(item.focus? `<span class="focusword">${item.focus}</span>` : '')}</div>
-      </div>
-      <div id="actionArea" style="margin-top:16px;">
-        <button class="btn btn-primary btn-block" id="revealBtn">👁️ 显示答案</button>
-      </div>
-    </div>
-  `;
-  let cells;
-  if(item.focus){
-    const chars = item.focus.split('').filter(isHanzi);
-    cells = buildCellWriter(document.getElementById('cellWrap'), chars.length);
-  } else {
-    cells = buildLineWriter(document.getElementById('lineWrap'));
-  }
-  document.getElementById('speakBtn').addEventListener('click', ()=>speak(item.full));
-  document.getElementById('clearBtn').addEventListener('click', ()=>cells.forEach(clearInk));
-  document.getElementById('revealBtn').addEventListener('click', ()=>{
-    document.getElementById('revealBox').classList.add('show');
-    if(item.focus) document.getElementById('ctxSentence').classList.add('revealed');
-    showSelfMark(item.id);
-  });
-  speak(item.full);
-}
-
-// ---------- 形近字辨析卡（MCQ） ----------
-function renderMCQCard(el, item, q){
-  // q.options 已在生成时洗牌，这里仍做一次保险洗牌，避免任何调用路径遗漏
-  const shuffledOptions = shuffleArr(q.options);
-  // 支持两种句子格式：
-  // 1. 句子里含 __ 占位符（多空题，如的地得三合一题），直接替换 __ 为下划线标记
-  // 2. 普通单字挖空：用 split(blank) 找位置
-  let display;
-  if(q.sentence.includes('__')){
-    display = q.sentence.replace(/__/g, '<span class="blank-marker" style="color:var(--seal);border-bottom-style:dashed;">＿＿</span>');
-  } else {
-    display = q.sentence.split(q.blank).join('<span class="blank-marker" style="color:var(--seal);border-bottom-style:dashed;">＿</span>');
-  }
-  el.innerHTML = `
-    ${sessionProgressHTML()}
-    <div class="prompt-card">
-      <div class="lesson-tag">形近字辨析 · ${item.grade}年级 第${item.lessonNum}课 <b>《${item.lessonTitle}》</b></div>
-      <button class="speak-btn" id="speakBtn">🔊 朗读整句</button>
-      <div class="context-sentence">${display}</div>
-      <div class="hint-text">选出空白处正确的字</div>
-      <div class="mcq-options" id="mcqOpts">
-        ${shuffledOptions.map((o,i)=>`<div class="mcq-opt" data-o="${o}">${o}</div>`).join('')}
-      </div>
-      <div class="answer-reveal" id="revealBox">
-        <div style="font-size:13px;color:var(--ink-soft);">💡 ${q.note}</div>
-        ${q.note ? `<button class="btn btn-primary btn-block" id="nextBtn" style="margin-top:14px;display:none;">下一题 →</button>` : ''}
-      </div>
-      <div style="margin-top:14px;text-align:left;"><button class="tool-btn" id="flagBadBtn" style="color:var(--seal-deep);">🚫 这题出得不好</button></div>
-    </div>
-  `;
-  document.getElementById('speakBtn').addEventListener('click', ()=>speak(q.sentence));
-  speak(q.sentence);
-  let answered = false;
-  document.getElementById('flagBadBtn').addEventListener('click', ()=>{
-    if(answered) return;
-    answered = true;
-    flagBadQuestion(q);
-  });
-  document.querySelectorAll('#mcqOpts .mcq-opt').forEach(opt=>{
-    opt.addEventListener('click', ()=>{
-      if(answered) return;
-      answered = true;
-      const ok = opt.dataset.o === q.blank;
-      document.querySelectorAll('#mcqOpts .mcq-opt').forEach(o2=>{
-        if(o2.dataset.o===q.blank) o2.classList.add('correct');
-        else if(o2===opt && !ok) o2.classList.add('wrong');
-      });
-      document.getElementById('revealBox').classList.add('show');
-      if(ok) SESSION.correct++; else SESSION.wrong++;
-      reviewItem(item.id, ok);
-      flashStamp(ok);
-      if(q.note){
-        // 有解释的题：显示"下一题"按钮，让学生读完再跳
-        const nextBtn = document.getElementById('nextBtn');
-        if(nextBtn){
-          nextBtn.style.display = 'block';
-          nextBtn.addEventListener('click', ()=>{ SESSION.idx++; renderCard(); });
-        }
-      } else {
-        setTimeout(()=>{ SESSION.idx++; renderCard(); }, 1100);
-      }
-    });
-  });
-}
-function flagBadQuestion(q){
-  if(q.key.startsWith('dyn:')){
-    const ch = q.blank;
-    BLOCKED_CHARS.add(ch);
-    saveBlockedChars();
-    toast(`已屏蔽「${ch}」，以后不会再用它出题（可在 设置→题库管理 里恢复）`);
-  } else {
-    const builtinMatch = q.key.startsWith('cur:');
-    if(builtinMatch){ DELETED_BUILTIN_KEYS.add(q.key); saveDeletedBuiltins(); }
-    else {
-      const id = q.key.split(':')[1];
-      CUSTOM_CONFUSABLES = CUSTOM_CONFUSABLES.filter(c=>c.id!==id);
-      saveCustomConfusables();
-    }
-    toast('已屏蔽这道题，以后不会再出现');
-  }
-  SESSION.idx++;
-  setTimeout(renderCard, 500);
-}
-function toast(msg){
-  let t = document.getElementById('toastBox');
-  if(!t){
-    t = document.createElement('div');
-    t.id = 'toastBox';
-    t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:30px;font-size:12.5px;z-index:300;max-width:88%;text-align:center;box-shadow:var(--shadow-lg);transition:opacity .3s;';
-    document.body.appendChild(t);
-  }
-  t.textContent = msg;
-  t.style.opacity = '1';
-  clearTimeout(t._timer);
-  t._timer = setTimeout(()=>{ t.style.opacity='0'; }, 2400);
-}
-
-// ---------- 造句练习卡 ----------
-function renderSentMakingCard(el){
-  const allPrompts = SENTENCE_MAKING_WORDS.map(w=>({text:w,isWord:true}))
-    .concat(SENTENCE_PATTERNS.map(p=>({text:p,isWord:false})));
-  let available = allPrompts.filter(p=>!SESSION.usedSentMaking.has(p.text));
-  if(available.length===0){ SESSION.usedSentMaking.clear(); available = allPrompts; }
-  const pick = available[Math.floor(Math.random()*available.length)];
-  SESSION.usedSentMaking.add(pick.text);
-  const prompt = pick.text, useWord = pick.isWord;
-  el.innerHTML = `
-    ${sessionProgressHTML()}
-    <div class="prompt-card">
-      <div class="lesson-tag">造句练习</div>
-      <div class="pinyin-display" style="font-family:var(--serif);font-size:30px;">${prompt}</div>
-      <div class="hint-text">请用以上${useWord?'词语':'句式'}写一句完整的句子</div>
-      <div class="write-zone">
-        <div class="lined-area" id="lineWrap"></div>
-        <div class="write-tools"><button class="tool-btn" id="clearBtn">🧹 重写</button></div>
-      </div>
-      <div id="actionArea" style="margin-top:16px;">
-        <button class="btn btn-primary btn-block" id="doneBtn">✅ 完成造句，下一题</button>
-      </div>
-    </div>
-  `;
-  const cells = buildLineWriter(document.getElementById('lineWrap'));
-  document.getElementById('clearBtn').addEventListener('click', ()=>cells.forEach(clearInk));
-  document.getElementById('doneBtn').addEventListener('click', ()=>{
-    SESSION.correct++;
-    flashStamp(true);
-    SESSION.idx++;
-
-    setTimeout(renderCard, 350);
-  });
-}
-
-// ---------- 自评按钮 ----------
-function showSelfMark(itemId){
-  const st = getState(itemId);
-  const tooEasyCount = st.tooEasy || 0;
-  const easyLabel = tooEasyCount === 0 ? '这题太简单了' :
-                    tooEasyCount === 1 ? '太简单了（再按1次不再出现）' :
-                                         '太简单了（再按1次永久跳过）';
-  document.getElementById('actionArea').innerHTML = `
-    <div class="self-mark-row">
-      <button class="mark-btn mark-wrong" id="markWrong">✗ 写错了</button>
-      <button class="mark-btn mark-right" id="markRight">✓ 写对了</button>
-    </div>
-    <div style="text-align:left;margin-top:10px;">
-      <button id="markEasy" style="background:none;border:none;font-size:12px;color:var(--ink-soft);cursor:pointer;padding:2px 0;text-decoration:underline dotted;">🌱 ${easyLabel}</button>
-    </div>
-  `;
-  document.getElementById('markWrong').addEventListener('click', ()=>{
-    SESSION.wrong++; reviewItem(itemId, false); flashStamp(false);
-    SESSION.idx++; setTimeout(renderCard, 250);
-  });
-  document.getElementById('markRight').addEventListener('click', ()=>{
-    SESSION.correct++; reviewItem(itemId, true); flashStamp(true);
-    SESSION.idx++; setTimeout(renderCard, 250);
-  });
-  document.getElementById('markEasy').addEventListener('click', ()=>{
-    const st = getState(itemId);
-    st.tooEasy = (st.tooEasy || 0) + 1;
-    if(st.tooEasy >= 3){
-      // 永久跳过：due设为遥远未来，ease拉满，reps标大
-      st.due = '9999-12-31'; st.ease = 2.9; st.interval = 9999; st.seen = true;
-      saveProgress();
-      toast('已永久跳过这道题，以后不会再出现');
-      SESSION.correct++; SESSION.idx++; setTimeout(renderCard, 300);
-    } else {
-      // 第1/2次：大幅拉长复习间隔
-      st.ease = 2.9; st.interval = st.tooEasy === 1 ? 30 : 90;
-      st.due = addDays(todayStr(), st.interval); st.seen = true;
-      saveProgress();
-      toast(st.tooEasy === 1 ? '已减少出现频率（再按一次可永久跳过）' : '复习间隔已拉至三个月（再按一次可永久跳过）');
-      SESSION.correct++; SESSION.idx++; setTimeout(renderCard, 300);
-    }
-  });
-}
-
-function flashStamp(ok){
-  const s = document.getElementById('stampPop');
-  s.textContent = ok ? '✓ 真棒' : '再接再厉';
-  s.style.color = ok ? 'var(--bamboo-deep)' : 'var(--seal)';
-  s.style.borderColor = ok ? 'var(--bamboo-deep)' : 'var(--seal)';
-  s.classList.remove('go'); void s.offsetWidth; s.classList.add('go');
-}
-
-function renderSessionDone(noneToReview){
-  const el = document.getElementById('screen-practice');
-  if(noneToReview){
-    el.innerHTML = `
-      <div class="empty-state">
-        <div class="ei">🎉</div>
-        <h2 style="font-family:var(--serif);">今天的内容都复习完啦！</h2>
-        <p>明天再来巩固新内容，或挑选更多课文加练。</p>
-        <button class="btn btn-outline" style="margin-top:10px;" onclick="showScreen('lessons')">📖 调整复习范围</button>
-      </div>`;
-    return;
-  }
-  const total = SESSION.correct + SESSION.wrong;
-  const pct = total? Math.round(SESSION.correct/total*100) : 100;
-  el.innerHTML = `
-    <div class="empty-state">
-      <div class="ei">🏮</div>
-      <h2 style="font-family:var(--serif);">本轮练习完成！</h2>
-      <div class="stat-row" style="max-width:320px;margin:18px auto;">
-        <div class="stat-box mastered"><div class="n">${SESSION.correct}</div><div class="l">答对</div></div>
-        <div class="stat-box due"><div class="n">${SESSION.wrong}</div><div class="l">答错</div></div>
-        <div class="stat-box"><div class="n">${pct}%</div><div class="l">正确率</div></div>
-      </div>
-      <div class="btn-row" style="max-width:340px;margin:0 auto;">
-        <button class="btn btn-primary btn-block" onclick="startSession()">再来一轮</button>
-        <button class="btn btn-outline btn-block" onclick="showScreen('home')">返回首页</button>
-      </div>
-    </div>`;
-}
-
-// ============ 错字本 / 统计页 ============
-function renderStats(){
-  const el = document.getElementById('screen-stats');
-  const errItems = [];
-  ITEMS.forEach(it=>{
-    const st = PROGRESS[it.id];
-    if(st && (st.lapses||0) > 0){
-      errItems.push({it, lapses:st.lapses, lvl:masteryLevel(st)});
-    }
-  });
-  errItems.sort((a,b)=>b.lapses-a.lapses);
-
-  el.innerHTML = `
-    <h2 class="section-title">📊 各课学习进度</h2>
-    <div class="card" style="margin-bottom:10px;"><div class="card-inner" style="font-size:12px;color:var(--ink-soft);line-height:1.7;">
-      💡 进度条反映「学习进度」：刚接触过算一部分，连续答对多次、间隔越拉越长才算「真正掌握」。
-      所以哪怕已经做了很多题，刚开始几天进度条也会比较低，这是间隔重复正常的过程，不代表没有学习记录。
-    </div></div>
-    <div class="card"><div class="card-inner" id="lessonBars"></div></div>
-    <h2 class="section-title">🔴 错字本 <span class="tag">${errItems.length} 项</span></h2>
-    ${errItems.length===0? `<div class="empty-state"><div class="ei">✨</div>还没有错题记录，继续加油！</div>` :
-    `<div class="error-list">${errItems.slice(0,60).map(e=>`
-      <div class="error-item">
-        <div>
-          <div class="w">${e.it.kind==='word'? e.it.text : (e.it.focus||e.it.full.slice(0,10)+'…')}</div>
-          <div class="meta">${e.it.grade}年级第${e.it.lessonNum}课 · ${e.it.kind==='word'?'词语':'句子'}</div>
-        </div>
-        <span class="lapses">错${e.lapses}次</span>
-      </div>`).join('')}</div>`}
-
-    <h2 class="section-title">📝 易错提示笔记</h2>
-    <div class="card"><div class="card-inner" id="tipsArea"></div></div>
-  `;
-  const bars = document.getElementById('lessonBars');
-  bars.innerHTML = LESSONS.map(l=>{
-    const s = lessonStats(l.id);
-    const caption = s.touched===0 ? '尚未开始'
-      : `已学 ${s.touched}/${s.total} 题${s.mastered>0?` · 已掌握 ${s.mastered} 题`:''}`;
-    return `<div style="margin-bottom:10px;">
-      <div class="bar-row" style="margin-bottom:2px;"><div class="lbl">${l.grade}年-${l.lesson}课</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${s.score}%"></div></div>
-        <div class="bar-pct">${s.score}%</div></div>
-      <div style="margin-left:82px;font-size:10.5px;color:var(--ink-soft);">${caption}</div>
-    </div>`;
-  }).join('');
-
-  const tipsArea = document.getElementById('tipsArea');
-  tipsArea.innerHTML = `<div style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;">
-    每课的字形拆解提示由听写表整理而来，可自行补充或修改。</div>
-    <select id="tipLessonSel" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--card-line);margin-bottom:10px;">
-      ${LESSONS.map(l=>`<option value="${l.id}">${l.grade}年级 第${l.lesson}课 《${l.title}》</option>`).join('')}
-    </select>
-    <div id="tipBuiltin" style="font-size:13px;color:var(--ink-soft);margin-bottom:8px;"></div>
-    <textarea class="tip-edit" id="tipEditBox" placeholder="补充易错提示，例如：脸-月+佥，俭-亻+佥……"></textarea>
-    <button class="btn btn-secondary" style="margin-top:8px;" id="saveTipBtn">💾 保存笔记</button>`;
-  function loadTipFor(lessonId){
-    const lesson = LESSONS.find(l=>l.id===lessonId);
-    document.getElementById('tipBuiltin').innerHTML = lesson.tips.length
-      ? '📌 ' + lesson.tips.join('<br>📌 ') : '（暂无内置提示）';
-    document.getElementById('tipEditBox').value = CUSTOM_TIPS[lessonId] || '';
-  }
-  document.getElementById('tipLessonSel').addEventListener('change', e=>loadTipFor(e.target.value));
-  document.getElementById('saveTipBtn').addEventListener('click', ()=>{
-    const id = document.getElementById('tipLessonSel').value;
-    CUSTOM_TIPS[id] = document.getElementById('tipEditBox').value;
-    saveTips();
-    document.getElementById('saveTipBtn').textContent = '✅ 已保存';
-    setTimeout(()=>{ document.getElementById('saveTipBtn').textContent='💾 保存笔记'; }, 1200);
-  });
-  loadTipFor(LESSONS[0].id);
-}
-
-// ============ 题库管理（Admin） ============
-function renderAdmin(){
-  const el = document.getElementById('screen-admin');
-  const all = effectiveConfusables();
-  el.innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-      <button class="icon-btn" onclick="showScreen('home')">←</button>
-      <h2 class="section-title" style="margin:0;">📋 题库管理</h2>
-    </div>
-    <div class="card"><div class="card-inner" style="font-size:12px;color:var(--ink-soft);line-height:1.7;">
-      这里管理「形近字辨析」的出题内容。遇到出得不好的题，也可以直接在练习时点「🚫 这题出得不好」一键处理，效果和在这里操作一样。
-    </div></div>
-
-    <h2 class="section-title">🚫 不再用来出题的简单字 <span class="tag">${BLOCKED_CHARS.size} 个</span></h2>
-    <div class="card"><div class="card-inner">
-      <div class="tag-row" id="blockedCharList"></div>
-      <div style="display:flex;gap:8px;margin-top:12px;">
-        <input id="newBlockChar" maxlength="6" placeholder="输入要屏蔽的字，如：子" style="flex:1;padding:10px;border:1px solid var(--card-line);border-radius:8px;font-size:14px;">
-        <button class="btn btn-secondary" id="addBlockBtn">添加</button>
-      </div>
-      <button class="btn btn-ghost btn-block" style="margin-top:10px;font-size:12px;" id="resetBlockBtn">恢复默认屏蔽字表</button>
-    </div></div>
-
-    <h2 class="section-title">✏️ 精选选择题库 <span class="tag">${all.length} 条</span></h2>
-    <button class="btn btn-primary btn-block" id="addQuestionBtn">＋ 新增一道选择题</button>
-    <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
-      ${all.map(c=>`
-        <div class="card" style="margin-bottom:0;">
-          <div class="card-inner">
-            <div style="font-size:13.5px;line-height:1.6;">${c.sentence.split(c.blank).join(`<b style="color:var(--seal);">[${c.blank}]</b>`)}</div>
-            <div style="font-size:12px;color:var(--ink-soft);margin-top:4px;">选项：${c.options.join(' / ')}</div>
-            <div style="font-size:11px;color:var(--ink-soft);margin-top:2px;">${c.note||''}</div>
-            <div class="tag-row" style="margin-top:8px;">
-              <span class="pill">${LESSONS.find(l=>l.id===c.lessonId)?.title || c.lessonId}</span>
-              <span class="pill">${c._src==='builtin'?'内置':'自定义'}</span>
-            </div>
-            <div class="btn-row" style="margin-top:10px;">
-              <button class="tool-btn" data-edit="${c._key}">✏️ 编辑</button>
-              <button class="tool-btn" style="color:var(--seal-deep);" data-del="${c._key}">🗑️ 删除</button>
-            </div>
-          </div>
-        </div>`).join('')}
-    </div>
-  `;
-  renderBlockedChips();
-  document.getElementById('addBlockBtn').addEventListener('click', ()=>{
-    const input = document.getElementById('newBlockChar');
-    const chars = input.value.trim().split('').filter(isHanzi);
-    if(chars.length===0) return;
-    chars.forEach(ch=>BLOCKED_CHARS.add(ch));
-    saveBlockedChars();
-    input.value = '';
-    renderBlockedChips();
-  });
-  document.getElementById('resetBlockBtn').addEventListener('click', ()=>{
-    if(!confirm('恢复为系统默认的屏蔽字表？你自己添加的会被清空。')) return;
-    BLOCKED_CHARS = new Set(DEFAULT_BLOCKED_CHARS);
-    saveBlockedChars();
-    renderBlockedChips();
-  });
-  document.getElementById('addQuestionBtn').addEventListener('click', ()=>openConfusableForm(null));
-  el.querySelectorAll('[data-edit]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const key = btn.dataset.edit;
-      const found = all.find(c=>c._key===key);
-      if(found) openConfusableForm(found);
-    });
-  });
-  el.querySelectorAll('[data-del]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      if(!confirm('确定删除这道题吗？')) return;
-      deleteConfusableByKey(btn.dataset.del);
-      renderAdmin();
-    });
-  });
-}
-function renderBlockedChips(){
-  const wrap = document.getElementById('blockedCharList');
-  if(!wrap) return;
-  const arr = Array.from(BLOCKED_CHARS);
-  wrap.innerHTML = arr.length===0 ? '<span style="font-size:12px;color:var(--ink-soft);">（空）</span>' :
-    arr.map(ch=>`<span class="pill" style="cursor:pointer;" data-unblock="${ch}">${ch} ✕</span>`).join('');
-  wrap.querySelectorAll('[data-unblock]').forEach(p=>{
-    p.addEventListener('click', ()=>{
-      BLOCKED_CHARS.delete(p.dataset.unblock);
-      saveBlockedChars();
-      renderBlockedChips();
-    });
-  });
-}
-function deleteConfusableByKey(key){
-  if(key.startsWith('cur:')){ DELETED_BUILTIN_KEYS.add(key); saveDeletedBuiltins(); }
-  else if(key.startsWith('usr:')){ const id=key.split(':')[1]; CUSTOM_CONFUSABLES = CUSTOM_CONFUSABLES.filter(c=>c.id!==id); saveCustomConfusables(); }
-}
-function openConfusableForm(existing){
-  const isEdit = !!existing;
-  document.getElementById('settingsContent').innerHTML = `
-    <h2 class="section-title" style="margin-top:0;">${isEdit?'✏️ 编辑题目':'＋ 新增题目'}</h2>
-    <div style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;">句子中要出现「正确答案」这个字，系统会自动把它挖空。四个选项需互不相同，且必须包含正确答案。</div>
-    <label style="font-size:12.5px;color:var(--ink-soft);">所属课文</label>
-    <select id="cfLesson" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--card-line);margin:6px 0 12px 0;">
-      ${LESSONS.map(l=>`<option value="${l.id}" ${existing&&existing.lessonId===l.id?'selected':''}>${l.grade}年级 第${l.lesson}课 《${l.title}》</option>`).join('')}
-    </select>
-    <label style="font-size:12.5px;color:var(--ink-soft);">例句（须包含正确答案这个字）</label>
-    <textarea class="tip-edit" id="cfSentence" style="min-height:60px;">${existing?existing.sentence:''}</textarea>
-    <label style="font-size:12.5px;color:var(--ink-soft);">正确答案（一个字）</label>
-    <input id="cfBlank" maxlength="2" value="${existing?existing.blank:''}" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--card-line);margin:6px 0 12px 0;font-size:16px;">
-    <label style="font-size:12.5px;color:var(--ink-soft);">四个选项（用、或空格隔开，需包含正确答案）</label>
-    <input id="cfOptions" value="${existing?existing.options.join('、'):''}" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--card-line);margin:6px 0 12px 0;font-size:16px;">
-    <label style="font-size:12.5px;color:var(--ink-soft);">提示说明（选填）</label>
-    <textarea class="tip-edit" id="cfNote" style="min-height:50px;">${existing?(existing.note||''):''}</textarea>
-    <div id="cfError" style="color:var(--seal-deep);font-size:12.5px;margin-top:8px;"></div>
-    <button class="btn btn-primary btn-block" style="margin-top:14px;" id="cfSaveBtn">💾 保存</button>
-    <button class="btn btn-ghost btn-block" style="margin-top:8px;" onclick="closeSettingsThenAdmin()">取消</button>
-  `;
-  document.getElementById('cfSaveBtn').addEventListener('click', ()=>{
-    const lessonId = document.getElementById('cfLesson').value;
-    const sentence = document.getElementById('cfSentence').value.trim();
-    const blank = document.getElementById('cfBlank').value.trim();
-    const options = document.getElementById('cfOptions').value.split(/[、,，\s]+/).map(s=>s.trim()).filter(Boolean);
-    const note = document.getElementById('cfNote').value.trim();
-    const errBox = document.getElementById('cfError');
-    if(!sentence || !blank || options.length!==4){ errBox.textContent='请填写完整：例句、正确答案，并提供 4 个选项。'; return; }
-    if(!sentence.includes(blank)){ errBox.textContent='例句中必须包含正确答案这个字，这样系统才能挖空。'; return; }
-    if(!options.includes(blank)){ errBox.textContent='4 个选项里必须包含正确答案。'; return; }
-    if(new Set(options).size!==4){ errBox.textContent='4 个选项必须互不相同。'; return; }
-    if(isEdit && existing._src==='builtin'){
-      // 内置题目编辑 = 屏蔽原题 + 新增一条自定义题，保持行为一致且不修改只读的内置数据
-      DELETED_BUILTIN_KEYS.add(existing._key); saveDeletedBuiltins();
-      CUSTOM_CONFUSABLES.push({id:newCustomId(), lessonId, sentence, blank, options, note});
-    } else if(isEdit){
-      const id = existing._key.split(':')[1];
-      const idx = CUSTOM_CONFUSABLES.findIndex(c=>c.id===id);
-      if(idx>-1) CUSTOM_CONFUSABLES[idx] = {id, lessonId, sentence, blank, options, note};
-    } else {
-      CUSTOM_CONFUSABLES.push({id:newCustomId(), lessonId, sentence, blank, options, note});
-    }
-    saveCustomConfusables();
-    closeSettingsThenAdmin();
-  });
-  document.getElementById('settingsModal').classList.add('show');
-}
-
-
-(async function init(){
-  await loadAll();
-  renderCountdown();
-  renderHome();
-})();
 
 </script>
 </body>
